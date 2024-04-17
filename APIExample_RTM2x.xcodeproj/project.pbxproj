@@ -29,7 +29,6 @@
 		296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */; };
 		296CC1272BA99690006E14F5 /* MessageItemRemoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */; };
 		296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */; };
-		296CC12B2BAAD9D5006E14F5 /* AllMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC12A2BAAD9D5006E14F5 /* AllMessagesView.swift */; };
 		296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC12E2BAAE070006E14F5 /* MessageItemFullView.swift */; };
 		296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1302BABCC0D006E14F5 /* ChannelMessagingViewModel.swift */; };
 		296CC1332BABE0E7006E14F5 /* P2PMessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1322BABE0E7006E14F5 /* P2PMessagingViewModel.swift */; };
@@ -79,7 +78,6 @@
 		296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemLocalView.swift; sourceTree = "<group>"; };
 		296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemRemoteView.swift; sourceTree = "<group>"; };
 		296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundedRectView.swift; sourceTree = "<group>"; };
-		296CC12A2BAAD9D5006E14F5 /* AllMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMessagesView.swift; sourceTree = "<group>"; };
 		296CC12E2BAAE070006E14F5 /* MessageItemFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageItemFullView.swift; sourceTree = "<group>"; };
 		296CC1302BABCC0D006E14F5 /* ChannelMessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMessagingViewModel.swift; sourceTree = "<group>"; };
 		296CC1322BABE0E7006E14F5 /* P2PMessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PMessagingViewModel.swift; sourceTree = "<group>"; };
@@ -224,14 +222,6 @@
 			path = Bidding;
 			sourceTree = "<group>";
 		};
-		296CC13A2BABE33C006E14F5 /* AllMessages */ = {
-			isa = PBXGroup;
-			children = (
-				296CC12A2BAAD9D5006E14F5 /* AllMessagesView.swift */,
-			);
-			path = AllMessages;
-			sourceTree = "<group>";
-		};
 		297F7FE72BA420E20057200A = {
 			isa = PBXGroup;
 			children = (
@@ -321,7 +311,6 @@
 				296CC1372BABE328006E14F5 /* Polling */,
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
-				296CC13A2BABE33C006E14F5 /* AllMessages */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -460,7 +449,6 @@
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
-				296CC12B2BAAD9D5006E14F5 /* AllMessagesView.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,

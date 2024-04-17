@@ -15,5 +15,5 @@ class Configurations: NSObject {
      The appIDs can be found from agora console (https://console.agora.io/) to create a project
      */
     
-    static let agora_AppdID: String = "<#Your AppID#>"
+    static let agora_AppdID: String = ""
 }
