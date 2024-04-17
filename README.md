@@ -9,6 +9,7 @@
 
 <h3 align="center">Agora Real-time Messaging (RTM) SDK APIExample</h3>
 
+
   <p align="center">
     <a href="https://docs.agora.io/en/signaling/reference/api?platform=ios"><strong>Explore the API Reference »</strong></a>
 
@@ -51,7 +52,17 @@
 
 This project showcases how to use Agora RTM SDK to build real-time interactive scenarios such as chat messaging, live bidding, live poll/quiz.
 
+Here is a video 
+
+<!-- [![YouTube Video](https://img.youtube.com/vi/5ZqHV-nf7WY/0.jpg)](https://www.youtube.com/watch?v=5ZqHV-nf7WY) -->
+
+<a href="https://www.youtube.com/watch?v=5ZqHV-nf7WY">
+  <img src="https://img.youtube.com/vi/5ZqHV-nf7WY/0.jpg" alt="YouTube Video" style="border-radius: 16px;">
+</a>
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ### Built With
 
@@ -100,11 +111,11 @@ The list of samples and what feature is used
 
 | **Samples**      | **Description**                                                                                      | **RTM ChannelType** | **RTM Features**  |
 |------------------|------------------------------------------------------------------------------------------------------|---------------------|-------------------|
-| ChannelMessaging | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
-| P2PMessaging     | Peer-to-peer messaging where a user can directly send a message to another user                      | `.User`                | /                 |
-| Polling          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
-| QuizGame         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
-| Bidding          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | `.storage`           |
+| [ChannelMessaging](/APIExample_RTM2x/Examples/Basic/ChannelMessaging) | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
+| [P2PMessaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging)     | Peer-to-peer messaging where a user can directly send a message to another user                      | `.User`                | /                 |
+| [Polling](APIExample_RTM2x/Examples/Advanced/Polling)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
+| [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
+| [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | `.storage`           |
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
