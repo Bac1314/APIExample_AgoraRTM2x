@@ -156,7 +156,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Bac Huang  - bac@boldbright.studio
 
-Project Link: [https://github.com/Bac1314/APIExample_RTM2x](https://github.com/Bac1314/APIExample_RTM2x)
+Project Link: [https://github.com/Bac1314/APIExample_AgoraRTM2x](https://github.com/Bac1314/APIExample_AgoraRTM2x)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

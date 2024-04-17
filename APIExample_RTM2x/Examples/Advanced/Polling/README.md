@@ -13,11 +13,11 @@
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This sample showcases how to create a real-time polling solution with Agora RTM SDK.  
+This sample showcases how to create a real-time polling solution with Agora RTM SDK.  The user will have the define their own question and options.
 
 | Subscribe features | Description |
 | --- | --- |
-| `.message` | Callback to receive all messages of a subscribed channel |
+| `.message` | Callback to receive all messages of a subscribed channel (poll question and poll options) |
 | `.presence` | Callback to get the users states (e.g join/leave/userstates) of a channel |
 
 
@@ -187,7 +187,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Bac Huang  - bac@boldbright.studio
 
-Project Link: [https://github.com/Bac1314/APIExample_RTM2x](https://github.com/Bac1314/APIExample_RTM2x)
+Project Link: [https://github.com/Bac1314/APIExample_AgoraRTM2x](https://github.com/Bac1314/APIExample_AgoraRTM2x)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

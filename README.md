@@ -1,24 +1,13 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Bac1314/APIExample_RTM2x">
+  <a href="https://github.com/Bac1314/APIExample_AgoraRTM2x">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-<h3 align="center">APIExample for Agora Real-time Messaging (RTM) SDK</h3>
+<h3 align="center">Agora Real-time Messaging (RTM) SDK APIExample</h3>
 
   <p align="center">
     <a href="https://docs.agora.io/en/signaling/reference/api?platform=ios"><strong>Explore the API Reference »</strong></a>
@@ -108,32 +97,14 @@ This project showcases how to use Agora RTM SDK to build real-time interactive s
 
 The list of samples and what feature is used
 
-<!-- 
-| **Samples**      | **Description**                                                                                                                                                                                                            | RTM ChannelType | RTM Features      |                                                               |
-|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|-------------------|---------------------------------------------------------------|
-| ChannelMessaging | Build a simple chat system using pub/sub model.                                                                                                                                                                            | Message         | message, presence | (APIExample_RTM2x/Examples/Basic/ChannelMessaging/)           |
-| P2PMessaging     | Peer-to-peer messaging where a user can directly send a message to another user                                                                                                                                            | User            | /                 | (APIExample_RTM2x/Examples/Basic/P2PMessaging/)               |
-| Polling          | Publish poll question and poll options through the Message Channel. The customType property is ued to differentiate whether message is question or answer. The 'Presence' feature is use to get the users in the channel.  | Message         | message, presence | (APIExample_RTM2x/APIExample_RTM2x/Examples/Advanced/Polling) |
-| QuizGame         | Publish quiz question and answers through Message Channel. The 'Presence' feature is used to temporary store user score and get the users in the channel                                                                   | Message         | message, presence | (APIExample_RTM2x/Examples/Advanced/QuizGame)                 |
-| Bidding          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. The data will persist even if users leave the channel                                                                 | Message         | storage           | (APIExample_RTM2x/APIExample_RTM2x/Examples/Advanced/Bidding) |
- -->
-
- <!-- | **Samples**      | **Description**                                                                                      | RTM ChannelType | RTM Features      |                                                               |
-|------------------|------------------------------------------------------------------------------------------------------|-----------------|-------------------|---------------------------------------------------------------|
-| ChannelMessaging | Build a simple chat system using pub/sub model.                                                      | Message         | message, presence | (APIExample_RTM2x/Examples/Basic/ChannelMessaging/)           |
-| P2PMessaging     | Peer-to-peer messaging where a user can directly send a message to another user                      | User            | /                 | (APIExample_RTM2x/Examples/Basic/P2PMessaging/)               |
-| Polling          | Publish poll question and poll options through the Message Channel.                                  | Message         | message, presence | (APIExample_RTM2x/APIExample_RTM2x/Examples/Advanced/Polling) |
-| QuizGame         | Publish quiz question and answers through Message Channel.                                           | Message         | message, presence | (APIExample_RTM2x/Examples/Advanced/QuizGame)                 |
-| Bidding          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message         | storage           | (APIExample_RTM2x/APIExample_RTM2x/Examples/Advanced/Bidding) | -->
-
 
 | **Samples**      | **Description**                                                                                      | **RTM ChannelType** | **RTM Features**  |
 |------------------|------------------------------------------------------------------------------------------------------|---------------------|-------------------|
-| ChannelMessaging | Build a simple chat system using pub/sub model.                                                      | Message             | message, presence |
-| P2PMessaging     | Peer-to-peer messaging where a user can directly send a message to another user                      | User                | /                 |
-| Polling          | Publish poll question and poll options through the Message Channel.                                  | Message             | message, presence |
-| QuizGame         | Publish quiz question and answers through Message Channel.                                           | Message             | message, presence |
-| Bidding          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | storage           |
+| ChannelMessaging | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
+| P2PMessaging     | Peer-to-peer messaging where a user can directly send a message to another user                      | `.User`                | /                 |
+| Polling          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
+| QuizGame         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
+| Bidding          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | `.storage`           |
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -190,7 +161,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Bac Huang  - bac@boldbright.studio
 
-Project Link: [https://github.com/Bac1314/APIExample_RTM2x](https://github.com/Bac1314/APIExample_RTM2x)
+Project Link: [https://github.com/Bac1314/APIExample_AgoraRTM2x](https://github.com/Bac1314/APIExample_AgoraRTM2x)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
