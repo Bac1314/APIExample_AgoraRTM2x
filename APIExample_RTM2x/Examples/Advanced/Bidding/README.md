@@ -50,7 +50,7 @@ if let (response, error) = await agoraRtmKit?.login("user_token") {
 ```swift
 // Define the subscription feature
 let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
-subOptions.features =  [.message, .presence]
+subOptions.features =  [.storage]
 
 // Subscribe to a channel  
 if let (response, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){

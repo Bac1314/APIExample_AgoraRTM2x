@@ -9,7 +9,6 @@ import SwiftUI
 
 
 struct LoginRTMView: View {
-    
     //    @EnvironmentObject var agoraRTMVM: AgoraRTMViewModel
     @Binding var isLoading: Bool
     @Binding var userID: String

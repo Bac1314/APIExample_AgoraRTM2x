@@ -124,6 +124,18 @@ The list of samples and what feature is used
 ## Roadmap
 
 - Share images and files using third-party storage such as Amazon S3
+- 1-to-1 video call using RTC + RTM + Apple CallKit
+- Real-time location sharing
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- ROADMAP -->
+## Potential Samples
+
+- Online collaborative tools
+- Interactive games
+- Real-time IoT event sharing
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

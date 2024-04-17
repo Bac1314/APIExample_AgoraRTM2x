@@ -19,6 +19,8 @@
 		292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB212BBAAB7600505913 /* PollItemView.swift */; };
 		292CDB242BBBA55100505913 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB232BBBA55100505913 /* TestingView.swift */; };
 		292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB252BBC10C700505913 /* CustomAlert.swift */; };
+		292F55C62BCFB8DC0044EFAF /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */; };
+		292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C72BCFC0B50044EFAF /* LocationView.swift */; };
 		29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29307D262BBD5819005BB4CC /* PollCreationView.swift */; };
 		29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F782BC3E94700299041 /* QuizViewModel.swift */; };
 		29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */; };
@@ -68,6 +70,8 @@
 		292CDB212BBAAB7600505913 /* PollItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollItemView.swift; sourceTree = "<group>"; };
 		292CDB232BBBA55100505913 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		292CDB252BBC10C700505913 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		292F55C72BCFC0B50044EFAF /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		29307D262BBD5819005BB4CC /* PollCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationView.swift; sourceTree = "<group>"; };
 		29538F782BC3E94700299041 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuiz.swift; sourceTree = "<group>"; };
@@ -136,6 +140,15 @@
 				29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */,
 			);
 			path = MyAssets;
+			sourceTree = "<group>";
+		};
+		292F55C42BCFB6780044EFAF /* LocationSharing */ = {
+			isa = PBXGroup;
+			children = (
+				292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */,
+				292F55C72BCFC0B50044EFAF /* LocationView.swift */,
+			);
+			path = LocationSharing;
 			sourceTree = "<group>";
 		};
 		29538F812BC538C500299041 /* MockData */ = {
@@ -311,6 +324,7 @@
 				296CC1372BABE328006E14F5 /* Polling */,
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
+				292F55C42BCFB6780044EFAF /* LocationSharing */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -445,6 +459,7 @@
 			files = (
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
+				292F55C62BCFB8DC0044EFAF /* LocationViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
@@ -459,6 +474,7 @@
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
+				292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
@@ -617,6 +633,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -648,6 +665,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

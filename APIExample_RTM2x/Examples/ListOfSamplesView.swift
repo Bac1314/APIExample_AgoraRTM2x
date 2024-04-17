@@ -21,7 +21,8 @@ struct ListOfSamplesView: View {
     let advancedSamples: [ServiceHandler] =  [
         ("Polling", ("chart.pie", AnyView(PollingView(serviceIcon:"chart.pie")))),
         ("Quiz Game", ("checklist", AnyView(QuizGameView(serviceIcon:"checklist")))),
-        ("Live Bidding", ("dollarsign.circle", AnyView(BiddingView(serviceIcon:"dollarsign.circle"))))
+        ("Live Bidding", ("dollarsign.circle", AnyView(BiddingView(serviceIcon:"dollarsign.circle")))),
+        ("Location Sharing", ("location.viewfinder", AnyView(LocationView(serviceIcon:"location.viewfinder"))))
     ]
     
     
