@@ -112,7 +112,7 @@ The list of samples and what feature is used
 | **Samples**      | **Description**                                                                                      | **RTM ChannelType** | **RTM Features**  |
 |------------------|------------------------------------------------------------------------------------------------------|---------------------|-------------------|
 | [ChannelMessaging](/APIExample_RTM2x/Examples/Basic/ChannelMessaging) | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
-| [P2PMessaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging)     | Peer-to-peer messaging where a user can directly send a message to another user                      | `.User`                | /                 |
+| [P2PMessaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging)     | Peer-to-peer messaging where a user can directly send a message to another user                      | User               | /                 |
 | [Polling](APIExample_RTM2x/Examples/Advanced/Polling)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
 | [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
 | [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | `.storage`           |
