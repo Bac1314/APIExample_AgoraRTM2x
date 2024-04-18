@@ -54,20 +54,22 @@ struct LocationView: View {
             if agoraRTMVM.isLoggedIn {
                 Map {
                     
-                    // Display a list of users locations
-                    ForEach(agoraRTMVM.users.sorted(by: {$0.userId > $1.userId}), id:\.userId) { user in
-                        Annotation(user.userId, coordinate: CLLocationCoordinate2D(latitude: user.userLocation.center.latitude, longitude: user.userLocation.center.longitude)) {
-                            Image(systemName: "person")
+//                    withAnimation {
+//                        Marker(agoraRTMVM.userID, coordinate: CLLocationCoordinate2D(latitude: agoraRTMVM.localRegion.center.latitude, longitude: agoraRTMVM.localRegion.center.longitude))
+                        
+                        
+                        Annotation(agoraRTMVM.userID, coordinate: CLLocationCoordinate2D(latitude: agoraRTMVM.localRegion.center.latitude, longitude: agoraRTMVM.localRegion.center.longitude)) {
+                            Image(systemName: "star.circle")
                                 .resizable()
-                                .padding(12)
-                                .foregroundStyle( user.userId == agoraRTMVM.userID ? .white : .blue)
-                                .frame(width: 50, height: 50)
-                                .background(user.userId == agoraRTMVM.userID ? .red : .white)
+                                .foregroundStyle(.red)
+                                .frame(width: 44, height: 44)
+                                .background(.white)
                                 .clipShape(.circle)
                         }
-                    }
-                    
+//                    }
+
                 }
+                
                 
             }
             
@@ -80,7 +82,6 @@ struct LocationView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Location" : "Login")
-        .toolbarBackground(.clear, for: .automatic)
         .toolbar{
             // Back button
             ToolbarItem(placement: .topBarLeading) {
@@ -95,7 +96,7 @@ struct LocationView: View {
                 }
             }
         }
-        
+    
     }
 }
 
