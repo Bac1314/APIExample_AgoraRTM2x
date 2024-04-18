@@ -19,8 +19,6 @@
 		292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB212BBAAB7600505913 /* PollItemView.swift */; };
 		292CDB242BBBA55100505913 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB232BBBA55100505913 /* TestingView.swift */; };
 		292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB252BBC10C700505913 /* CustomAlert.swift */; };
-		292F55C62BCFB8DC0044EFAF /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */; };
-		292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C72BCFC0B50044EFAF /* LocationView.swift */; };
 		29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29307D262BBD5819005BB4CC /* PollCreationView.swift */; };
 		29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F782BC3E94700299041 /* QuizViewModel.swift */; };
 		29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */; };
@@ -53,6 +51,10 @@
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
 		29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */; };
 		29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */; };
+		29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFAC9D2BD0F36400088381 /* Personalize.swift */; };
+		29AFACA32BD0F37700088381 /* LocationUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFAC9F2BD0F37700088381 /* LocationUser.swift */; };
+		29AFACA42BD0F37700088381 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA02BD0F37700088381 /* LocationView.swift */; };
+		29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA12BD0F37700088381 /* LocationViewModel.swift */; };
 		7AA7A4164C9BEE92EF5180BB /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +72,6 @@
 		292CDB212BBAAB7600505913 /* PollItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollItemView.swift; sourceTree = "<group>"; };
 		292CDB232BBBA55100505913 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		292CDB252BBC10C700505913 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
-		292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
-		292F55C72BCFC0B50044EFAF /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		29307D262BBD5819005BB4CC /* PollCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationView.swift; sourceTree = "<group>"; };
 		29538F782BC3E94700299041 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuiz.swift; sourceTree = "<group>"; };
@@ -105,6 +105,10 @@
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
 		29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuctionItem.swift; sourceTree = "<group>"; };
 		29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionItemView.swift; sourceTree = "<group>"; };
+		29AFAC9D2BD0F36400088381 /* Personalize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Personalize.swift; sourceTree = "<group>"; };
+		29AFAC9F2BD0F37700088381 /* LocationUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUser.swift; sourceTree = "<group>"; };
+		29AFACA02BD0F37700088381 /* LocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		29AFACA12BD0F37700088381 /* LocationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.release.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
 		E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,15 +144,6 @@
 				29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */,
 			);
 			path = MyAssets;
-			sourceTree = "<group>";
-		};
-		292F55C42BCFB6780044EFAF /* LocationSharing */ = {
-			isa = PBXGroup;
-			children = (
-				292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */,
-				292F55C72BCFC0B50044EFAF /* LocationView.swift */,
-			);
-			path = LocationSharing;
 			sourceTree = "<group>";
 		};
 		29538F812BC538C500299041 /* MockData */ = {
@@ -259,6 +254,7 @@
 			children = (
 				29024AAE2BCE866100E871B2 /* Configurations.swift */,
 				297F7FF32BA420E20057200A /* APIExample_RTM2xApp.swift */,
+				29AFAC9D2BD0F36400088381 /* Personalize.swift */,
 				297F80022BA43A7A0057200A /* Examples */,
 				297F80012BA43A710057200A /* Models */,
 				296CC1232BA99690006E14F5 /* SubViews */,
@@ -324,9 +320,19 @@
 				296CC1372BABE328006E14F5 /* Polling */,
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
-				292F55C42BCFB6780044EFAF /* LocationSharing */,
+				29AFACA22BD0F37700088381 /* LocationSharing */,
 			);
 			path = Advanced;
+			sourceTree = "<group>";
+		};
+		29AFACA22BD0F37700088381 /* LocationSharing */ = {
+			isa = PBXGroup;
+			children = (
+				29AFAC9F2BD0F37700088381 /* LocationUser.swift */,
+				29AFACA02BD0F37700088381 /* LocationView.swift */,
+				29AFACA12BD0F37700088381 /* LocationViewModel.swift */,
+			);
+			path = LocationSharing;
 			sourceTree = "<group>";
 		};
 		8A685BF4286D1F5002CE1D3A /* Frameworks */ = {
@@ -459,7 +465,6 @@
 			files = (
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
-				292F55C62BCFB8DC0044EFAF /* LocationViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
@@ -467,20 +472,23 @@
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
+				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
+				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
-				292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
+				29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */,
 				296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */,
+				29AFACA32BD0F37700088381 /* LocationUser.swift in Sources */,
 				297F80162BA4540D0057200A /* ChannelMessagingView.swift in Sources */,
 				29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */,
 				296CC1332BABE0E7006E14F5 /* P2PMessagingViewModel.swift in Sources */,
