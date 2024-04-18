@@ -55,6 +55,7 @@
 		29AFACA32BD0F37700088381 /* LocationUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFAC9F2BD0F37700088381 /* LocationUser.swift */; };
 		29AFACA42BD0F37700088381 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA02BD0F37700088381 /* LocationView.swift */; };
 		29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA12BD0F37700088381 /* LocationViewModel.swift */; };
+		29AFACA72BD0FB0200088381 /* Arch_LocationSharing.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */; };
 		7AA7A4164C9BEE92EF5180BB /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,7 @@
 		29AFAC9F2BD0F37700088381 /* LocationUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUser.swift; sourceTree = "<group>"; };
 		29AFACA02BD0F37700088381 /* LocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		29AFACA12BD0F37700088381 /* LocationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_LocationSharing.png; sourceTree = "<group>"; };
 		BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.release.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
 		E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -142,6 +144,7 @@
 				29024AA22BCE1F0500E871B2 /* Arch_P2P.png */,
 				29024AA32BCE1F0500E871B2 /* Arch_Polling.png */,
 				29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */,
+				29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */,
 			);
 			path = MyAssets;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				297F7FF82BA420E40057200A /* Assets.xcassets in Resources */,
 				29024AA92BCE1F0600E871B2 /* Arch_Livebidding.png in Resources */,
 				29024AA72BCE1F0600E871B2 /* Arch_P2P.png in Resources */,
+				29AFACA72BD0FB0200088381 /* Arch_LocationSharing.png in Resources */,
 				29024AAB2BCE1F0600E871B2 /* Arch_Quiz.png in Resources */,
 				29538F832BC538E700299041 /* quizmockdata.json in Resources */,
 			);

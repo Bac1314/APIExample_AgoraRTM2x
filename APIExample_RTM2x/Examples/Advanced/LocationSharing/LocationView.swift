@@ -79,8 +79,7 @@ struct LocationView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Location" : "Login")
-        .toolbarBackground(.clear, for: .automatic)
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Real-time Location" : "Login")
         .toolbar{
             // Back button
             ToolbarItem(placement: .topBarLeading) {

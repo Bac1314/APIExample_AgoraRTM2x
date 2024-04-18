@@ -115,7 +115,8 @@ The list of samples and what feature is used
 | [P2PMessaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging)     | Peer-to-peer messaging where a user can directly send a message to another user                      | User               | /                 |
 | [Polling](APIExample_RTM2x/Examples/Advanced/Polling)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
 | [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
-| [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the 'Storage' channel metadata feature. | Message             | `.storage`           |
+| [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
+| [Location SHaring](APIExample_RTM2x/Examples/Advanced/LocationSharing)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -125,7 +126,6 @@ The list of samples and what feature is used
 
 - Share images and files using third-party storage such as Amazon S3
 - 1-to-1 video call using RTC + RTM + Apple CallKit
-- Real-time location sharing
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -146,6 +146,7 @@ The list of samples and what feature is used
 - API Reference (https://docs.agora.io/en/signaling/reference/api?platform=ios)
 - Pricing (https://docs.agora.io/en/signaling/overview/pricing?platform=ios)
 - API Limitations (https://docs.agora.io/en/signaling/reference/limitations?platform=android)
+- Security/Compliance (https://docs.agora.io/en/signaling/reference/security?platform=android) 
 
 
 
