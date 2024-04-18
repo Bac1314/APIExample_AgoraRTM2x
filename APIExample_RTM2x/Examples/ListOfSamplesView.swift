@@ -61,13 +61,27 @@ struct ListOfSamplesView: View {
                     }
                 }
             }
-            
-//            Text("Logged in as \(userName)")
-//                .padding(16)
-//                .foregroundStyle(Color.gray)
+            .toolbar{
+                // Test Button
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action : {
+                        Task {
+                            do{
+                                let token = try await Personalize().customGenerateToken()
+                                print("Bac's Internal Text token = \(token)")
+                            }catch {
+                                print("Bac's Internal Text Error \(error)")
+                            }
+                        }
+                    }){
+                        Text("Internal Test")
+                    }
+                }
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("API Examples")
+
 
     }
 }

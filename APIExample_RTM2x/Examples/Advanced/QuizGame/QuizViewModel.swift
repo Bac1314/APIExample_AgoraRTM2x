@@ -227,7 +227,7 @@ extension QuizViewModel: AgoraRtmClientDelegate {
             
             if let publisher = event.publisher {
                 Task {
-                    let userstates = await getUserStateItems(channelName: mainChannel, userID: event.publisher!) // It doesn't get the states of the user when user joins channel. Also presence doesn't disappear right away after user leaves the channel
+                    let userstates = await getUserStateItems(channelName: mainChannel, userID: event.publisher!) //  channel. Also presence doesn't disappear right away after user leaves the channel
                     let newUser : QuizUser = QuizUser(userId: publisher, userScore: userstates.first(where: {$0.key == scoreKey})?.value ?? "0")
                     await MainActor.run(body: {
                         users.append(newUser)

@@ -21,6 +21,8 @@
 		292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB252BBC10C700505913 /* CustomAlert.swift */; };
 		292F55C62BCFB8DC0044EFAF /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */; };
 		292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C72BCFC0B50044EFAF /* LocationView.swift */; };
+		292F55CA2BCFDC4A0044EFAF /* LocationUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55C92BCFDC4A0044EFAF /* LocationUser.swift */; };
+		292F55CC2BD0B70D0044EFAF /* Personalize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F55CB2BD0B70D0044EFAF /* Personalize.swift */; };
 		29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29307D262BBD5819005BB4CC /* PollCreationView.swift */; };
 		29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F782BC3E94700299041 /* QuizViewModel.swift */; };
 		29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */; };
@@ -72,6 +74,8 @@
 		292CDB252BBC10C700505913 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		292F55C72BCFC0B50044EFAF /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		292F55C92BCFDC4A0044EFAF /* LocationUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUser.swift; sourceTree = "<group>"; };
+		292F55CB2BD0B70D0044EFAF /* Personalize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Personalize.swift; sourceTree = "<group>"; };
 		29307D262BBD5819005BB4CC /* PollCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationView.swift; sourceTree = "<group>"; };
 		29538F782BC3E94700299041 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuiz.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 			children = (
 				292F55C52BCFB8DC0044EFAF /* LocationViewModel.swift */,
 				292F55C72BCFC0B50044EFAF /* LocationView.swift */,
+				292F55C92BCFDC4A0044EFAF /* LocationUser.swift */,
 			);
 			path = LocationSharing;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				29024AAE2BCE866100E871B2 /* Configurations.swift */,
+				292F55CB2BD0B70D0044EFAF /* Personalize.swift */,
 				297F7FF32BA420E20057200A /* APIExample_RTM2xApp.swift */,
 				297F80022BA43A7A0057200A /* Examples */,
 				297F80012BA43A710057200A /* Models */,
@@ -465,6 +471,7 @@
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
+				292F55CC2BD0B70D0044EFAF /* Personalize.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
@@ -477,6 +484,7 @@
 				292F55C82BCFC0B50044EFAF /* LocationView.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
+				292F55CA2BCFDC4A0044EFAF /* LocationUser.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
