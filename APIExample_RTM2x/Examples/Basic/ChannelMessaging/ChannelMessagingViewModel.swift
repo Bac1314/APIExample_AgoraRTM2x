@@ -13,7 +13,7 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
     
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
-    @AppStorage("userToken") var token: String = ""
+    @Published var token: String = ""
     @Published var customRTMChannelList: [CustomRTMChannel] = [] // Show list of subscribed channels (list of messages, last message, userList)
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
@@ -25,17 +25,15 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
                 throw customError.emptyUIDLoginError
             }
             
-            if token.isEmpty {
-                throw customTokenError.tokenEmptyError
-            }
-            
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
-            if let (response, error) = await agoraRtmKit?.login(token) {
+            // Login to RTM server
+            // Use AppID to login if app certificate is NOT enabled for project
+            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{

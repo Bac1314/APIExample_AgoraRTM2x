@@ -116,7 +116,7 @@ The list of samples and what feature is used
 | [Polling](APIExample_RTM2x/Examples/Advanced/Polling)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
 | [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
 | [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
-| [Location SHaring](APIExample_RTM2x/Examples/Advanced/LocationSharing)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
+| [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 

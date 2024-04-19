@@ -6,15 +6,226 @@
 //
 
 import SwiftUI
+import AgoraRtmKit
 
 struct StreamMessagingView: View {
-    var serviceIcon: String = "messaging"
+    @StateObject var agoraRTMVM: StreamMessagingViewModel = StreamMessagingViewModel()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
+    @FocusState private var keyboardIsFocused: Bool
+    @State var isLoading: Bool = false
+    
+    // show alert
+    @State var showAlert: Bool = false
+    @State var alertMessage: String = "Error"
+    @State var presentAlertSubscribe = false
+    @State var newTopic = ""
+    
+    let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+    ]
+
+    var serviceIcon: String = "message"
 
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            // MARK: LOGIN VIEW
+            if !agoraRTMVM.isLoggedIn {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, isStreamChannel: true, streamToken: $agoraRTMVM.tokenRTC) {
+                    Task {
+                        do{
+                            try await agoraRTMVM.loginRTM()
+                            await agoraRTMVM.createAndJoinStreamChannel()
+                            await agoraRTMVM.preJoinSubTopics()
+                        }catch {
+                            if let agoraError = error as? AgoraRtmErrorInfo {
+                                alertMessage = "\(agoraError.code) : \(agoraError.reason)"
+                            }else{
+                                alertMessage = error.localizedDescription
+                            }
+                            withAnimation {
+                                isLoading = false
+                                showAlert.toggle()
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // MARK: Display list of subscribed channels
+            if agoraRTMVM.isLoggedIn {
+                VStack {
+                    Text("Stream Channel:  \(agoraRTMVM.mainChannel)")
+                        .padding()
+                    
+                    LazyVGrid(columns: columns, spacing: 16) {
+                  
+                        ForEach(agoraRTMVM.customStreamTopicList, id: \.id) { topicChannel in
+                            NavigationLink(destination: StreamMessagingDetailedView(selectedTopic: topicChannel.topic).environmentObject(agoraRTMVM)
+                            ){
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(topicChannel.topic)
+                                            .font(.headline)
+                                        Text(topicChannel.lastMessage)
+                                            .font(.callout)
+                                            .foregroundStyle(Color.secondary)
+                                            .lineLimit(1)
+                                    }
+                                    Spacer()
+                                }
+                                .padding(24)
+                                .background(Color.gray.opacity(0.2))
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
+                                
+                            }
+                        }
+                    }
+                    .padding()
+
+                    Spacer()
+                
+                    // Displayed Logged in Username
+                    Text("Logged in as \(agoraRTMVM.userID)")
+                }
+                .onChange(of: agoraRTMVM.isLoggedIn) { oldValue, newValue in
+                    if newValue {
+                        isLoading = false
+                        
+                    }
+                }
+                .alert("Subscribe", isPresented: $presentAlertSubscribe, actions: {
+                    TextField("Enter new topic", text: $newTopic)
+                        .focused($keyboardIsFocused)
+                    
+                    Button("Subscribe", action: {
+                        Task{
+                            if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
+                                return
+                            }
+                            let result = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
+                            newTopic = "" //Reset
+                            
+                            keyboardIsFocused = false // dismiss keyboard
+
+                        }
+                    })
+                    
+                    Button("Cancel", role: .cancel, action: {})
+                }, message: {
+                    Text("Subscribe to another channel")
+                })
+            }
+            
+            // MARK: SHOW CUSTOM ALERT
+            if showAlert {
+                CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
+        .toolbar{
+            if agoraRTMVM.isLoggedIn {
+                ToolbarItem(placement: .topBarTrailing){
+                    Button(action: {
+                        withAnimation {
+                            presentAlertSubscribe.toggle()
+                        }
+                    }, label: {
+                        Text("Subscribe")
+                    })
+                }
+            }
+            // Back button
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action : {
+                    agoraRTMVM.logoutRTM()
+                    self.mode.wrappedValue.dismiss()
+                }){
+                    HStack{
+                        Image(systemName: "arrow.left")
+                        Text(agoraRTMVM.isLoggedIn ? "Logout" : "Back")
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
     StreamMessagingView()
 }
+
+// MARK: TO SHOW THE LIST OF MESSAGES OF SPECIFIED CHANNEL
+struct StreamMessagingDetailedView: View {
+    @EnvironmentObject var agoraRTMVM: StreamMessagingViewModel
+    @FocusState private var keyboardIsFocused: Bool
+    @State var selectedTopic: String = ""
+    @State var message: String = ""
+
+    
+    var body: some View {
+        // List of messages
+        VStack {
+            // MARK: DISPLAY LIST OF MESSAGES
+            ScrollViewReader {proxy in
+                ScrollView{
+                    ForEach(agoraRTMVM.customStreamTopicList.first(where: {$0.topic == selectedTopic})?.messages ?? [], id: \.self) { message in
+                        if message.publisher == agoraRTMVM.userID {
+                            MessageItemLocalView(from: "\(message.publisher) \(message.channelTopic)", message: "\(message.message.stringData ?? "")")
+                                .listRowSeparator(.hidden)
+                                .listItemTint(.clear)
+                        }else{
+                            MessageItemRemoteView(from: "\(message.publisher) \(message.channelTopic)", message: "\(message.message.stringData ?? "")")
+                                .listRowSeparator(.hidden)
+                                .listItemTint(.clear)
+                        }
+                    }
+                }
+                .onChange(of: agoraRTMVM.customStreamTopicList.first(where: {$0.topic == selectedTopic})?.messages.count ?? 0) { oldValue, newValue in
+                    withAnimation {
+                        if newValue != 0 {
+                            proxy.scrollTo(newValue-1)
+                        }
+                    }
+                }
+            }
+            
+            // MARK: SEND MESSAGE VIEW
+            HStack{
+                TextField("Enter Message", text: $message)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($keyboardIsFocused)
+                
+                Button(action: {
+                    Task{
+                        let result = await agoraRTMVM.publishToTopic(topic: selectedTopic, message: message)
+                        if result {
+                            message = ""
+                        }
+                        
+                        keyboardIsFocused = false // dismiss keyboard
+
+                    }
+                }, label: {
+                    Text("Publish")
+                })
+                .buttonStyle(.bordered)
+                .disabled(selectedTopic.isEmpty || message.isEmpty)
+            }
+        }
+        .padding(.horizontal)
+        .navigationTitle("\(selectedTopic)")
+    
+    }
+    
+}
+
+
+#Preview {
+    StreamMessagingDetailedView()
+        .environmentObject(StreamMessagingViewModel())
+}
+

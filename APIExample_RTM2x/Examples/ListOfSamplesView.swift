@@ -26,19 +26,27 @@ struct ListOfSamplesView: View {
     ]
     
     
+//    // Rotating logo
+//    @State var degreesRotating = 0.0
+    
     var body: some View {
         NavigationStack {
             VStack {
 //                Image(systemName: "bolt.brakesignal")
-//                    .frame(width: 80, height: 80)
-//                    .aspectRatio(1.0, contentMode: .fill)
-//                    .font(.system(size: 60))
-//                    .padding()
-//                    .foregroundStyle(Color.accentColor.gradient)
-////                    .background(Color(UIColor.secondarySystemGroupedBackground))
+//                    .font(.system(size: 50))
+//                    .padding(.top, 20)
+//                    .foregroundStyle(LinearGradient(colors: [Color.accentColor.opacity(0.3), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
+//                    .shadow(radius: 5)
+//                    .rotationEffect(.degrees(degreesRotating))
+//                    .onAppear {
+//                        withAnimation(.linear(duration: 1)
+//                            .speed(0.1).repeatForever(autoreverses: false)) {
+//                                degreesRotating = 360.0
+//                            }
+//                    }
+                
                 
                 Form{
-                    
                     // MARK: BASIC SAMPLES
                     Section(header: Text("Basic").font(.title3)) {
                         List(basicSamples, id:\.0){ sample in
@@ -61,29 +69,32 @@ struct ListOfSamplesView: View {
                     }
                 }
             }
-            .toolbar{
-                // Internal testing button
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action : {
-                        Task {
-                            let token = try? await Personalize().customGenerateToken()
-                            print("Bac's internal token \(token ?? "")")
-                        }
-                    }){
-                        HStack{
-                            Image(systemName: "wrench")
-                            Text("Internal Testing")
-                        }
-                    }
-                }
-            }
+            .background(Color(UIColor.systemGroupedBackground))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("RTM API Examples")
+
+//            .toolbar{
+//                // Internal testing button
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button(action : {
+//                        Task {
+//                            let token = try? await Personalize().customGenerateToken()
+//                            print("Bac's internal token \(token ?? "")")
+//                        }
+//                    }){
+//                        HStack{
+//                            Image(systemName: "wrench")
+//                            Text("Internal Testing")
+//                        }
+//                    }
+//                }
+//                
+//            }
             
 //            Text("Logged in as \(userName)")
 //                .padding(16)
 //                .foregroundStyle(Color.gray)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("API Examples")
 
     }
 }

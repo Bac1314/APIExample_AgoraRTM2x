@@ -13,7 +13,7 @@ class QuizViewModel: NSObject, ObservableObject {
     
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
-    @AppStorage("userToken") var token: String = ""
+    @Published var token: String = ""
     @Published var currentQuiz: CustomQuiz = CustomQuiz(question: "(Example) I like pandas", options: ["Yes", "No"], answer: "Yes", sender: "panda_lover_1992", totalUsers: 10, totalSubmission: 9, timestamp: Int(Date().addingTimeInterval(-15).timeIntervalSince1970))
     @Published var users: [QuizUser] = []
     @Published var isLoggedIn: Bool = false
@@ -38,17 +38,15 @@ class QuizViewModel: NSObject, ObservableObject {
                 throw customError.emptyUIDLoginError
             }
             
-            if token.isEmpty {
-                throw customTokenError.tokenEmptyError
-            }
-            
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
-            if let (response, error) = await agoraRtmKit?.login(token) {
+            // Login to RTM server
+            // Use AppID to login if app certificate is NOT enabled for project
+            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{

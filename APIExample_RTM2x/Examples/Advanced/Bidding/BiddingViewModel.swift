@@ -14,7 +14,7 @@ class BiddingViewModel: NSObject, ObservableObject {
     
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
-    @AppStorage("userToken") var token: String = ""
+    @Published var token: String = ""
     @Published var isLoggedIn: Bool = false
     @Published var currentAuctionItem: CustomAuctionItem? = nil
     //= CustomAuctionItem(majorRevision: 123456, auctionName: "Pokemon Card - Mew Two", startingPrice: 100, currentBid: 100, highestBidder: "Bac", lastUpdatedTimeStamp: Int(Date().addingTimeInterval(-15).timeIntervalSince1970))
@@ -31,17 +31,15 @@ class BiddingViewModel: NSObject, ObservableObject {
                 throw customError.emptyUIDLoginError
             }
             
-            if token.isEmpty {
-                throw customTokenError.tokenEmptyError
-            }
-            
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
-            if let (response, error) = await agoraRtmKit?.login(token) {
+            // Login to RTM server
+            // Use AppID to login if app certificate is NOT enabled for project
+            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{
@@ -179,8 +177,12 @@ class BiddingViewModel: NSObject, ObservableObject {
         
         if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil) {
             if error == nil {
+                print("Bac's publishNewAuction success")
                 return true
                 //return await fetchUpdateAuction()
+            }else  {
+                print("Bac's publishNewAuction failed error \(error?.code ?? 0) \(error?.reason ?? "")")
+
             }
         }
         

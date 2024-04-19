@@ -33,8 +33,9 @@ var agoraRtmKit: AgoraRtmClientKit = try AgoraRtmClientKit(config, delegate: sel
 ```
 
 **Login to Agora Server**
+
 ```swift
-// Login to Agora Server
+// Login to Agora Server 
 if let (response, error) = await agoraRtmKit?.login("user_token") {
     if error == nil{
        // Login successful

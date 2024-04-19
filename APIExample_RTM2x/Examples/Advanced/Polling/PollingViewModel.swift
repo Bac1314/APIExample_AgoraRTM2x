@@ -14,7 +14,7 @@ class PollingViewModel: NSObject, ObservableObject {
     
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
-    @AppStorage("userToken") var token: String = ""
+    @Published var token: String = ""
     @Published var currentPoll: CustomPoll = CustomPoll(question: "(Example) Which one do you prefer?", options: ["MacOS":10, "Windows OS":5, "Linux":9], sender: "User1", totalUsers: 30, totalSubmission: 24, timestamp: Int(Date().addingTimeInterval(-15).timeIntervalSince1970))
     @Published var users: [AgoraRtmUserState] = []
     @Published var isLoggedIn: Bool = false
@@ -33,17 +33,15 @@ class PollingViewModel: NSObject, ObservableObject {
                 throw customError.emptyUIDLoginError
             }
             
-            if token.isEmpty {
-                throw customTokenError.tokenEmptyError
-            }
-            
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
-            if let (response, error) = await agoraRtmKit?.login(token) {
+            // Login to RTM server
+            // Use AppID to login if app certificate is NOT enabled for project
+            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{

@@ -12,8 +12,6 @@ struct ChannelMessagingView: View {
     @StateObject var agoraRTMVM: ChannelMessagingViewModel = ChannelMessagingViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @FocusState private var keyboardIsFocused: Bool
-    @State var newChannelName = ""
-    @State var presentAlertSubscribe = false
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
@@ -21,12 +19,14 @@ struct ChannelMessagingView: View {
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
+    @State var presentAlertSubscribe = false
+    @State var newChannelName = ""
         
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon) {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
@@ -57,6 +57,7 @@ struct ChannelMessagingView: View {
                                     Text(channel.lastMessage)
                                         .font(.callout)
                                         .foregroundStyle(Color.secondary)
+                                        .lineLimit(1)
                                 }
                                 
                                 Spacer()
@@ -133,7 +134,6 @@ struct ChannelMessagingView: View {
                     })
                 }
             }
-            
             // Back button
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
@@ -185,21 +185,6 @@ struct ChannelMessagingDetailedView: View {
                         }
                     }
                 }
-//                .onChange(of: agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.listOfUsers) { oldValue, newValue in
-//                    withAnimation {
-//                        if newValue.count > oldValue.count {
-//                            // new user joined
-//                            
-//                            let newUserList = newValue.filter { oldValue }
-//                            
-//                        }else if newValue.count < oldValue.count{
-//                            // user left
-//                            let newUserList = oldValue.filter { newValue }
-//
-//                            
-//                        }
-//                    }
-//                }
             }
             
             // MARK: SEND MESSAGE VIEW

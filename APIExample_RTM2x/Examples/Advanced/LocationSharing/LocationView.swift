@@ -30,7 +30,7 @@ struct LocationView: View {
             
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon)  {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant(""))  {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
@@ -79,7 +79,7 @@ struct LocationView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Real-time Location" : "Login")
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Real-Time Location" : "Login")
         .toolbar{
             // Back button
             ToolbarItem(placement: .topBarLeading) {
