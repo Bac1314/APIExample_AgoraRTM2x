@@ -54,12 +54,11 @@ This project showcases how to use Agora RTM SDK to build real-time interactive s
 
 Here is a video 
 
-<!-- [![YouTube Video](https://youtu.be/wULShl2kK2Y/0.jpg)](https://www.youtube.com/watch?v=wULShl2kK2Y) -->
+<!-- [![YouTube Video](https://img.youtube.com/vi/5ZqHV-nf7WY/0.jpg)](https://www.youtube.com/watch?v=5ZqHV-nf7WY) -->
 
 <a href="https://www.youtube.com/watch?v=wULShl2kK2Y">
-  <img src="https://www.youtube.com/watch?v=wULShl2kK2Y/0.jpg" alt="YouTube Video" style="border-radius: 16px;">
+  <img src="https://img.youtube.com/vi/wULShl2kK2Y/0.jpg" alt="YouTube Video" style="border-radius: 16px;">
 </a>
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
