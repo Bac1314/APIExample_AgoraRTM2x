@@ -53,7 +53,6 @@ struct LocationView: View {
             // MARK: Main View
             if agoraRTMVM.isLoggedIn {
                 Map {
-                    
                     // Display a list of users locations
                     ForEach(agoraRTMVM.users.sorted(by: {$0.userId > $1.userId}), id:\.userId) { user in
                         Annotation(user.userId, coordinate: CLLocationCoordinate2D(latitude: user.userLocation.center.latitude, longitude: user.userLocation.center.longitude)) {
@@ -69,6 +68,14 @@ struct LocationView: View {
                     
                 }
                 
+            }
+            
+            
+            VStack {
+                Spacer()
+                // MARK: Show login user and channel
+                Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
+                    .minimumScaleFactor(0.8)
             }
             
             // MARK: SHOW CUSTOM ALERT

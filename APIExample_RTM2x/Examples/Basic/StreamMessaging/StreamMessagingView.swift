@@ -68,6 +68,8 @@ struct StreamMessagingView: View {
                                     VStack(alignment: .leading) {
                                         Text(topicChannel.topic)
                                             .font(.headline)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.8)
                                         Text(topicChannel.lastMessage)
                                             .font(.callout)
                                             .foregroundStyle(Color.secondary)
@@ -125,7 +127,7 @@ struct StreamMessagingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Topics" : "Login")
         .toolbar{
             if agoraRTMVM.isLoggedIn {
                 ToolbarItem(placement: .topBarTrailing){

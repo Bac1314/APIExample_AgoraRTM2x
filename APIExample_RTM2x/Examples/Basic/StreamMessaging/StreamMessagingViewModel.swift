@@ -48,6 +48,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
                     isLoggedIn = true
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
+                    await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
             } else {
@@ -136,7 +137,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     func subscribeOneTopic(topic: String) async -> Bool{
         // Set subscribing options
         let subscribeTopicOptions = AgoraRtmTopicOption()
-//        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
+        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
         
         
         // Subscribe to topic

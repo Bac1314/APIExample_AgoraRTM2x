@@ -44,6 +44,7 @@ class BiddingViewModel: NSObject, ObservableObject {
                     isLoggedIn = true
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
+                    await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
             } else {

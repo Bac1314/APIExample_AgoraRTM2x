@@ -72,28 +72,6 @@ struct ListOfSamplesView: View {
             .background(Color(UIColor.systemGroupedBackground))
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("RTM API Examples")
-
-//            .toolbar{
-//                // Internal testing button
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    Button(action : {
-//                        Task {
-//                            let token = try? await Personalize().customGenerateToken()
-//                            print("Bac's internal token \(token ?? "")")
-//                        }
-//                    }){
-//                        HStack{
-//                            Image(systemName: "wrench")
-//                            Text("Internal Testing")
-//                        }
-//                    }
-//                }
-//                
-//            }
-            
-//            Text("Logged in as \(userName)")
-//                .padding(16)
-//                .foregroundStyle(Color.gray)
         }
 
     }

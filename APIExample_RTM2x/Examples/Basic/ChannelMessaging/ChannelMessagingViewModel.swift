@@ -38,6 +38,7 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
                     isLoggedIn = true
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
+                    await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
             } else {
@@ -62,22 +63,26 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
     // Subscribe to channel in 'MessageChannel'
     @MainActor
     func subscribeChannel(channelName: String) async -> Bool {
+        // Create new channel if it doesn't exist.
+        if let _ = customRTMChannelList.firstIndex(where: { $0.channelName == channelName }) {
+            // Object exists, do nothing
+        } else {
+            // Object doesn't exist. Append a new object
+            let newChannel = CustomRTMChannel(channelName: channelName, channelMessages: [], lastMessage: "Latest message would appear here", listOfUsers: [])
+            customRTMChannelList.append(newChannel)
+        }
+        
+        
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
                 
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
-                if let _ = customRTMChannelList.firstIndex(where: { $0.channelName == channelName }) {
-                    // object exists, do nothing
-                    return false
-                } else {
-                    // object doesn't exist. Append a new object
-//                    let listOfusers = await getListOfusers(channelName: channelName)
-                    let newChannel = CustomRTMChannel(channelName: channelName, channelMessages: [], lastMessage: "Latest message would appear here", listOfUsers: [])
-                    customRTMChannelList.append(newChannel)
-                    
-                    return true
-                }
+                //subscribe success
+                return true
+            }else {
+                //subscribe failed
+                print("Bac's subscribeChannel failed \(channelName)")
             }
             return false
         }
@@ -170,7 +175,10 @@ extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceivePresenceEvent event: AgoraRtmPresenceEvent) {
         print("Bac's didReceivePresenceEvent channelType \(event.channelType) publisher \(String(describing: event.publisher)) channel \(event.channelName) type \(event.type) ")
         // Check channelIndex exists.
-        guard let channeIndex = customRTMChannelList.firstIndex(where: { $0.channelName == event.channelName }) else { return }
+        guard let channeIndex = customRTMChannelList.firstIndex(where: { $0.channelName == event.channelName }) else { 
+            print("Bac's didReceivePresenceEvent channelIndex doesn't exist ")
+
+            return }
         
         if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
         // A remote user left the channel

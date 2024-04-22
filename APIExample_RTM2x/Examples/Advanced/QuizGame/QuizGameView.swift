@@ -117,6 +117,11 @@ struct QuizGameView: View {
                         .cornerRadius(12)
                     })
                     
+                    // MARK: Show login user and channel
+                    Spacer()
+                    Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
+                        .minimumScaleFactor(0.8)
+                    
                 }
             }
             

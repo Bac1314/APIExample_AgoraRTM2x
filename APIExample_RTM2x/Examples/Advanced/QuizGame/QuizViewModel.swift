@@ -51,6 +51,7 @@ class QuizViewModel: NSObject, ObservableObject {
                     isLoggedIn = true
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
+                    await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
             } else {
@@ -80,8 +81,7 @@ class QuizViewModel: NSObject, ObservableObject {
         
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
-                // object doesn't exist. Append a new object
-                //                users = await getListOfusers(channelName: channelName)
+                return true
             }
             return false
         }

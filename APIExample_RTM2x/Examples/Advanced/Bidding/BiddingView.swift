@@ -97,6 +97,9 @@ struct BiddingView: View {
                                 
                             })
                             
+                            Spacer()
+                            
+                            
                             // Add custom amount
                             Button(action: {
                                 Task {
@@ -117,6 +120,9 @@ struct BiddingView: View {
                         .padding(.horizontal)
                         .padding(.bottom)
                         
+                        // MARK: Show login user and channel
+                        Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
+                            .minimumScaleFactor(0.8)
                     }
                     
                 }
@@ -136,9 +142,9 @@ struct BiddingView: View {
                             .font(.title3)
                             .contentTransition(.numericText())
                     })
-                    
                 }
             }
+            
             
             // MARK: SHOW CUSTOM ALERT
             if showAlert {

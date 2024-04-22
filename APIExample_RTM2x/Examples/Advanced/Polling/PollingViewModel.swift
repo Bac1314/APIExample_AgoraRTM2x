@@ -46,6 +46,7 @@ class PollingViewModel: NSObject, ObservableObject {
                     isLoggedIn = true
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
+                    await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
             } else {
@@ -75,8 +76,7 @@ class PollingViewModel: NSObject, ObservableObject {
         
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
-                // object doesn't exist. Append a new object
-//                numberOfUsers = await getListOfusers(channelName: channelName).count
+                return true
             }
             return false
         }

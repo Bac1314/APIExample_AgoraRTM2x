@@ -88,6 +88,12 @@ struct PollingView: View {
                         .cornerRadius(12)
                     })
                     
+                    Spacer()
+                    
+                    // MARK: Show login user and channel
+                    Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
+                        .minimumScaleFactor(0.8)
+                    
                 }
             }
             
