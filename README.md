@@ -111,12 +111,16 @@ The list of samples and what feature is used
 
 | **Samples**      | **Description**                                                                                      | **RTM ChannelType** | **RTM Features**  |
 |------------------|------------------------------------------------------------------------------------------------------|---------------------|-------------------|
-| [ChannelMessaging](/APIExample_RTM2x/Examples/Basic/ChannelMessaging) | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
-| [P2PMessaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging)     | Peer-to-peer messaging where a user can directly send a message to another user                      | User               | /                 |
-| [Polling](APIExample_RTM2x/Examples/Advanced/Polling)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
-| [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
-| [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
-| [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
+| [Channel Messaging](/APIExample_RTM2x/Examples/Basic/ChannelMessaging/) | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
+| [P2P Messaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging/)     | Peer-to-peer messaging where a user can directly send a message to another user                      | User               | /                 |
+| [Stream Messaging](APIExample_RTM2x/Examples/Basic/StreamMessaging/)          | Pub-and-sub model with RTM Stream Channel's topics | Stream             | `.presence`           |
+| [Polling](APIExample_RTM2x/Examples/Advanced/Polling/)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
+| [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame/)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
+| [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding/)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
+| [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing/)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
+
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -132,6 +136,7 @@ The list of samples and what feature is used
 
 <!-- ROADMAP -->
 ## Potential Samples
+If you have 
 
 - Online collaborative tools
 - Interactive games

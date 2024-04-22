@@ -96,7 +96,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     func preJoinSubTopics() async {
         for topic in defaultTopics {
             // Join as publisher first, if success then subscribe
-            let result = await JoinAndSubTopic(topic: topic)
+            let _ = await JoinAndSubTopic(topic: topic)
         
             
 //            if result {
@@ -136,14 +136,16 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     func subscribeOneTopic(topic: String) async -> Bool{
         // Set subscribing options
         let subscribeTopicOptions = AgoraRtmTopicOption()
-        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
+//        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
         
         
         // Subscribe to topic
-        if let (_, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
+        if let (response, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
             if error == nil {
                 // Subscribe success
                 print("Bac's subscribe \(topic) success")
+                print("Bac's subscribed Success users \(String(describing: response?.succeedUsers)) AND Failed \(String(describing: response?.failedUsers)) ")
+
                 return true
             }else {
                 // Subscribe failed
@@ -160,10 +162,6 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
         if !customStreamTopicList.contains(where: {$0.topic == topic}) {
             let resultA = await joinOneTopic(topic: topic)
             let resultB = resultA ? await subscribeOneTopic(topic: topic) : false
-            
-            // if successful, add to list
-            let custom = CustomStreamTopic(topic: topic, messages: [], lastMessage: "Latest message would appear here")
-//            customStreamTopicList.append(custom)
             
             Task {
                 await MainActor.run {
@@ -230,6 +228,7 @@ extension StreamMessagingViewModel: AgoraRtmClientDelegate {
         case .message:
             break
         case .stream:
+            print("Received stream topic \(event.channelTopic) and message \(event.message.stringData ?? "")")
             if let index = customStreamTopicList.firstIndex(where: {$0.topic == event.channelTopic}) {
                 Task {
                     await MainActor.run {
