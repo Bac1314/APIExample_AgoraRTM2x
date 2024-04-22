@@ -3,7 +3,7 @@
 
 ### Architecture
 
-![alt text](../../../../MyAssets/Arch_ChannelMessaging.png)
+![alt text](../../../../MyAssets/Arch_StreamMessaging.png)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
