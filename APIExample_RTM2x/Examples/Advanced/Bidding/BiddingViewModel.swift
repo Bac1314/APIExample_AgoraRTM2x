@@ -191,30 +191,6 @@ class BiddingViewModel: NSObject, ObservableObject {
         
     }
     
-//    @MainActor
-//    func fetchUpdateAuction() async -> Bool {
-//        // When user publishes a new auction, fetch new auction from database and update it locally
-//        if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){
-//            if error == nil {
-//                if let metadataItems = response?.data?.getItems() {
-//                    // New Metadata items
-//                    let majorRevision : Int64 = response?.data?.getMajorRevision() ?? 0
-//                    let auctionName : String = metadataItems.first(where: {$0.key == "auctionName"})?.value ?? ""
-//                    let startPrice : Int = Int(metadataItems.first(where: {$0.key == "startingPrice"})?.value ?? "0") ?? 0
-//                    let currentBid : Int = Int(metadataItems.first(where: {$0.key == "currentBid"})?.value ?? "0") ?? 0
-//                    let highestBidder : String = metadataItems.first(where: {$0.key == "highestBidder"})?.value ?? ""
-//                    let lastUpdatedTimeStamp : Int = Int(metadataItems.first(where: {$0.key == "timeIntervalSince1970"})?.value ?? "0") ?? 0
-//                    
-//                    currentAuctionItem = CustomAuctionItem(majorRevision: majorRevision, auctionName: auctionName, startingPrice: startPrice, currentBid: currentBid, highestBidder: highestBidder, lastUpdatedTimeStamp: lastUpdatedTimeStamp)
-//                }
-//                return true
-//            }else{
-//                return false
-//            }
-//        }
-//        
-//        return false
-//    }
     
     func fetchMajorRevision() async -> Int64 {
         if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){

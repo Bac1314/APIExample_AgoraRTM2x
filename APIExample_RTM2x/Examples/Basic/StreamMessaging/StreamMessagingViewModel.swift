@@ -163,7 +163,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
         if !customStreamTopicList.contains(where: {$0.topic == topic}) {
             let resultA = await joinOneTopic(topic: topic)
             let resultB = resultA ? await subscribeOneTopic(topic: topic) : false
-            
+
             Task {
                 await MainActor.run {
                     customStreamTopicList.append(CustomStreamTopic(topic: topic, messages: [] , lastMessage: "Latest message would appear here"))
@@ -222,6 +222,14 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
 
 
 extension StreamMessagingViewModel: AgoraRtmClientDelegate {
+    
+    func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveTopicEvent event: AgoraRtmTopicEvent) {
+        print("Bac's didReceiveTopicEvent Topic events channelName: \(event.channelName) publisher: \(event.publisher) topicinfo: \(event.topicInfos)")
+      
+        for eventInfo in event.topicInfos {
+            print("Bac's topicinfo \(eventInfo.description)")
+        }
+    }
     
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {

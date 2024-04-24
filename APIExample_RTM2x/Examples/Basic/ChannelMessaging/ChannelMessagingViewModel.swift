@@ -75,6 +75,7 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
         
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
+    
                 
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {

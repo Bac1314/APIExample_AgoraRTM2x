@@ -49,7 +49,7 @@ struct LoginRTMView: View {
                     
                     Spacer()
                     
-                    TextField("UserName", text: $userID)
+                    TextField("RTM UserName", text: $userID)
                         .textFieldStyle(.roundedBorder)
                         .font(.headline)
                     

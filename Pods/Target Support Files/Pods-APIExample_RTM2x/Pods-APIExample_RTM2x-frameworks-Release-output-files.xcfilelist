@@ -1,12 +1,1 @@
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraAiNoiseSuppressionExtension.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraAudioBeautyExtension.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraClearVisionExtension.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraContentInspectExtension.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtcKit.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/aosl.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Agorafdkaac.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Agoraffmpeg.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraSoundTouch.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraVideoQualityAnalyzerExtension.framework
-${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraVideoSegmentationExtension.framework
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtmKit.framework

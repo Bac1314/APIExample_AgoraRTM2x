@@ -1,21 +1,21 @@
 //
-//  TestingView.swift
+//  Canvas.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/4/2.
+//  Created by BBC on 2024/4/24.
 //
 
 import SwiftUI
 
-struct TestingView: View {
+struct Canvas: View {
     @Binding var currentDrawing: Drawing
     @Binding var drawings: [Drawing]
     
     var colors : [Color] = [.black, .blue, .red, .green, .orange]
     @State var selectedColor : Color = .black
-    
-    @State private var isErasing: Bool = false
-    
+
+    var onSubmitDrawing: (() -> Void)?
+
     var body: some View {
         ZStack(alignment: .bottom) {
             // MARK: Canvas
@@ -41,7 +41,7 @@ struct TestingView: View {
                         .onChanged { value in
                             let currentPoint = value.location
                             currentDrawing.points.append(currentPoint)
-                            print("currentPoint \(currentPoint)")
+                            print("id \(currentDrawing.id) \(currentPoint)")
 
                         }
                         .onEnded { value in
@@ -50,21 +50,14 @@ struct TestingView: View {
                             currentDrawing.color = selectedColor
                             print("onEnded")
                             
-                            for drawing in drawings {
-                                print("Drawing \(drawing.color)")
-                            }
+       
+                            self.onSubmitDrawing?()
                         }
                 )
             }
             
             // MARK: Color selection
             HStack{
-                Button(action: {
-                    isErasing.toggle()
-                }, label: {
-                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                })
-                
                 ForEach(colors, id: \.self) { color in
                     Circle()
                         .frame(width: 35)
@@ -84,6 +77,7 @@ struct TestingView: View {
                 }
             }
         }
+//        .frame(width: 400, height: 800)
     }
     
     private func addLine(drawing: Drawing, toPath path: inout Path) {
@@ -92,12 +86,8 @@ struct TestingView: View {
             for i in 0..<points.count-1 {
                 let current = points[i]
                 let next = points[i+1]
-                
-                // Skip adding points to the path when erasing is enabled
-                if !isErasing {
-                    path.move(to: current)
-                    path.addLine(to: next)
-                }
+                path.move(to: current)
+                path.addLine(to: next)
             }
         }
     }
@@ -110,9 +100,9 @@ struct TestingView: View {
         @State private var drawings: [Drawing] = [Drawing]()
         
         var body: some View {
-            TestingView(currentDrawing: $currentDrawing, drawings: $drawings)
+            Canvas(currentDrawing: $currentDrawing, drawings: $drawings)
         }
     }
-    
+
     return Preview()
 }

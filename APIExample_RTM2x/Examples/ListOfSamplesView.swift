@@ -22,7 +22,9 @@ struct ListOfSamplesView: View {
         ("Polling", ("chart.pie", AnyView(PollingView(serviceIcon:"chart.pie")))),
         ("Quiz Game", ("checklist", AnyView(QuizGameView(serviceIcon:"checklist")))),
         ("Live Bidding", ("dollarsign.circle", AnyView(BiddingView(serviceIcon:"dollarsign.circle")))),
-        ("Location Sharing", ("location.viewfinder", AnyView(LocationView(serviceIcon:"location.viewfinder"))))
+        ("Location Sharing", ("location.viewfinder", AnyView(LocationView(serviceIcon:"location.viewfinder")))),
+        ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw"))))
+
     ]
     
     

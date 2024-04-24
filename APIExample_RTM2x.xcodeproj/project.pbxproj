@@ -58,6 +58,10 @@
 		29AFACA72BD0FB0200088381 /* Arch_LocationSharing.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */; };
 		29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */; };
 		29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */; };
+		29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E601092BD8A59B00D69079 /* Canvas.swift */; };
+		29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */; };
+		29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */; };
+		29E601102BD8E08100D69079 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010F2BD8E08100D69079 /* Drawing.swift */; };
 		7AA7A4164C9BEE92EF5180BB /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +119,10 @@
 		29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_LocationSharing.png; sourceTree = "<group>"; };
 		29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingViewModel.swift; sourceTree = "<group>"; };
 		29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStreamTopic.swift; sourceTree = "<group>"; };
+		29E601092BD8A59B00D69079 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardView.swift; sourceTree = "<group>"; };
+		29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardViewModel.swift; sourceTree = "<group>"; };
+		29E6010F2BD8E08100D69079 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 		BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.release.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
 		E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -330,6 +338,7 @@
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
 				29AFACA22BD0F37700088381 /* LocationSharing */,
+				29E601082BD8A57800D69079 /* WhiteBoard */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -337,11 +346,22 @@
 		29AFACA22BD0F37700088381 /* LocationSharing */ = {
 			isa = PBXGroup;
 			children = (
-				29AFAC9F2BD0F37700088381 /* LocationUser.swift */,
 				29AFACA02BD0F37700088381 /* LocationView.swift */,
 				29AFACA12BD0F37700088381 /* LocationViewModel.swift */,
+				29AFAC9F2BD0F37700088381 /* LocationUser.swift */,
 			);
 			path = LocationSharing;
+			sourceTree = "<group>";
+		};
+		29E601082BD8A57800D69079 /* WhiteBoard */ = {
+			isa = PBXGroup;
+			children = (
+				29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */,
+				29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */,
+				29E601092BD8A59B00D69079 /* Canvas.swift */,
+				29E6010F2BD8E08100D69079 /* Drawing.swift */,
+			);
+			path = WhiteBoard;
 			sourceTree = "<group>";
 		};
 		8A685BF4286D1F5002CE1D3A /* Frameworks */ = {
@@ -482,11 +502,13 @@
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
+				29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */,
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */,
+				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
@@ -505,6 +527,8 @@
 				297F80162BA4540D0057200A /* ChannelMessagingView.swift in Sources */,
 				29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */,
 				296CC1332BABE0E7006E14F5 /* P2PMessagingViewModel.swift in Sources */,
+				29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */,
+				29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */,
 				292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */,
 				292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */,
 				297003032BB6656100B6681A /* PollingViewModel.swift in Sources */,

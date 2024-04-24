@@ -1,11 +1,6 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## AgoraRtcEngine_iOS
-
-Copyright 2023 agora.io. All rights reserved.
-
-
 ## AgoraRtm_iOS
 
 Copyright 2023 agora.io. All rights reserved.

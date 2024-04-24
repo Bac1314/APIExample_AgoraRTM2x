@@ -1,8 +1,8 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/AgoraRtcEngine_iOS" "${PODS_ROOT}/AgoraRtm_iOS" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AINS" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AudioBeauty" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ClearVision" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ContentInspect" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VQA" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VirtualBackground" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtm_iOS"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/AgoraRtm_iOS" "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtm_iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -l"c++" -l"resolv" -framework "AgoraAiNoiseSuppressionExtension" -framework "AgoraAudioBeautyExtension" -framework "AgoraClearVisionExtension" -framework "AgoraContentInspectExtension" -framework "AgoraRtcKit" -framework "AgoraRtmKit" -framework "AgoraSoundTouch" -framework "AgoraVideoQualityAnalyzerExtension" -framework "AgoraVideoSegmentationExtension" -framework "Agorafdkaac" -framework "Agoraffmpeg" -framework "CoreTelephony" -framework "SystemConfiguration" -framework "aosl" -weak_framework "AgoraAiNoiseSuppressionExtension" -weak_framework "AgoraAudioBeautyExtension" -weak_framework "AgoraClearVisionExtension" -weak_framework "AgoraContentInspectExtension" -weak_framework "AgoraVideoQualityAnalyzerExtension" -weak_framework "AgoraVideoSegmentationExtension"
+OTHER_LDFLAGS = $(inherited) -l"c++" -l"resolv" -framework "AgoraRtmKit" -framework "CoreTelephony" -framework "SystemConfiguration"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

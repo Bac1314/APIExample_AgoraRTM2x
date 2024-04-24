@@ -12,7 +12,6 @@ struct PollingView: View {
     @StateObject var agoraRTMVM: PollingViewModel = PollingViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
-    @State var presentPollSheet: Bool = false
     
     var serviceIcon: String = "message"
 
@@ -21,6 +20,7 @@ struct PollingView: View {
     @State var alertMessage: String = "Error"
     
     // new poll
+    @State var presentPollSheet: Bool = false
     @State var question: String = ""
     @State var option: String = ""
     @State var tempOptions = Array<String>.init(repeating: "", count: 4)
