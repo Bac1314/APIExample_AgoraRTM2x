@@ -32,7 +32,7 @@ struct StreamMessagingView: View {
         ZStack {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, isStreamChannel: true, streamToken: $agoraRTMVM.tokenRTC) {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, isStreamChannel: true, streamToken: $agoraRTMVM.tokenRTC) {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
@@ -106,7 +106,7 @@ struct StreamMessagingView: View {
                             if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
                                 return
                             }
-                            let result = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
+                            _ = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
                             newTopic = "" //Reset
                             
                             keyboardIsFocused = false // dismiss keyboard

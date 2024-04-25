@@ -21,9 +21,9 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     @Published var customStreamTopicList : [CustomStreamTopic] = []
     @Published var users: [AgoraRtmUserState] = []
     
-    let mainChannel = "ChannelA" // to publish the storage
-    var agoraStreamChannel: AgoraRtmStreamChannel? = nil
+    @Published var mainChannel = "ChannelA" // to publish the storage
     @Published var tokenRTC: String = ""
+    var agoraStreamChannel: AgoraRtmStreamChannel? = nil
 
     var defaultTopics : [String] = ["topic1", "topic2"] // Topics that you would to publish to
 //    @Published var subscribedTopics : [String] = ["topic1", "topic2"] // Topics that you would like to subscribe to
@@ -98,15 +98,6 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
         for topic in defaultTopics {
             // Join as publisher first, if success then subscribe
             let _ = await JoinAndSubTopic(topic: topic)
-        
-            
-//            if result {
-//                Task {
-//                    await MainActor.run {
-//                        customStreamTopicList.append(CustomStreamTopic(topic: topic, messages: [] , lastMessage: "Latest message would appear here"))
-//                    }
-//                }
-//            }
         }
     }
     
@@ -276,7 +267,7 @@ extension StreamMessagingViewModel: AgoraRtmClientDelegate {
                 userState.states = event.states
                 users.append(userState)
                 
-                // Resubscribe for new users
+                // StreamChannel - Resubscribe for new users
                 Task {
                     await reSubscribeNewUsers()
                 }

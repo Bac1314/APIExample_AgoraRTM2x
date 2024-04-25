@@ -20,7 +20,7 @@ class PollingViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    let mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
     let customPollQuestionType = "pollquestion"
     let customPollResultType = "pollresult"
     

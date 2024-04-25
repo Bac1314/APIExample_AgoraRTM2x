@@ -13,6 +13,7 @@ struct LoginRTMView: View {
     @Binding var isLoading: Bool
     @Binding var userID: String
     @Binding var token: String
+    @Binding var channelName: String
     @Binding var isLoggedIn: Bool
     var icon: String = "message"
     
@@ -29,61 +30,127 @@ struct LoginRTMView: View {
             ZStack {
                 // MARK: LOGIN RTM VIEW
                 VStack {
+                    
+                    Spacer()
                     Image(systemName: icon)
                         .frame(width: 80, height: 80)
                         .aspectRatio(1.0, contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
                         .font(.system(size: 60))
                         .padding()
-                        .background(LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .background(
+                            LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)
+//                                .rotationEffect(.degrees(degreesRotating))
+                        )
                         .foregroundStyle(Color.white.gradient)
                         .cornerRadius(24)
                         .shadow(radius: 5)
-                        .padding(.vertical, 100)
 //                        .rotationEffect(.degrees(degreesRotating))
 //                        .onAppear {
 //                            withAnimation(.linear(duration: 1)
 //                                .speed(0.1).repeatForever(autoreverses: false)) {
 //                                    degreesRotating = 360.0
 //                                }
-
-                    
+//                        }
                     Spacer()
                     
-                    TextField("RTM UserName", text: $userID)
-                        .textFieldStyle(.roundedBorder)
-                        .font(.headline)
+                    VStack(alignment: .leading, spacing: 6){
+                        Text("USERNAME")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                        
+                        TextField("", text: $userID)
+                            .textFieldStyle(.plain)
+                            .font(.headline)
+                            .padding(12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+//                                    .fill(Color.gray.opacity(0.1))
+                                    .stroke(Color.gray, lineWidth: 1.0)
+
+                            )
+                    }
+                    .padding(.bottom, 8)
                     
-                    TextField("RTM Token", text: $token)
-                        .textFieldStyle(.roundedBorder)
-                        .font(.headline)
-                
+                    VStack(alignment: .leading, spacing: 6){
+                        Text("TOKEN")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                        
+                        TextField("", text: $token)
+                            .textFieldStyle(.plain)
+                            .font(.headline)
+                            .padding(12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .stroke(Color.gray, lineWidth: 1.0)
+                            )
+                    }
+                    .padding(.bottom, 8)
+
+                    
+                    VStack(alignment: .leading, spacing: 6){
+                        Text("CHANNEL NAME")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                        
+                        TextField("", text: $channelName)
+                            .textFieldStyle(.plain)
+                            .font(.headline)
+                            .padding(12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                    .stroke(Color.gray, lineWidth: 1.0)
+                            )
+                    }
+                    .padding(.bottom, 8)
+
                     
                     if isStreamChannel {
-                        TextField("RTC Token (for stream channel)", text: $streamToken)
-                            .textFieldStyle(.roundedBorder)
-                            .font(.headline)
-                    }else {
-                        HStack {
-                            Text("Note: Leave token input empty if app certificate is NOT enabled")
-                                .font(.footnote)
-                                .foregroundStyle(.gray.opacity(0.7))
-                            Spacer()
+                        VStack(alignment: .leading, spacing: 6){
+                            Text("RTC TOKEN")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                            
+                            TextField("Stream channel requires RTC token", text: $streamToken)
+                                .textFieldStyle(.plain)
+                                .font(.headline)
+                                .padding(12)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                        .stroke(Color.gray, lineWidth: 1.0)
+                                )
                         }
-                        .padding(.top, 8)
-                    }
+                        .padding(.bottom, 8)
 
+                    
+                    }
+                
+
+                    Spacer()
 
                     
                     Button {
                         isLoading = true
                         self.onButtonTap?()
                     } label: {
-                        Text("Login to Agora")
+                        Text("LOGIN")
                     }
+                    .font(.headline)
+                    .bold()
+                    .frame(maxWidth: .infinity)
                     .padding()
-                    .buttonStyle(.bordered)
-                    .disabled(userID.isEmpty)
+                    .foregroundStyle(Color.white)
+                    .background(Color.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .disabled(userID.isEmpty || channelName.isEmpty)
                     
+                    HStack {
+                        Text(isStreamChannel ? "" : "Note: Leave token input empty if app certificate is NOT enabled")
+                            .font(.footnote)
+                            .foregroundStyle(.gray.opacity(0.7))
+                        Spacer()
+                    }
+                    .padding(.top, 8)
                     
                     Spacer()
                 }
@@ -125,7 +192,7 @@ struct LoginRTMView: View {
 }
 
 #Preview {
-    LoginRTMView(isLoading: .constant(true), userID: .constant("Bac"), token: .constant("jaisodjioajsiodhio1h2312"), isLoggedIn: .constant(false), icon: "person.2", streamToken: .constant(""))
+    LoginRTMView(isLoading: .constant(true), userID: .constant("Bac"), token: .constant(""), channelName: .constant("ChannelA"), isLoggedIn: .constant(false), icon: "person.2", streamToken: .constant(""))
     
 }
 

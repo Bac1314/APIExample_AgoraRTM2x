@@ -19,9 +19,14 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    let mainChannel = "ChannelA" // to publish and receive poll questions/answers
-    let customWhiteBoardNewType = "newDrawing"
-    let customWhiteBoardUpdateType = "drawingUpdate"
+    
+    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var tokenRTC: String = ""
+    var agoraStreamChannel: AgoraRtmStreamChannel? = nil
+//    var defaultTopics : [String] = ["newDrawing", "drawingUpdate"] // Topics that you would to publish to
+
+    let NewDrawingTopic = "newDrawing"
+    let UpdateDrawingTopic = "drawingUpdate"
 
     
     @Published var drawings: [Drawing] = [Drawing]()
@@ -67,66 +72,173 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         agoraRtmKit?.destroy()
         isLoggedIn = false
     }
-
-    //MARK: MESSAGE CHANNEL / POLL METHODS
-    // Subscribe to channel in 'MessageChannel'
-    @MainActor
-    func subscribeChannel(channelName: String) async -> Bool {
-        let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
-        subOptions.features =  [.message, .presence, .metadata]
-        
-        if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
-            if error == nil {
-                return true
+    
+    // Join Stream Channel
+    func createAndJoinStreamChannel() async{
+        do {
+            agoraStreamChannel = try agoraRtmKit?.createStreamChannel(mainChannel)
+                        
+            let joinOption = AgoraRtmJoinChannelOption()
+            joinOption.features = [.presence]
+            joinOption.token = tokenRTC
+            
+            if let (response, error) = await agoraStreamChannel?.join(joinOption) {
+                if error == nil {
+                    // Join successful
+                    print("Bac's createAndJoinStreamChannel success \(String(describing: response))")
+                }else {
+                    // Join failed
+                    print("Bac's createAndJoinStreamChannel failed \(String(describing: error)) \(error?.reason ?? "")")
+                }
             }
-            return false
+            
+        } catch {
+            print("Bac's createAndJoinStreamChannel error \(error)")
         }
-        return false
     }
     
 
     // Publish to channel in 'MessageChannel'
     func publishNewDrawing(drawing: Drawing) async -> Bool{
-        let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customWhiteBoardNewType
-        pubOptions.channelType = .message
-
-        if let drawingString = convertObjectToJsonString(object: drawing){
-            if let (_, error) = await agoraRtmKit?.publish(channelName: mainChannel, message: drawingString, option: pubOptions){
+        if let newDrawingString = convertObjectToJsonString(object: drawing){
+            if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: NewDrawingTopic, message: newDrawingString, option: nil) {
                 if error == nil {
-                    print("Bac's sendMessageToChannel success \(drawingString)")
-                    return true
-                }else{
-                    print("Bac's sendMessageToChannel error \(String(describing: error))")
+                    // Publish successful
+                }else {
+                    print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
                 }
-                
             }
         }
         return false
     }
     
     func publishDrawingUpdate(newPoint: DrawingPoint) async -> Bool{
-        let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customWhiteBoardUpdateType
-        pubOptions.channelType = .message
-
         if let newDrawingPointString = convertObjectToJsonString(object: newPoint){
-            if let (_, error) = await agoraRtmKit?.publish(channelName: mainChannel, message: newDrawingPointString, option: pubOptions){
+            if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: UpdateDrawingTopic, message: newDrawingPointString, option: nil) {
                 if error == nil {
-                    print("Bac's sendMessageToChannel success \(newDrawingPointString)")
-                    return true
-                }else{
-                    print("Bac's sendMessageToChannel error \(String(describing: error))")
+                    // Publish successful
+                }else {
+                    print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
                 }
+            }
+            
+            return false
+        }
+        return false
+        
+    }
+    
+    func saveDrawingToStorage(drawing: Drawing) async -> Bool {
+        
+        return false
+    }
+    
+    func getDrawingsFromStorage() async -> Bool {
+        if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .stream) {
+            if error == nil {
+                // Get Successful, do here
+            }else {
+                print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
+                return false
+            }
+        }
+        
                 
+        return false
+    }
+    // Pre-join some topics
+    func preJoinSubTopics() async {
+//        for topic in defaultTopics {
+            // Join as publisher first, if success then subscribe
+            let _ = await JoinAndSubTopic(topic: NewDrawingTopic)
+            let _ = await JoinAndSubTopic(topic: UpdateDrawingTopic)
+//        }
+    }
+    
+    // Join a single topic as publisher
+    func joinOneTopic(topic: String) async -> Bool{
+        // Set publishing options
+        let publishTopicOptions = AgoraRtmJoinTopicOption()
+        publishTopicOptions.priority = .high
+        publishTopicOptions.qos = .ordered
+        
+        if let (_, error) = await agoraStreamChannel?.joinTopic(topic, option: publishTopicOptions) {
+            if error == nil {
+                // Join success
+                print("Bac's joinOneTopics \(topic) success")
+                return true
+            }else {
+                // Join failed
+                print("Bac's joinOneTopics \(topic) failed \(error?.code ?? 0) \(error?.reason ?? "")")
+                return false
             }
         }
         return false
     }
     
-    func saveDrawingToRTMStorage(drawing: Drawing) async -> Bool {
+    // Subscribe to a single topic to receive topic messages
+    func subscribeOneTopic(topic: String) async -> Bool{
+        // Set subscribing options
+        let subscribeTopicOptions = AgoraRtmTopicOption()
+        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
+        
+        
+        // Subscribe to topic
+        if let (response, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
+            if error == nil {
+                // Subscribe success
+                print("Bac's subscribe \(topic) success")
+                print("Bac's subscribed Success users \(String(describing: response?.succeedUsers)) AND Failed \(String(describing: response?.failedUsers)) ")
+
+                return true
+            }else {
+                // Subscribe failed
+                print("Bac's subscribe failed \(error?.code ?? 0) \(error?.reason ?? "")")
+                return false
+            }
+        }
+        
+        return false
+    }
+    
+    // Join and subscribe a topic
+    func JoinAndSubTopic(topic: String) async -> Bool{
+        let resultA = await joinOneTopic(topic: topic)
+        let resultB = resultA ? await subscribeOneTopic(topic: topic) : false
+        return resultB // only return true if join and sub is successful
+    }
+    
+    // Resubscribe when a new user joins
+    func reSubscribeNewUsers() async {
+        // Set subscribing options
+        let subscribeTopicOptions = AgoraRtmTopicOption()
+        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
+        
+        for topic in [NewDrawingTopic, UpdateDrawingTopic] {
+            if let (_, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
+                if error == nil {
+                    // Subscribe success
+                }else {
+                    // Subscribe failed
+                    print("Bac's subscribeTopics failed \(error?.code ?? 0) \(error?.reason ?? "")")
+                }
+            }
+        }
+    }
+    
+    @MainActor
+    func publishToTopic(topic: String, message: String) async -> Bool {
+        if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: topic, message: message, option: nil) {
+            if error == nil {
+                // Publish successful
+            }else {
+                print("Bac's publishToTopic failed topic \(topic) message \(message) error \(String(describing: error))")
+                return false
+            }
+        }
+        
         return false
     }
     
@@ -141,14 +253,15 @@ extension WhiteBoardViewModel: AgoraRtmClientDelegate {
         
         switch event.channelType {
         case .message:
-            // Main Channel to receive new drawings
-            if event.customType == customWhiteBoardNewType {
+            break
+        case .stream:
+            if event.channelTopic == NewDrawingTopic {
                 // Received new drawing,
                 if let jsonString = event.message.stringData, let newDrawing = convertJsonStringToObject(jsonString: jsonString, objectType: Drawing.self) {
                     print("Bac's didReceiveMessageEvent new drawing is \(jsonString)")
                     drawings.append(newDrawing)
                 }
-            }else if event.customType == customWhiteBoardUpdateType {
+            }else if event.channelTopic == UpdateDrawingTopic {
                 if let jsonString = event.message.stringData, let newDrawingPoint = convertJsonStringToObject(jsonString: jsonString, objectType: DrawingPoint.self) {
                     print("Bac's didReceiveMessageEvent new drawing point is \(jsonString)")
                     if let index = drawings.firstIndex(where: {$0.id == newDrawingPoint.id}) {
@@ -157,13 +270,9 @@ extension WhiteBoardViewModel: AgoraRtmClientDelegate {
                         drawings[index].points.append(newDrawingPoint.point)
                     }else {
                         print("Bac's didReceiveMessageEvent UID NOT FOUND")
-
-                        
                     }
                 }
             }
-            break
-        case .stream:
             break
         case .user:
             
@@ -196,21 +305,15 @@ extension WhiteBoardViewModel: AgoraRtmClientDelegate {
                 users.append(userState)
             }
             
+            // StreamChannel - Resubscribe for new users
+            Task {
+                await reSubscribeNewUsers()
+            }
         }else if event.type == .snapshot {
             print("Bac's didReceivePresenceEvent snapshot")
             users = event.snapshot
         }else if event.type == .remoteStateChanged {
             print("Bac's didReceivePresenceEvent remoteStateChanged")
-            
-            if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
-                // User exist, update the states
-                users[userIndex].states = event.states
-                
-                for state in event.states {
-                    print("Bac's didReceivePresenceEvent remoteStateChanged key: \(state.key) value: \(state.value)")
-                }
-
-            }
         }
     }
     

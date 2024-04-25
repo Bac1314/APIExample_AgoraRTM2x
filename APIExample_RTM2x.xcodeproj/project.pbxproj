@@ -250,10 +250,10 @@
 		297F7FE72BA420E20057200A = {
 			isa = PBXGroup;
 			children = (
-				29024AA12BCE18E200E871B2 /* MyAssets */,
 				297F7FF22BA420E20057200A /* APIExample_RTM2x */,
 				297F7FF12BA420E20057200A /* Products */,
 				2403D931E29907F9F2D179C4 /* Pods */,
+				29024AA12BCE18E200E871B2 /* MyAssets */,
 				8A685BF4286D1F5002CE1D3A /* Frameworks */,
 			);
 			sourceTree = "<group>";

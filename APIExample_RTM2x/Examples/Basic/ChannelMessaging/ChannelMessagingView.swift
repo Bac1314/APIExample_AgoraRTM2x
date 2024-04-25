@@ -15,6 +15,9 @@ struct ChannelMessagingView: View {
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
+    
+    // First channelName
+    @State var channelName: String = "ChannelA"
 
     // show alert
     @State var showAlert: Bool = false
@@ -26,10 +29,11 @@ struct ChannelMessagingView: View {
         ZStack {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $channelName, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
+                            _ = await agoraRTMVM.subscribeChannel(channelName: channelName)
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -73,13 +77,13 @@ struct ChannelMessagingView: View {
                         }
                     }
                     .listStyle(.plain)
-                    .task {
-                        if agoraRTMVM.customRTMChannelList.count == 0 {
-                            // When user first the screen, subscribe to a couple random channels
-                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelA")
-                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelB")
-                        }
-                    }
+//                    .task {
+//                        if agoraRTMVM.customRTMChannelList.count == 0 {
+//                            // When user first the screen, subscribe to a couple random channels
+//                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelA")
+//                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelB")
+//                        }
+//                    }
                     
                     
                     // Displayed Logged in Username

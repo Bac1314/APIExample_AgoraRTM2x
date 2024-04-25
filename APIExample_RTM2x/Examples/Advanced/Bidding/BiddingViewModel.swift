@@ -21,7 +21,7 @@ class BiddingViewModel: NSObject, ObservableObject {
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
 //    let mainChannel = "biddingChannel" // to publish the storage
-    let mainChannel = "ChannelA" // to publish the storage
+    @Published var mainChannel = "ChannelA" // to publish the storage
 
     
     @MainActor

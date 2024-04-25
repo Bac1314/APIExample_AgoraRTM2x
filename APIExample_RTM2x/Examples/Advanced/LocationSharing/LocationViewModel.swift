@@ -18,7 +18,7 @@ class LocationViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    let mainChannel = "ChannelA" // to publish the storage
+    @Published var mainChannel = "ChannelA" // to publish the storage
     
     // Location Properties
     @Published var users : [LocationUser] = []
@@ -189,7 +189,7 @@ extension LocationViewModel: AgoraRtmClientDelegate {
             for remoteUser in event.snapshot {
                 // Update remote location
                 if let latitude =  remoteUser.states.first(where: {$0.key == latitudeKey})?.value, let longitude = remoteUser.states.first(where: {$0.key == longitudeKey})?.value{
-                    var publisher = remoteUser.userId
+                    let publisher = remoteUser.userId
                     
                     print("Bac's didReceivePresenceEvent snapshot user \(publisher) latitude \(latitude) longitude \(longitude) ")
 

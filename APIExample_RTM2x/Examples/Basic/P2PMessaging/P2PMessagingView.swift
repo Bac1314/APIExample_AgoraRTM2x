@@ -18,6 +18,9 @@ struct P2PMessagingView: View {
     
     var serviceIcon: String = "message"
     
+    // First user
+    @State var userName: String = "DummyUser"
+    
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
@@ -26,10 +29,11 @@ struct P2PMessagingView: View {
         ZStack {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant(""))  {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $userName, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant(""))  {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
+                            agoraRTMVM.subscribedUsers[userName] = "New User"
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"

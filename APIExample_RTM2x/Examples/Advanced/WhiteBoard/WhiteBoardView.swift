@@ -31,11 +31,12 @@ struct WhiteBoardView: View {
             
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon,  streamToken: .constant(""))  {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, isStreamChannel: true, streamToken: $agoraRTMVM.tokenRTC) {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
-                            let _ = await agoraRTMVM.subscribeChannel(channelName: agoraRTMVM.mainChannel)
+                            await agoraRTMVM.createAndJoinStreamChannel()
+                            await agoraRTMVM.preJoinSubTopics()
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"

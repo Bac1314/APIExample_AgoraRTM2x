@@ -30,7 +30,7 @@ struct LocationView: View {
             
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant(""))  {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant(""))  {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
