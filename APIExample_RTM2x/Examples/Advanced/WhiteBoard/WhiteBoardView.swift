@@ -35,6 +35,7 @@ struct WhiteBoardView: View {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
+                            let _ = await agoraRTMVM.subscribeChannel()
                             await agoraRTMVM.createAndJoinStreamChannel()
                             await agoraRTMVM.preJoinSubTopics()
                         }catch {
@@ -54,33 +55,45 @@ struct WhiteBoardView: View {
             
             // MARK: Main View
             if agoraRTMVM.isLoggedIn {
-                Canvas(currentDrawing: $currentDrawing, drawings: $agoraRTMVM.drawings){
-//                    // OnSubmitDrawing
-//                    if let lastDrawing = agoraRTMVM.drawings.last {
+                Canvas(currentDrawing: $currentDrawing, drawings: $agoraRTMVM.drawings) { action in
+                    switch action {
+                    case .delete(let uuid):
+                        Task {
+                            // Publish delete request to remote users
+                            let _ = await agoraRTMVM.publishDeleteDrawing(drawingID: uuid)
+                        }
+                        break
+                    case .submitNew(let newDrawing):
+                        Task {
+                            // Publish new drawing to remote users
+                            let _ = await agoraRTMVM.publishNewDrawing(drawing: newDrawing)
+                        }
+                        break
+                    case .update(let drawingPoint):
+                        Task {
+                            // Publish new points of currentDrawint to remote users
+                            await agoraRTMVM.publishDrawingUpdate(newPoint: drawingPoint)
+                        }
+                        break
+                    case .move(_):
+                        break
+                    }
+                }
+//                .onChange(of: currentDrawing.points) { oldValue, newValue in
+//                    if newValue.count == 1 {
 //                        Task {
-//                            await agoraRTMVM.publishNewDrawing(drawing: lastDrawing)
+//                            await agoraRTMVM.publishNewDrawing(drawing: currentDrawing)
 //                        }
 //                    }
-                }
-                .onChange(of: currentDrawing.points) { oldValue, newValue in
-                    if newValue.count == 1 {
-                        Task {
-                            await agoraRTMVM.publishNewDrawing(drawing: currentDrawing)
-                        }
-                    }
-                    else if newValue.count > 1 {
-                        if let newPoint = currentDrawing.points.last {
-                            Task {
-                                await agoraRTMVM.publishDrawingUpdate(newPoint: DrawingPoint(id: currentDrawing.id, point:  newPoint))
-                            }
-                        }
-
-                    }
-                }
-                .onChange(of: agoraRTMVM.drawings.count) { oldValue, newValue in
-                    
-                    
-                }
+//                    else if newValue.count > 1 {
+//                        if let newPoint = currentDrawing.points.last {
+//                            Task {
+//                                await agoraRTMVM.publishDrawingUpdate(newPoint: DrawingPoint(id: currentDrawing.id, point:  newPoint))
+//                            }
+//                        }
+//
+//                    }
+//                }
             }
             
             // MARK: SHOW CUSTOM ALERT
@@ -90,8 +103,23 @@ struct WhiteBoardView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Whiteboard" : "Login")
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Whiteboard (\(agoraRTMVM.users.count))" : "Login")
         .toolbar{
+            if agoraRTMVM.isLoggedIn {
+                // Clear All drawings
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action : {
+                        Task {
+                            await agoraRTMVM.publishDeleteAllDrawing()
+                        }
+                    }){
+                        HStack{
+                            Text("Clear all").foregroundStyle(Color.red)
+                        }
+                    }
+                }
+            }
+            
             // Back button
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
@@ -104,6 +132,7 @@ struct WhiteBoardView: View {
                     }
                 }
             }
+
             
         }
     }

@@ -15,7 +15,7 @@ func convertObjectToJsonString<T: Encodable>(object: T) -> String? {
     do {
         let jsonData = try encoder.encode(object)
         let jsonString = String(data: jsonData, encoding: .utf8)
-        print("JSON string : " + jsonString!)
+//        print("JSON string : " + jsonString!)
         return jsonString
     } catch {
         print("Error encoding object into JSON, error: \(error.localizedDescription)")

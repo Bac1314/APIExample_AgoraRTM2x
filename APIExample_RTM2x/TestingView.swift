@@ -8,109 +8,20 @@
 import SwiftUI
 
 struct TestingView: View {
-    @Binding var currentDrawing: Drawing
-    @Binding var drawings: [Drawing]
-    
-    var colors : [Color] = [.black, .blue, .red, .green, .orange]
-    @State var selectedColor : Color = .black
-    
-    @State private var isErasing: Bool = false
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            // MARK: Canvas
-            GeometryReader { geometry in
-                ZStack {
-                    // Previous Drawings
-                    ForEach(drawings) { drawing in
-                        Path { path in
-                            addLine(drawing: drawing, toPath: &path)
-                        }
-                        .stroke(drawing.color, lineWidth: drawing.lineWidth)
-                    }
-                    
-                    // Current Drawing
-                    Path { path in
-                        addLine(drawing: self.currentDrawing, toPath: &path)
-                    }
-                    .stroke(selectedColor, lineWidth: currentDrawing.lineWidth)
-                }
-                .background(Color.white)
-                .gesture(
-                    DragGesture(minimumDistance: 1)
-                        .onChanged { value in
-                            let currentPoint = value.location
-                            currentDrawing.points.append(currentPoint)
-                            print("currentPoint \(currentPoint)")
 
-                        }
-                        .onEnded { value in
-                            drawings.append(currentDrawing)
-                            currentDrawing = Drawing()
-                            currentDrawing.color = selectedColor
-                            print("onEnded")
-                            
-                            for drawing in drawings {
-                                print("Drawing \(drawing.color)")
-                            }
-                        }
-                )
-            }
-            
-            // MARK: Color selection
-            HStack{
-                Button(action: {
-                    isErasing.toggle()
-                }, label: {
-                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                })
-                
-                ForEach(colors, id: \.self) { color in
-                    Circle()
-                        .frame(width: 35)
-                        .padding(3)
-                        .foregroundStyle(color)
-                        .padding(1)
-                        .overlay(
-                            Circle()
-                                .stroke(color, lineWidth: selectedColor == color ? 2 : 0)
-                        )
-                        .onTapGesture {
-                            withAnimation {
-                                selectedColor = color
-                                currentDrawing.color = color
-                            }
-                        }
-                }
-            }
-        }
-    }
-    
-    private func addLine(drawing: Drawing, toPath path: inout Path) {
-        let points = drawing.points
-        if points.count > 1 {
-            for i in 0..<points.count-1 {
-                let current = points[i]
-                let next = points[i+1]
-                
-                // Skip adding points to the path when erasing is enabled
-                if !isErasing {
-                    path.move(to: current)
-                    path.addLine(to: next)
-                }
-            }
-        }
+    var body: some View {
+        Text("Hello World!")
     }
 }
 
 
 #Preview {
     struct Preview: View {
-        @State private var currentDrawing: Drawing = Drawing()
-        @State private var drawings: [Drawing] = [Drawing]()
-        
+//        @State private var currentDrawing: Drawing = Drawing()
+//        @State private var drawings: [Drawing] = [Drawing]()
+//        
         var body: some View {
-            TestingView(currentDrawing: $currentDrawing, drawings: $drawings)
+            TestingView()
         }
     }
     

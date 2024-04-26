@@ -129,12 +129,14 @@ struct LoginRTMView: View {
                     Spacer()
 
                     
-                    Button {
-                        isLoading = true
-                        self.onButtonTap?()
-                    } label: {
-                        Text("LOGIN")
-                    }
+                    
+//                    Button {
+//                        isLoading = true
+//                        self.onButtonTap?()
+//                    } label: {
+//                        Text("LOGIN")
+//                    }
+                    Text("LOGIN")
                     .font(.headline)
                     .bold()
                     .frame(maxWidth: .infinity)
@@ -143,6 +145,10 @@ struct LoginRTMView: View {
                     .background(Color.black)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     .disabled(userID.isEmpty || channelName.isEmpty)
+                    .onTapGesture {
+                            isLoading = true
+                            self.onButtonTap?()
+                    }
                     
                     HStack {
                         Text(isStreamChannel ? "" : "Note: Leave token input empty if app certificate is NOT enabled")
@@ -170,7 +176,7 @@ struct LoginRTMView: View {
                     
                 }
             }
-//            .toolbar(content: {
+            .toolbar(content: {
 //                ToolbarItem(placement: .topBarTrailing){
 //                    Button(action: {
 //                        // TODO: REMOVE BEFORE PUBLISHING
@@ -183,10 +189,9 @@ struct LoginRTMView: View {
 //                        
 //                    }, label: {
 //                        Text("Internal Testing")
-//                            .opacity(0.5)
 //                    })
 //                }
-//            })
+            })
         }
     }
 }

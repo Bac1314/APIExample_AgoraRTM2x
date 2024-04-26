@@ -23,14 +23,17 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
     @Published var tokenRTC: String = ""
     var agoraStreamChannel: AgoraRtmStreamChannel? = nil
-//    var defaultTopics : [String] = ["newDrawing", "drawingUpdate"] // Topics that you would to publish to
 
-    let NewDrawingTopic = "newDrawing"
-    let UpdateDrawingTopic = "drawingUpdate"
+    // For Channel Message
+    let NewDrawingType = "newDrawing"
+    
+    // For Stream Channel
+    let UpdateDrawingTopic = "updateDrawing"
+    let DeleteDrawingTopic = "deleteDrawing"
+    let DeleteAllDrawingTopic = "deleteAllDrawings"
 
     
     @Published var drawings: [Drawing] = [Drawing]()
-
     
     @MainActor
     func loginRTM() async throws {
@@ -97,13 +100,31 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         }
     }
     
-
-    // Publish to channel in 'MessageChannel'
+    // Subscribe to Message Channel to publish large data (> 1KB)
+    func subscribeChannel() async -> Bool {
+        let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
+        subOptions.features =  [.message]
+        
+        if let (_, error) = await agoraRtmKit?.subscribe(channelName: mainChannel, option: subOptions){
+            if error == nil {
+                return true
+            }
+            return false
+        }
+        
+        return false
+    }
+    
+    // Publish New Drawing with Channel Message (bc new Drawing can be larger than 1KB)
     func publishNewDrawing(drawing: Drawing) async -> Bool{
+        let pubOptions = AgoraRtmPublishOptions()
+        pubOptions.customType = NewDrawingType
+        pubOptions.channelType = .message
+
         if let newDrawingString = convertObjectToJsonString(object: drawing){
-            if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: NewDrawingTopic, message: newDrawingString, option: nil) {
+            if let (_, error) = await agoraRtmKit?.publish(channelName: mainChannel, message: newDrawingString, option: pubOptions) {
                 if error == nil {
-                    // Publish successful
+                    return true
                 }else {
                     print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
@@ -112,12 +133,14 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         }
         return false
     }
-    
+
+    // Publish new drawing points
     func publishDrawingUpdate(newPoint: DrawingPoint) async -> Bool{
         if let newDrawingPointString = convertObjectToJsonString(object: newPoint){
             if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: UpdateDrawingTopic, message: newDrawingPointString, option: nil) {
                 if error == nil {
                     // Publish successful
+                    return true
                 }else {
                     print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
@@ -127,18 +150,57 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
             return false
         }
         return false
-        
     }
     
-    func saveDrawingToStorage(drawing: Drawing) async -> Bool {
+    // Publish delete single drawing
+    func publishDeleteDrawing(drawingID: UUID) async -> Bool {
+        if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteDrawingTopic, message: drawingID.uuidString, option: nil) {
+            if error == nil {
+                print("Bac's publishDeleteDrawing Success")
+
+                // Publish successful
+                return true
+            }else {
+                print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
+
+               return false
+            }
+        }
         
         return false
     }
     
+    // Publish delete ALL drawings
+    @MainActor
+    func publishDeleteAllDrawing() async -> Bool {
+        if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteAllDrawingTopic, message: "yes", option: nil) {
+            if error == nil {
+                print("Bac's publishDeleteDrawing Success")
+                Task {
+                    await MainActor.run {
+                        drawings.removeAll()
+                    }
+                }
+                return true
+            }else {
+                print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
+
+               return false
+            }
+        }
+        
+        return false
+    }
+    
+    func saveDrawingToStorage(drawing: Drawing) async -> Bool {
+        return false
+    }
+    
     func getDrawingsFromStorage() async -> Bool {
-        if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .stream) {
+        if let (_, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .stream) {
             if error == nil {
                 // Get Successful, do here
+                return true
             }else {
                 print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                 return false
@@ -148,13 +210,13 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                 
         return false
     }
+    
     // Pre-join some topics
     func preJoinSubTopics() async {
-//        for topic in defaultTopics {
+        for topic in [UpdateDrawingTopic, DeleteDrawingTopic, DeleteAllDrawingTopic] {
             // Join as publisher first, if success then subscribe
-            let _ = await JoinAndSubTopic(topic: NewDrawingTopic)
-            let _ = await JoinAndSubTopic(topic: UpdateDrawingTopic)
-//        }
+            let _ = await JoinAndSubTopic(topic: topic)
+        }
     }
     
     // Join a single topic as publisher
@@ -216,7 +278,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         let subscribeTopicOptions = AgoraRtmTopicOption()
         subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
         
-        for topic in [NewDrawingTopic, UpdateDrawingTopic] {
+        for topic in [UpdateDrawingTopic, DeleteDrawingTopic, DeleteAllDrawingTopic]  {
             if let (_, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
                 if error == nil {
                     // Subscribe success
@@ -249,19 +311,24 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
 extension WhiteBoardViewModel: AgoraRtmClientDelegate {
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
-        print("Bac's didReceiveMessageEvent msg = \(event.message.stringData ?? "Empty") from \(event.publisher) type \(String(describing: event.customType))")
+//        print("Bac's didReceiveMessageEvent msg = \(event.message.stringData ?? "Empty") from \(event.publisher) Topic \(String(describing: event.channelTopic))")
         
         switch event.channelType {
         case .message:
-            break
-        case .stream:
-            if event.channelTopic == NewDrawingTopic {
+            print("Bac's didReceiveMessageEvent new drawing \(event.message.stringData ?? "Empty")")
+
+            if event.customType == NewDrawingType {
                 // Received new drawing,
                 if let jsonString = event.message.stringData, let newDrawing = convertJsonStringToObject(jsonString: jsonString, objectType: Drawing.self) {
                     print("Bac's didReceiveMessageEvent new drawing is \(jsonString)")
                     drawings.append(newDrawing)
                 }
-            }else if event.channelTopic == UpdateDrawingTopic {
+            }
+            break
+        case .stream:
+            switch event.channelTopic {
+    
+            case UpdateDrawingTopic:
                 if let jsonString = event.message.stringData, let newDrawingPoint = convertJsonStringToObject(jsonString: jsonString, objectType: DrawingPoint.self) {
                     print("Bac's didReceiveMessageEvent new drawing point is \(jsonString)")
                     if let index = drawings.firstIndex(where: {$0.id == newDrawingPoint.id}) {
@@ -272,6 +339,26 @@ extension WhiteBoardViewModel: AgoraRtmClientDelegate {
                         print("Bac's didReceiveMessageEvent UID NOT FOUND")
                     }
                 }
+                break
+            case DeleteDrawingTopic:
+                print("Bac's code DeleteDrawingTopic \(event.message.stringData ?? "")")
+                if let convertedUUID = UUID(uuidString: event.message.stringData ?? "") {
+                    if let index = drawings.firstIndex(where: {$0.id == convertedUUID}) {
+                        print("Bac's code DeleteDrawingTopic reached inside")
+                        drawings.remove(at: index)
+                    }
+                }
+                break
+                
+            case DeleteAllDrawingTopic:
+                Task {
+                    await MainActor.run {
+                        drawings.removeAll()
+                    }
+                }
+                break;
+            default:
+                break
             }
             break
         case .user:

@@ -18,7 +18,7 @@ struct Drawing: Identifiable, Codable {
     var id: UUID  = UUID()
     var points: [CGPoint] = [CGPoint]()
     var color: Color = .black
-    var lineWidth: CGFloat = 3
+    var lineWidth: CGFloat = 5
     
     init() {}
     
