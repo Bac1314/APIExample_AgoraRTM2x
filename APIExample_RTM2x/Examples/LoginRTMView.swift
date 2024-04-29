@@ -176,7 +176,7 @@ struct LoginRTMView: View {
                     
                 }
             }
-            .toolbar(content: {
+//            .toolbar(content: {
 //                ToolbarItem(placement: .topBarTrailing){
 //                    Button(action: {
 //                        // TODO: REMOVE BEFORE PUBLISHING
@@ -191,7 +191,7 @@ struct LoginRTMView: View {
 //                        Text("Internal Testing")
 //                    })
 //                }
-            })
+//            })
         }
     }
 }

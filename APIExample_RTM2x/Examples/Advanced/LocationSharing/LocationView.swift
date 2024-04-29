@@ -68,15 +68,15 @@ struct LocationView: View {
                     
                 }
                 
+                VStack {
+                    Spacer()
+                    // MARK: Show login user and channel
+                    Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
+                        .minimumScaleFactor(0.8)
+                }
             }
             
             
-            VStack {
-                Spacer()
-                // MARK: Show login user and channel
-                Text("Username: \(agoraRTMVM.userID) | Channel: \(agoraRTMVM.mainChannel)")
-                    .minimumScaleFactor(0.8)
-            }
             
             // MARK: SHOW CUSTOM ALERT
             if showAlert {

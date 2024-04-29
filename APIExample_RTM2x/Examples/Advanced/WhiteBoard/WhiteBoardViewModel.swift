@@ -30,10 +30,12 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     // For Stream Channel
     let UpdateDrawingTopic = "updateDrawing"
     let DeleteDrawingTopic = "deleteDrawing"
-    let DeleteAllDrawingTopic = "deleteAllDrawings"
-
+    let DeleteAllDrawingTopic = "deleteAll"
     
     @Published var drawings: [Drawing] = [Drawing]()
+    
+    // MARK: TESTING
+    @Published var fails: Int = 0
     
     @MainActor
     func loginRTM() async throws {
@@ -126,7 +128,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                 if error == nil {
                     return true
                 }else {
-                    print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
+                    fails += 1
                     return false
                 }
             }
@@ -142,6 +144,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                     // Publish successful
                     return true
                 }else {
+                    fails += 1
                     print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
                 }
@@ -156,13 +159,11 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     func publishDeleteDrawing(drawingID: UUID) async -> Bool {
         if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteDrawingTopic, message: drawingID.uuidString, option: nil) {
             if error == nil {
-                print("Bac's publishDeleteDrawing Success")
-
                 // Publish successful
                 return true
             }else {
-                print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
-
+                // Publish failed
+                fails += 1
                return false
             }
         }
@@ -183,6 +184,8 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                 }
                 return true
             }else {
+                fails += 1
+
                 print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
 
                return false

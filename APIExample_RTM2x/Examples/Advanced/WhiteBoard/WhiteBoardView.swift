@@ -79,20 +79,10 @@ struct WhiteBoardView: View {
                         break
                     }
                 }
-//                .onChange(of: currentDrawing.points) { oldValue, newValue in
-//                    if newValue.count == 1 {
-//                        Task {
-//                            await agoraRTMVM.publishNewDrawing(drawing: currentDrawing)
-//                        }
-//                    }
-//                    else if newValue.count > 1 {
-//                        if let newPoint = currentDrawing.points.last {
-//                            Task {
-//                                await agoraRTMVM.publishDrawingUpdate(newPoint: DrawingPoint(id: currentDrawing.id, point:  newPoint))
-//                            }
-//                        }
-//
-//                    }
+                
+//                VStack{
+//                    Text("Fails # \(agoraRTMVM.fails)")
+//                    Spacer()
 //                }
             }
             
