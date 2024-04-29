@@ -88,13 +88,13 @@ struct WhiteBoardView: View {
                 }
                 
                 // TESTING
-                VStack{
-                    Text("Fails # \(agoraRTMVM.fails)")
-                        .onTapGesture {
-                            print(agoraRTMVM.drawings)
-                        }
-                    Spacer()
-                }
+//                VStack{
+//                    Text("Fails # \(agoraRTMVM.fails)")
+//                        .onTapGesture {
+//                            print(agoraRTMVM.drawings)
+//                        }
+//                    Spacer()
+//                }
 
             }
             
