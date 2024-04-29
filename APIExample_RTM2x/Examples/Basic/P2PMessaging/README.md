@@ -115,6 +115,7 @@ func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmM
 - API Reference (https://docs.agora.io/en/signaling/reference/api?platform=ios)
 - Pricing (https://docs.agora.io/en/signaling/overview/pricing?platform=ios)
 - API Limitations (https://docs.agora.io/en/signaling/reference/limitations?platform=android)
+- Security/Compliance (https://docs.agora.io/en/signaling/reference/security?platform=android) 
 
 
 

@@ -13,9 +13,10 @@ enum CanvasTool: String {
 
 enum CanvasAction {
     case delete(UUID)
-    case submitNew(Drawing)
     case update(DrawingPoint)
     case move(DrawingPoint)
+    case submitNewDrawing(Drawing) // Can be empty points (just drawing) or full of points (for moving drawing)
+    case submitFinishedDrawing(Drawing)
 }
 
 struct Canvas: View {
@@ -68,7 +69,7 @@ struct Canvas: View {
                                         
                                         // Update currentDrawing with new moving points
                                         currentDrawing.points = drawing.points.map { point in
-                                            CGPoint(x: point.x + xOffset, y: point.y + yOffset)
+                                            CGPoint(x: point.x + xOffset, y: point.y + yOffset).roundTo2Decimals()
                                         }
                                     }
                                 }
@@ -76,7 +77,8 @@ struct Canvas: View {
                                     if selectedTool == .select {
                                         if let index = drawings.firstIndex(where: {$0.id == drawing.id}) {
                                             self.onCanvasUserAction?(.delete(drawings[index].id))
-                                            self.onCanvasUserAction?(.submitNew(currentDrawing))
+                                            self.onCanvasUserAction?(.submitNewDrawing(currentDrawing)) // To send to remote user
+                                            self.onCanvasUserAction?(.submitFinishedDrawing(currentDrawing)) // For local to update to cloud
                                             
                                             drawings.remove(at: index)
                                             drawings.append(currentDrawing)
@@ -102,11 +104,11 @@ struct Canvas: View {
                     DragGesture(minimumDistance: 0.1)
                         .onChanged { value in
                             if selectedTool == .pen {
-                                let currentPoint = value.location
+                                let currentPoint = value.location.roundTo2Decimals()
                                 currentDrawing.points.append(currentPoint)
 
                                 if currentDrawing.points.count == 1 {
-                                    self.onCanvasUserAction?(.submitNew(currentDrawing))
+                                    self.onCanvasUserAction?(.submitNewDrawing(currentDrawing))
                                 }else {
                                     self.onCanvasUserAction?(.update(DrawingPoint(id: currentDrawing.id, point: currentPoint)))
                                 }
@@ -114,6 +116,7 @@ struct Canvas: View {
                         }
                         .onEnded { value in
                             if selectedTool == .pen {
+                                self.onCanvasUserAction?(.submitFinishedDrawing(currentDrawing))
                                 drawings.append(currentDrawing)
                                 currentDrawing = Drawing()
                                 currentDrawing.color = selectedColor

@@ -205,7 +205,7 @@ class BiddingViewModel: NSObject, ObservableObject {
     }
     
     @MainActor
-    func UpdateAuction(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
+    func UpdateAuctionFromRemoteUsers(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
         // When auction is updated
         
         if let auctionName = metadataItems.first(where: {$0.key == "auctionName"})?.value, let auctionStartingPrice = Int(metadataItems.first(where: {$0.key == "startingPrice"})?.value ?? "0") {
@@ -302,7 +302,7 @@ extension BiddingViewModel: AgoraRtmClientDelegate {
 
                 Task {
                     await MainActor.run {
-                        UpdateAuction(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
+                        UpdateAuctionFromRemoteUsers(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
                     }
                 }
             }

@@ -17,7 +17,7 @@ This sample demonstrates the implementation of Agora RTM stream channels, which 
 
 | Subscribe features | Description |
 | --- | --- |
-| `.stream` | Callback to receive topic messages |
+| (stream topics) | Callback to receive topic messages |
 | `.presence` | Callback to get the users states (e.g join/leave/userstates) of a channel |
 
 
@@ -204,6 +204,7 @@ if let (response, error) = await agoraStreamChannel?.subscribeTopic(topic, optio
 - API Reference (https://docs.agora.io/en/signaling/reference/api?platform=ios)
 - Pricing (https://docs.agora.io/en/signaling/overview/pricing?platform=ios)
 - API Limitations (https://docs.agora.io/en/signaling/reference/limitations?platform=android)
+- Security/Compliance (https://docs.agora.io/en/signaling/reference/security?platform=android) 
 
 
 

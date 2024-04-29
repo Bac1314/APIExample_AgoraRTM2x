@@ -24,18 +24,21 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     @Published var tokenRTC: String = ""
     var agoraStreamChannel: AgoraRtmStreamChannel? = nil
 
-    // For Channel Message
+    // For Channel Channel, Key for new Drawing
     let NewDrawingType = "newDrawing"
     
-    // For Stream Channel
-    let UpdateDrawingTopic = "updateDrawing"
-    let DeleteDrawingTopic = "deleteDrawing"
-    let DeleteAllDrawingTopic = "deleteAll"
+    // For Stream Channel, Keys for update and deleting drawing
+    let UpdateDrawingTopic = "UpdateDrawing"
+    let DeleteDrawingTopic = "DeleteDrawing"
+    let DeleteAllDrawingTopic = "DeleteAllDrawing"
+    
+    // For Storage, Keys for storing metadata
+    let StorageDrawingKey = "storageDrawingKey"
     
     @Published var drawings: [Drawing] = [Drawing]()
     
-    // MARK: TESTING
-    @Published var fails: Int = 0
+//    // MARK: TESTING
+//    @Published var fails: Int = 0
     
     @MainActor
     func loginRTM() async throws {
@@ -126,9 +129,11 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         if let newDrawingString = convertObjectToJsonString(object: drawing){
             if let (_, error) = await agoraRtmKit?.publish(channelName: mainChannel, message: newDrawingString, option: pubOptions) {
                 if error == nil {
+                    // Publish successful, save drawing to Agora Storage
+                    
                     return true
                 }else {
-                    fails += 1
+//                    fails += 1
                     return false
                 }
             }
@@ -144,7 +149,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                     // Publish successful
                     return true
                 }else {
-                    fails += 1
+//                    fails += 1
                     print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
                     return false
                 }
@@ -154,16 +159,18 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         }
         return false
     }
+
     
     // Publish delete single drawing
     func publishDeleteDrawing(drawingID: UUID) async -> Bool {
         if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteDrawingTopic, message: drawingID.uuidString, option: nil) {
             if error == nil {
                 // Publish successful
+                let _ = await saveDrawingsToStorage() // Resave current savings to cloud
                 return true
             }else {
                 // Publish failed
-                fails += 1
+//                fails += 1
                return false
             }
         }
@@ -181,10 +188,11 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                     await MainActor.run {
                         drawings.removeAll()
                     }
+                    let _ = await deleteAllDrawingsFromStorage() // Delete All drawings from storage
                 }
                 return true
             }else {
-                fails += 1
+//                fails += 1
 
                 print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
 
@@ -192,25 +200,6 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
             }
         }
         
-        return false
-    }
-    
-    func saveDrawingToStorage(drawing: Drawing) async -> Bool {
-        return false
-    }
-    
-    func getDrawingsFromStorage() async -> Bool {
-        if let (_, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .stream) {
-            if error == nil {
-                // Get Successful, do here
-                return true
-            }else {
-                print("Bac's publishToTopic failed topic \(UpdateDrawingTopic) error \(String(describing: error))")
-                return false
-            }
-        }
-        
-                
         return false
     }
     
@@ -307,11 +296,86 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         return false
     }
     
+    // Storage Methods
+    func saveDrawingsToStorage() async -> Bool {
+        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
+        guard let drawingsString = convertObjectToJsonString(object: drawings) else {
+            print("Bac's saveDrawingsToStorage failed to convertObjectoString")
+            return false}
+        
+        print("Bac's saveDrawingsToStorage success \(drawingsString)")
+
+        let metaDataItem: AgoraRtmMetadataItem = AgoraRtmMetadataItem()
+        metaDataItem.key = StorageDrawingKey
+        metaDataItem.value = drawingsString
+        metaData.setMetadataItem(metaDataItem)
+        
+        if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: AgoraRtmMetadataOptions(), lock: nil) {
+            if error == nil {
+                print("Bac's saveDrawingsToStorage saving success")
+
+                return true
+            }else {
+//                fails += 1
+                print("Bac's saveDrawingsToStorage saving failed")
+
+                return false
+            }
+        }
+        
+        return false
+    }
+    
+    func getDrawingsFromStorage() async -> Bool {
+        if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message) {
+            if error == nil {
+                // Get Successful, do here
+                print("Bac's getDrawingsFromStorage success error")
+
+                guard let drawingsString = response?.data?.getItems().first(where: {$0.key == StorageDrawingKey})?.value else {return false}
+                
+                print("Bac's getDrawingsFromStorage drawingsString \(drawingsString)")
+
+                
+                let newDrawings = convertJsonStringToObject(jsonString: drawingsString, objectType: [Drawing].self) ?? []
+                Task {
+                    await MainActor.run {
+                        drawings = newDrawings
+                    }
+                }
+                return true
+            }else {
+                print("Bac's getDrawingsFromStorage failed error \(String(describing: error))")
+                return false
+            }
+        }
+        
+                
+        return false
+    }
+    
+    func deleteAllDrawingsFromStorage() async -> Bool {
+        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
+
+        if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
+            if error == nil {
+                // Delete Successful
+                return true
+            }else {
+                // Delete failed
+                return false
+            }
+        }
+        
+        return false
+    }
     
 
 }
 
 extension WhiteBoardViewModel: AgoraRtmClientDelegate {
+    
+    
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
 //        print("Bac's didReceiveMessageEvent msg = \(event.message.stringData ?? "Empty") from \(event.publisher) Topic \(String(describing: event.channelTopic))")

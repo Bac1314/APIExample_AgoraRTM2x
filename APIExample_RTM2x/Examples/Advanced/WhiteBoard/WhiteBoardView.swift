@@ -38,6 +38,7 @@ struct WhiteBoardView: View {
                             let _ = await agoraRTMVM.subscribeChannel()
                             await agoraRTMVM.createAndJoinStreamChannel()
                             await agoraRTMVM.preJoinSubTopics()
+                            let _ = await agoraRTMVM.getDrawingsFromStorage()
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -63,10 +64,16 @@ struct WhiteBoardView: View {
                             let _ = await agoraRTMVM.publishDeleteDrawing(drawingID: uuid)
                         }
                         break
-                    case .submitNew(let newDrawing):
+                    case .submitNewDrawing(let newDrawing):
                         Task {
                             // Publish new drawing to remote users
                             let _ = await agoraRTMVM.publishNewDrawing(drawing: newDrawing)
+                        }
+                        break
+                    case .submitFinishedDrawing(let newDrawing):
+                        Task {
+                            // Save new finished drawing to Storage
+                            let _ = await agoraRTMVM.saveDrawingsToStorage()
                         }
                         break
                     case .update(let drawingPoint):
@@ -80,10 +87,15 @@ struct WhiteBoardView: View {
                     }
                 }
                 
-//                VStack{
-//                    Text("Fails # \(agoraRTMVM.fails)")
-//                    Spacer()
-//                }
+                // TESTING
+                VStack{
+                    Text("Fails # \(agoraRTMVM.fails)")
+                        .onTapGesture {
+                            print(agoraRTMVM.drawings)
+                        }
+                    Spacer()
+                }
+
             }
             
             // MARK: SHOW CUSTOM ALERT

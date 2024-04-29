@@ -117,7 +117,7 @@ The list of samples and what feature is used
 | [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame/)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
 | [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding/)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
 | [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing/)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
-
+| [Whiteboard](APIExample_RTM2x/Examples/Advanced/WhiteBoard/)          | Real-time whiteboard collaboration tool  | Message, Stream             | `.message`, `.presence`             |
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
