@@ -58,6 +58,8 @@
 		29AFACA72BD0FB0200088381 /* Arch_LocationSharing.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */; };
 		29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */; };
 		29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */; };
+		29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */; };
+		29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */; };
 		29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E601092BD8A59B00D69079 /* Canvas.swift */; };
 		29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */; };
 		29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */; };
@@ -119,6 +121,8 @@
 		29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_LocationSharing.png; sourceTree = "<group>"; };
 		29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingViewModel.swift; sourceTree = "<group>"; };
 		29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStreamTopic.swift; sourceTree = "<group>"; };
+		29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageView.swift; sourceTree = "<group>"; };
+		29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		29E601092BD8A59B00D69079 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardView.swift; sourceTree = "<group>"; };
 		29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardViewModel.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 				296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */,
 				296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */,
 				296CC12E2BAAE070006E14F5 /* MessageItemFullView.swift */,
+				29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */,
 				296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */,
 				292CDB252BBC10C700505913 /* CustomAlert.swift */,
 			);
@@ -317,6 +322,7 @@
 				297F800B2BA440120057200A /* APIRequest.swift */,
 				297F80132BA44C300057200A /* GlobalVariables.swift */,
 				292CDB1D2BBA66C600505913 /* GlobalTools.swift */,
+				29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -511,6 +517,7 @@
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
+				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
@@ -538,6 +545,7 @@
 				297F800C2BA440120057200A /* APIRequest.swift in Sources */,
 				292CDB202BBA94D100505913 /* CustomPoll.swift in Sources */,
 				297003052BB66FBB00B6681A /* CustomRTMChannel.swift in Sources */,
+				29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */,
 				296CC13E2BAC0397006E14F5 /* LoginRTMView.swift in Sources */,
 				29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */,
 			);

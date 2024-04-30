@@ -18,13 +18,13 @@ struct ChannelMessagingView: View {
     
     // First channelName
     @State var channelName: String = "ChannelA"
-
+    
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
     @State var presentAlertSubscribe = false
     @State var newChannelName = ""
-        
+    
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
@@ -68,7 +68,7 @@ struct ChannelMessagingView: View {
                                 
                                 // Number of users
                                 Label("\(channel.listOfUsers.count)x", image: "person.2")
-                     
+                                
                             }
                             .padding(24)
                             .background(Color.gray.opacity(0.2))
@@ -77,13 +77,13 @@ struct ChannelMessagingView: View {
                         }
                     }
                     .listStyle(.plain)
-//                    .task {
-//                        if agoraRTMVM.customRTMChannelList.count == 0 {
-//                            // When user first the screen, subscribe to a couple random channels
-//                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelA")
-//                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelB")
-//                        }
-//                    }
+                    //                    .task {
+                    //                        if agoraRTMVM.customRTMChannelList.count == 0 {
+                    //                            // When user first the screen, subscribe to a couple random channels
+                    //                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelA")
+                    //                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelB")
+                    //                        }
+                    //                    }
                     
                     
                     // Displayed Logged in Username
@@ -115,7 +115,7 @@ struct ChannelMessagingView: View {
                 }, message: {
                     Text("Subscribe to another channel")
                 })
-
+                
             }
             
             // MARK: SHOW CUSTOM ALERT
@@ -152,6 +152,8 @@ struct ChannelMessagingView: View {
             }
         }
     }
+    
+    
 }
 
 
@@ -161,61 +163,128 @@ struct ChannelMessagingDetailedView: View {
     @EnvironmentObject var agoraRTMVM: ChannelMessagingViewModel
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedChannel: String = ""
-    @State var message: String = ""
+    @State var newMessage: String = ""
     
+    // To display loaded images
+    @State var presentFullImage: Bool = false
+    @State var selectedImage: Data?
+    
+    // To display user selected image
+    @State var presentImagePicker = false
+    @State var userSelectedImage: UIImage?
+
     
     var body: some View {
         // List of messages
-        VStack {
-            // MARK: DISPLAY LIST OF MESSAGES
-            ScrollViewReader {proxy in
-                ScrollView{
-                    ForEach(agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.channelMessages ?? [], id: \.self) { message in
-                        if message.publisher == agoraRTMVM.userID {
-                            MessageItemLocalView(from: "\(message.publisher) \(message.channelTopic)", message: "\(message.message.stringData ?? "")")
-                                .listRowSeparator(.hidden)
-                                .listItemTint(.clear)
-                        }else{
-                            MessageItemRemoteView(from: "\(message.publisher) \(message.channelTopic)", message: "\(message.message.stringData ?? "")")
-                                .listRowSeparator(.hidden)
-                                .listItemTint(.clear)
+        ZStack {
+            VStack {
+                // MARK: DISPLAY LIST OF MESSAGES
+                ScrollViewReader {proxy in
+                    ScrollView{
+                        ForEach(agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.channelMessages ?? [], id: \.self) { event in
+                            if event.publisher == agoraRTMVM.userID {
+                                MessageItemLocalView(from: "\(event.publisher) \(event.channelTopic)", message: event.message.stringData, imageData: event.message.rawData)
+                                    .listRowSeparator(.hidden)
+                                    .listItemTint(.clear)
+                                    .onTapGesture {
+                                        if let imageData = event.message.rawData {
+                                            withAnimation {
+                                                selectedImage = imageData
+                                                presentFullImage.toggle()
+                                            }
+                                        }
+                                    }
+                                
+                            }else{
+                                MessageItemRemoteView(from: "\(event.publisher) \(event.channelTopic)", message: event.message.stringData, imageData: event.message.rawData)
+                                    .listRowSeparator(.hidden)
+                                    .listItemTint(.clear)
+                                    .onTapGesture {
+                                        if let imageData = event.message.rawData {
+                                            withAnimation {
+                                                selectedImage = imageData
+                                                presentFullImage.toggle()
+                                            }
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                    .onChange(of: agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.channelMessages.count ?? 0) { oldValue, newValue in
+                        withAnimation {
+                            if newValue != 0 {
+                                proxy.scrollTo(newValue-1)
+                            }
                         }
                     }
                 }
-                .onChange(of: agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.channelMessages.count ?? 0) { oldValue, newValue in
-                    withAnimation {
-                        if newValue != 0 {
-                            proxy.scrollTo(newValue-1)
-                        }
-                    }
-                }
-            }
-            
-            // MARK: SEND MESSAGE VIEW
-            HStack{
-                TextField("Enter Message", text: $message)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($keyboardIsFocused)
                 
-                Button(action: {
-                    Task{
-                        keyboardIsFocused = false // dismiss keyboard
-                        let result = await agoraRTMVM.publishToChannel(channelName: selectedChannel, messageString: message, customType: nil)
-                        
-                        if result {
-                            message = "" // clear text
+                // MARK: SEND MESSAGE VIEW
+                HStack{
+                    // Image button
+                    Button(action: {
+                        withAnimation {
+                            presentImagePicker.toggle()
+                        }
+                    }, label: {
+                        Image(systemName: "photo")
+                            .foregroundColor(Color.white)
+                            .textCase(.lowercase)
+                            .padding(4)
+                            .background(Color.accentColor)
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 4, height: 4)))
+                    })
+                    
+                    
+                    TextField("Enter Message", text: $newMessage)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($keyboardIsFocused)
+                    
+                    Button(action: {
+                        Task{
+                            keyboardIsFocused = false // dismiss keyboard
+                            let result = await agoraRTMVM.publishToChannel(channelName: selectedChannel, messageString: newMessage)
+                            
+                            if result {
+                                newMessage = "" // clear text
+                            }
+                        }
+                    }, label: {
+                        Text("Publish")
+                    })
+                    .buttonStyle(.bordered)
+                    .disabled(selectedChannel.isEmpty || newMessage.isEmpty)
+                }
+                .padding(.bottom)
+            }
+            .padding(.horizontal)
+            .navigationTitle("\(selectedChannel) (\(agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.listOfUsers.count ?? 0))")
+            .sheet(isPresented: $presentImagePicker, onDismiss: loadImage) {
+                ImagePicker(selectedImage: $userSelectedImage, resize400Width: true)
+                 }
+            .disabled(presentFullImage)
+            .blur(radius: presentFullImage ? 8 : 0)
+            
+            // MARK: Display full image
+            if presentFullImage {
+                FullImageView(imageData: selectedImage)
+                    .padding()
+                    .onTapGesture {
+                        withAnimation {
+                            presentFullImage.toggle()
                         }
                     }
-                }, label: {
-                    Text("Publish")
-                })
-                .buttonStyle(.bordered)
-                .disabled(selectedChannel.isEmpty || message.isEmpty)
             }
         }
-        .padding(.horizontal)
-        .navigationTitle("\(selectedChannel) (\(agoraRTMVM.customRTMChannelList.first(where: {$0.channelName == selectedChannel})?.listOfUsers.count ?? 0))")
+        
+    }
     
+    func loadImage() {
+        Task {
+            if let image = userSelectedImage {
+                let result = await agoraRTMVM.publishImageToChannel(channelName: selectedChannel, image: image)
+            }
+        }
     }
     
 }
@@ -224,4 +293,7 @@ struct ChannelMessagingDetailedView: View {
 #Preview {
     ChannelMessagingView()
         .environmentObject(ChannelMessagingViewModel())
+    
+//    ChannelMessagingDetailedView()
+//        .environmentObject(ChannelMessagingViewModel())
 }

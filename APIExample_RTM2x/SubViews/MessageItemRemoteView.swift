@@ -10,7 +10,8 @@ import SwiftUI
 
 struct MessageItemRemoteView: View {
     var from: String
-    var message: String
+    var message: String?
+    var imageData: Data?
     
     var body: some View {
         HStack{
@@ -19,11 +20,24 @@ struct MessageItemRemoteView: View {
             VStack(alignment: .trailing){
                 Text(from)
                     .foregroundStyle(Color.accentColor)
-                Text(message)
-                    .padding(10)
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(16)
+                
+                // Display text
+                if let message = message  {
+                    Text(message)
+                        .padding(10)
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(16)
+                }
+                
+                // Display image
+                if let imageData = imageData, let img = UIImage(data: imageData) {
+                    Image(uiImage: img)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 100)
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
+                }
             }
             
             Image(systemName: "person")

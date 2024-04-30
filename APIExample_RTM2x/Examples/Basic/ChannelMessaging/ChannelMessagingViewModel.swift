@@ -17,7 +17,9 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
     @Published var customRTMChannelList: [CustomRTMChannel] = [] // Show list of subscribed channels (list of messages, last message, userList)
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
-        
+    
+    let channelTypeImage = "imageType"
+    
     @MainActor
     func loginRTM() async throws {
         do {
@@ -75,8 +77,8 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
         
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
-    
-                
+        
+        
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
                 //subscribe success
@@ -92,10 +94,9 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
     }
     
     // Publish to channel in 'MessageChannel'
-    @MainActor
-    func publishToChannel(channelName: String, messageString: String, customType: String?) async -> Bool{
+    func publishToChannel(channelName: String, messageString: String) async -> Bool{
         let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customType ?? ""
+        //        pubOptions.customType = customType ?? ""
         pubOptions.channelType = .message
         
         
@@ -112,11 +113,15 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
                     temp.message.stringData = messageString
                     temp.publisher = userID
                     
-                    customRTMChannelList[index].channelMessages.append(temp)
-                    customRTMChannelList[index].lastMessage = messageString
-
+                    Task {
+                        await MainActor.run {
+                            customRTMChannelList[index].channelMessages.append(temp)
+                            customRTMChannelList[index].lastMessage = messageString
+                        }
+                    }
+                    
                 }
-
+                
                 return true
             }else{
                 print("Bac's sendMessageToChannel error \(String(describing: error))")
@@ -127,20 +132,78 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
         return false
     }
     
-//    @MainActor
-//    func getListOfusers(channelName: String) async -> [AgoraRtmUserState] {
-//        let onlineOptions = AgoraRtmGetOnlineUsersOptions()
-//        onlineOptions.includeUserId = true
-//        onlineOptions.includeState = true
-//                
-//        if let (response, error) = await agoraRtmKit?.getPresence()?.getOnlineUser(channelName: channelName, channelType: .message, options: onlineOptions){
-//            if error == nil {
-//                return response?.userStateList ?? []
-//            }
-//        }
-//        
-//        return []
-//    }
+
+    func publishImageToChannel(channelName: String, image: UIImage) async -> Bool{
+        let pubOptions = AgoraRtmPublishOptions()
+        pubOptions.customType = channelTypeImage
+        pubOptions.channelType = .message
+        
+        
+        // Compress the image if it's larger than 32KB
+        var compressionQuality: CGFloat = 1.0
+        var imageData = image.jpegData(compressionQuality: compressionQuality)
+        
+        // Convert Imagedata to less than 32KB
+        while let data = imageData, data.count > 32 * 1024, compressionQuality > 0 {
+            compressionQuality -= 0.1
+            imageData = image.jpegData(compressionQuality: compressionQuality)
+            print("Bac's publishImageToChannel imageData size \(Double(imageData?.count ?? 0)/1024)KB")
+        }
+
+
+        if let imageData = imageData, imageData.count <= 32 * 1024 {
+            if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, data: imageData, option: pubOptions){
+                if error == nil {
+                    if let index = customRTMChannelList.firstIndex(where: { $0.channelName == channelName }) {
+                        // Channel Exist, Add to channel list of messages
+
+                        // MARK: if success, create a local message event for display (bc callback doesn't fire for local send)
+                        let temp = AgoraRtmMessageEvent()
+                        temp.channelType = .message
+                        temp.channelName = channelName
+                        temp.message = AgoraRtmMessage()
+                        temp.customType = channelTypeImage
+                        temp.message.rawData = imageData
+                        temp.publisher = userID
+
+                        Task {
+                            await MainActor.run {
+                                customRTMChannelList[index].channelMessages.append(temp)
+                                customRTMChannelList[index].lastMessage = "Image"
+                            }
+                        }
+            
+                    }
+
+                    return true
+                }else{
+                    print("Bac's sendMessageToChannel error \(String(describing: error))")
+                    return false
+                }
+
+            }
+            return false
+        }else {
+            // Image larger than 32KB
+            return false
+        }
+        
+    }
+    
+    //    @MainActor
+    //    func getListOfusers(channelName: String) async -> [AgoraRtmUserState] {
+    //        let onlineOptions = AgoraRtmGetOnlineUsersOptions()
+    //        onlineOptions.includeUserId = true
+    //        onlineOptions.includeState = true
+    //
+    //        if let (response, error) = await agoraRtmKit?.getPresence()?.getOnlineUser(channelName: channelName, channelType: .message, options: onlineOptions){
+    //            if error == nil {
+    //                return response?.userStateList ?? []
+    //            }
+    //        }
+    //
+    //        return []
+    //    }
 }
 
 extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
@@ -156,7 +219,7 @@ extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
                 Task {
                     await MainActor.run {
                         customRTMChannelList[index].channelMessages.append(event)
-                        customRTMChannelList[index].lastMessage = event.message.stringData ?? ""
+                        customRTMChannelList[index].lastMessage = event.message.stringData ?? "Image"
                     }
                 }
             }
@@ -176,18 +239,18 @@ extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceivePresenceEvent event: AgoraRtmPresenceEvent) {
         print("Bac's didReceivePresenceEvent channelType \(event.channelType) publisher \(String(describing: event.publisher)) channel \(event.channelName) type \(event.type) ")
         // Check channelIndex exists.
-        guard let channeIndex = customRTMChannelList.firstIndex(where: { $0.channelName == event.channelName }) else { 
+        guard let channeIndex = customRTMChannelList.firstIndex(where: { $0.channelName == event.channelName }) else {
             print("Bac's didReceivePresenceEvent channelIndex doesn't exist ")
-
+            
             return }
         
         if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
-        // A remote user left the channel
+            // A remote user left the channel
             guard let userIndex = customRTMChannelList[channeIndex].listOfUsers.firstIndex(where: { $0.userId == event.publisher}) else { return }
             customRTMChannelList[channeIndex].listOfUsers.remove(at: userIndex) // Remove user from list
             
         }else if event.type == .remoteJoinChannel && event.publisher != nil {
-         // A remote user subscribe the channel
+            // A remote user subscribe the channel
             let newUser = AgoraRtmUserState()
             newUser.userId = event.publisher!
             newUser.states = event.states
@@ -195,21 +258,21 @@ extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
             customRTMChannelList[channeIndex].listOfUsers.append(newUser) // Add new user to list
             
         }else if event.type == .snapshot {
-        // Get a snapshot of all the subscribed users' 'presence' data (aka temporary key-value pairs storage)
+            // Get a snapshot of all the subscribed users' 'presence' data (aka temporary key-value pairs storage)
             customRTMChannelList[channeIndex].listOfUsers = event.snapshot
             
         }else if event.type == .remoteStateChanged {
-        // A remote user's 'presence' data was changed
+            // A remote user's 'presence' data was changed
         }
         
     }
-
+    
     // Triggers when connection changes
     func rtmKit(_ kit: AgoraRtmClientKit, channel channelName: String, connectionChangedToState state: AgoraRtmClientConnectionState, reason: AgoraRtmClientConnectionChangeReason) {
         print("Bac's connectionChangedToState \(state) reason \(reason.rawValue)")
         connectionState = connectionState
     }
-
+    
     
 }
 
