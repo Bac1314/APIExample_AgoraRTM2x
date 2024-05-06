@@ -179,8 +179,8 @@
 				296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */,
 				296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */,
 				296CC12E2BAAE070006E14F5 /* MessageItemFullView.swift */,
-				29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */,
 				296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */,
+				29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */,
 				292CDB252BBC10C700505913 /* CustomAlert.swift */,
 			);
 			path = SubViews;

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import AgoraChat
 
 struct MessageItemRemoteView: View {
     var from: String
