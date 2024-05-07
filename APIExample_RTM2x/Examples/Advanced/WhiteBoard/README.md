@@ -15,7 +15,7 @@
 
 This sample showcases how you can build an whiteboard collaborative tool. For the whiteboard, this sample uses SwiftUI's native method to draw. To transfer the whiteboard data, this sample uses both the `message` and `stream` channel types. These 2 types are used to publish different types data. 
 
-- The `message` channelType have a max message size of 64KB and rate of <60 messages per second. This is used to publish new Drawing which can be larger 1KB
+- The `message` channelType have a max message size of 32KB and rate of <60 messages per second. This is used to publish new Drawing which can be larger 1KB
 - The`stream` channelType have a max message size of 1KB, but has a rate of <200 messages per second. This is used to publish new Drawing Point in real-time, which can exceed the 60 message per second. 
 
  
