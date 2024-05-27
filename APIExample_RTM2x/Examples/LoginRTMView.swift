@@ -39,18 +39,18 @@ struct LoginRTMView: View {
                         .padding()
                         .background(
                             LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)
-//                                .rotationEffect(.degrees(degreesRotating))
+                            //                                .rotationEffect(.degrees(degreesRotating))
                         )
                         .foregroundStyle(Color.white.gradient)
                         .cornerRadius(24)
                         .shadow(radius: 5)
-//                        .rotationEffect(.degrees(degreesRotating))
-//                        .onAppear {
-//                            withAnimation(.linear(duration: 1)
-//                                .speed(0.1).repeatForever(autoreverses: false)) {
-//                                    degreesRotating = 360.0
-//                                }
-//                        }
+                    //                        .rotationEffect(.degrees(degreesRotating))
+                    //                        .onAppear {
+                    //                            withAnimation(.linear(duration: 1)
+                    //                                .speed(0.1).repeatForever(autoreverses: false)) {
+                    //                                    degreesRotating = 360.0
+                    //                                }
+                    //                        }
                     Spacer()
                     
                     VStack(alignment: .leading, spacing: 6){
@@ -64,9 +64,9 @@ struct LoginRTMView: View {
                             .padding(12)
                             .background(
                                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-//                                    .fill(Color.gray.opacity(0.1))
+                                //                                    .fill(Color.gray.opacity(0.1))
                                     .stroke(Color.gray, lineWidth: 1.0)
-
+                                
                             )
                     }
                     .padding(.bottom, 8)
@@ -86,7 +86,7 @@ struct LoginRTMView: View {
                             )
                     }
                     .padding(.bottom, 8)
-
+                    
                     
                     VStack(alignment: .leading, spacing: 6){
                         Text("CHANNEL NAME")
@@ -103,7 +103,7 @@ struct LoginRTMView: View {
                             )
                     }
                     .padding(.bottom, 8)
-
+                    
                     
                     if isStreamChannel {
                         VStack(alignment: .leading, spacing: 6){
@@ -121,34 +121,34 @@ struct LoginRTMView: View {
                                 )
                         }
                         .padding(.bottom, 8)
-
-                    
+                        
+                        
                     }
-                
-
+                    
+                    
                     Spacer()
-
                     
                     
-//                    Button {
-//                        isLoading = true
-//                        self.onButtonTap?()
-//                    } label: {
-//                        Text("LOGIN")
-//                    }
+                    
+                    //                    Button {
+                    //                        isLoading = true
+                    //                        self.onButtonTap?()
+                    //                    } label: {
+                    //                        Text("LOGIN")
+                    //                    }
                     Text("LOGIN")
-                    .font(.headline)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundStyle(Color.white)
-                    .background(Color.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .disabled(userID.isEmpty || channelName.isEmpty)
-                    .onTapGesture {
+                        .font(.headline)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundStyle(Color.white)
+                        .background(Color.black)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .disabled(userID.isEmpty || channelName.isEmpty)
+                        .onTapGesture {
                             isLoading = true
                             self.onButtonTap?()
-                    }
+                        }
                     
                     HStack {
                         Text(isStreamChannel ? "" : "Note: Leave token input empty if app certificate is NOT enabled")
@@ -176,22 +176,22 @@ struct LoginRTMView: View {
                     
                 }
             }
-//            .toolbar(content: {
-//                ToolbarItem(placement: .topBarTrailing){
-//                    Button(action: {
-//                        // TODO: REMOVE BEFORE PUBLISHING
-//                        Task {
-//                            isLoading = true
-//                            token = try await Personalize().generateRTMToken(userID: userID)
-//                            streamToken = isStreamChannel ? try await Personalize().generateRTCToken(channelName: "ChannelA") : ""
-//                            isLoading = false
-//                        }
-//                        
-//                    }, label: {
-//                        Text("Internal Testing")
-//                    })
-//                }
-//            })
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarTrailing){
+                    Button(action: {
+                        // TODO: REMOVE BEFORE PUBLISHING
+                        Task {
+                            isLoading = true
+                            token = try await Personalize().generateRTMToken(userID: userID)
+                            streamToken = isStreamChannel ? try await Personalize().generateRTCToken(channelName: "ChannelA") : ""
+                            isLoading = false
+                        }
+                        
+                    }, label: {
+                        Text("Internal Testing")
+                    })
+                }
+            })
         }
     }
 }

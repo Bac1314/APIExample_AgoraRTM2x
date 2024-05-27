@@ -9,7 +9,6 @@ import SwiftUI
 import AgoraRtmKit
 
 struct WhiteBoardView: View {
-    
     // Agora RTM
     @StateObject var agoraRTMVM: WhiteBoardViewModel = WhiteBoardViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button

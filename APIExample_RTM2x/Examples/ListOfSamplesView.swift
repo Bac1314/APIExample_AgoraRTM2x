@@ -23,31 +23,14 @@ struct ListOfSamplesView: View {
         ("Quiz Game", ("checklist", AnyView(QuizGameView(serviceIcon:"checklist")))),
         ("Live Bidding", ("dollarsign.circle", AnyView(BiddingView(serviceIcon:"dollarsign.circle")))),
         ("Location Sharing", ("location.viewfinder", AnyView(LocationView(serviceIcon:"location.viewfinder")))),
-        ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw"))))
+        ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw")))),
+        ("Audio Recording", ("waveform", AnyView(AudioRecordingView(serviceIcon:"waveform"))))
 
     ]
-    
-    
-//    // Rotating logo
-//    @State var degreesRotating = 0.0
     
     var body: some View {
         NavigationStack {
             VStack {
-//                Image(systemName: "bolt.brakesignal")
-//                    .font(.system(size: 50))
-//                    .padding(.top, 20)
-//                    .foregroundStyle(LinearGradient(colors: [Color.accentColor.opacity(0.3), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
-//                    .shadow(radius: 5)
-//                    .rotationEffect(.degrees(degreesRotating))
-//                    .onAppear {
-//                        withAnimation(.linear(duration: 1)
-//                            .speed(0.1).repeatForever(autoreverses: false)) {
-//                                degreesRotating = 360.0
-//                            }
-//                    }
-                
-                
                 Form{
                     // MARK: BASIC SAMPLES
                     Section(header: Text("Basic").font(.title3)) {

@@ -58,6 +58,9 @@
 		29AFACA72BD0FB0200088381 /* Arch_LocationSharing.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */; };
 		29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */; };
 		29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */; };
+		29BDB2872C003AA700BF8AF5 /* AudioRecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2862C003AA700BF8AF5 /* AudioRecordingViewModel.swift */; };
+		29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2882C003AC800BF8AF5 /* AudioRecordingView.swift */; };
+		29BDB28B2C00471200BF8AF5 /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB28A2C00471200BF8AF5 /* AudioMessage.swift */; };
 		29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */; };
 		29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */; };
 		29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E601092BD8A59B00D69079 /* Canvas.swift */; };
@@ -121,6 +124,9 @@
 		29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_LocationSharing.png; sourceTree = "<group>"; };
 		29AFACA92BD10C3000088381 /* StreamMessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingViewModel.swift; sourceTree = "<group>"; };
 		29AFACAF2BD20D3100088381 /* CustomStreamTopic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStreamTopic.swift; sourceTree = "<group>"; };
+		29BDB2862C003AA700BF8AF5 /* AudioRecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingViewModel.swift; sourceTree = "<group>"; };
+		29BDB2882C003AC800BF8AF5 /* AudioRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingView.swift; sourceTree = "<group>"; };
+		29BDB28A2C00471200BF8AF5 /* AudioMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessage.swift; sourceTree = "<group>"; };
 		29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageView.swift; sourceTree = "<group>"; };
 		29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		29E601092BD8A59B00D69079 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -340,11 +346,12 @@
 		297F80082BA43F4E0057200A /* Advanced */ = {
 			isa = PBXGroup;
 			children = (
+				29AFACA22BD0F37700088381 /* LocationSharing */,
 				296CC1372BABE328006E14F5 /* Polling */,
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
-				29AFACA22BD0F37700088381 /* LocationSharing */,
 				29E601082BD8A57800D69079 /* WhiteBoard */,
+				29BDB2852C003A6B00BF8AF5 /* AudioRecording */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -357,6 +364,16 @@
 				29AFAC9F2BD0F37700088381 /* LocationUser.swift */,
 			);
 			path = LocationSharing;
+			sourceTree = "<group>";
+		};
+		29BDB2852C003A6B00BF8AF5 /* AudioRecording */ = {
+			isa = PBXGroup;
+			children = (
+				29BDB2882C003AC800BF8AF5 /* AudioRecordingView.swift */,
+				29BDB2862C003AA700BF8AF5 /* AudioRecordingViewModel.swift */,
+				29BDB28A2C00471200BF8AF5 /* AudioMessage.swift */,
+			);
+			path = AudioRecording;
 			sourceTree = "<group>";
 		};
 		29E601082BD8A57800D69079 /* WhiteBoard */ = {
@@ -505,6 +522,7 @@
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
+				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
@@ -536,6 +554,7 @@
 				296CC1332BABE0E7006E14F5 /* P2PMessagingViewModel.swift in Sources */,
 				29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */,
 				29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */,
+				29BDB28B2C00471200BF8AF5 /* AudioMessage.swift in Sources */,
 				292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */,
 				292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */,
 				297003032BB6656100B6681A /* PollingViewModel.swift in Sources */,
@@ -548,6 +567,7 @@
 				29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */,
 				296CC13E2BAC0397006E14F5 /* LoginRTMView.swift in Sources */,
 				29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */,
+				29BDB2872C003AA700BF8AF5 /* AudioRecordingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +708,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -722,6 +743,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
