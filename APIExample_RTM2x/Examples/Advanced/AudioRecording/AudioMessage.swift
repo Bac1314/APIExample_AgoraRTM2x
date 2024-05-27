@@ -11,5 +11,8 @@ import AVFoundation
 struct AudioMessage : Identifiable, Codable {
     var id: UUID
     var fileName: String
+    var fileURL: URL
     var sender: String
+    var duration: Int // In Seconds
+    // var timestamp: Date
 }

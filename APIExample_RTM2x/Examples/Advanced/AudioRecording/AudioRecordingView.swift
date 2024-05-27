@@ -66,10 +66,15 @@ struct AudioRecordingView: View {
                             .padding()
                     })
                     
-                    ForEach(agoraRTMVM.audioFiles, id: \.self) { audioFile in
-                        Text(audioFile)
+                    ForEach(agoraRTMVM.audioFiles) { audioFile in
+                      
+                        Text("\(audioFile.duration) s")
+                            .padding(10)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(16)
                             .onTapGesture {
-                                agoraRTMVM.playAudio(audioFileName: audioFile)
+                                agoraRTMVM.playAudio(fileURL: audioFile.fileURL)
                             }
                     }
                     

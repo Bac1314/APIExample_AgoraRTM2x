@@ -25,7 +25,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
     //    @Published var listOfRecordingMessages : [AudioMessage] = []
     //    @Published var currentAudioFile = AudioMessage(fileName: "recording.m4a", sender: "")
     @Published var isRecording = false
-    @Published var audioFiles : [String] = []
+    @Published var audioFiles : [AudioMessage] = []
     var audioRecorder: AVAudioRecorder!
 //    var player: AVPlayer?
     var audioPlayer: AVAudioPlayer!
@@ -113,7 +113,6 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
     func toggleRecording() {
         if !isRecording {
             // Start recording
-            //            let audioFilename = getDocumentsDirectory().appendingPathComponent("\(userID)_\(Date().formatted(date: .abbreviated, time: .shortened))_recording.m4a")
             let audioFilename = getDocumentsDirectory().appendingPathComponent("\(userID)_\(Date().timeIntervalSince1970)_recording.m4a")
             
             let settings = [
@@ -122,7 +121,16 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
                 AVNumberOfChannelsKey: 1,
                 AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
             ]
+            
+//            let settings = [
+//                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+//                AVSampleRateKey: 44100,
+//                AVNumberOfChannelsKey: 2,
+//                AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
+//            ]
             do {
+                try AVAudioSession.sharedInstance().setCategory(.record, mode: .default)
+
                 audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
                 audioRecorder.record()
                 isRecording = true
@@ -146,14 +154,24 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             let tempAudioFiles = fileURLs.filter({ $0.pathExtension == "m4a" })
             
             audioFiles.removeAll()
-            
             for audioFile in tempAudioFiles {
-                audioFiles.append(audioFile.lastPathComponent)
-                print("Bac's audio file absolute \(audioFile.absoluteString)")
-                print("Bac's audio file relative \(audioFile.relativePath)")
-                print("Bac's audio file url lastPath \(audioFile.lastPathComponent)")
+//                audioFiles.append(audioFile.lastPathComponent)
+//                print("Bac's audio file absolute \(audioFile.absoluteString)")
+//                print("Bac's audio file relative \(audioFile.relativePath)")
+//                print("Bac's audio file url lastPath \(audioFile.lastPathComponent)")
+                
+                
+                do {
+                    let audioPlayer = try AVAudioPlayer(contentsOf: audioFile)
+                    let duration = audioPlayer.duration
+                    print("Duration of \(audioFile.lastPathComponent): \(duration) seconds")
+                    
+                    let audioMessage = AudioMessage(id: UUID(), fileName: audioFile.lastPathComponent, fileURL: audioFile.absoluteURL, sender: userID, duration: Int(duration)) // Fix sender later with local document/database. right now all files will have sender as owner
+                    audioFiles.append(audioMessage)
+                } catch {
+                    print("Error initializing audio player: \(error)")
+                }
             }
-            print(audioFiles)
         } catch {
             print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
         }
@@ -200,7 +218,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             if fileManager.fileExists(atPath: fileURL.path) {
                 try fileManager.removeItem(at: fileURL)
                 print("File \(fileName) was deleted.")
-                audioFiles.removeAll(where: {$0.contains(fileName)})
+                audioFiles.removeAll(where: {$0.fileName == fileName})
             } else {
                 print("File \(fileName) does not exist.")
             }
@@ -229,12 +247,10 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
     }
     
     
-    func playAudio(audioFileName: String) {
+    func playAudio(fileURL: URL) {
         
-        let documentsURL = getDocumentsDirectory()
-        let fileURL = documentsURL.appendingPathComponent(audioFileName)
-        
-        print("Play audio \(fileURL)")
+//        let documentsURL = getDocumentsDirectory()
+//        let fileURL = documentsURL.appendingPathComponent(audioFileName)
         
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
@@ -243,7 +259,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             audioPlayer.prepareToPlay()
             audioPlayer.play()
         } catch {
-            print("Failed to play audio file \(audioFileName): \(error)")
+            print("Failed to play audio file \(fileURL): \(error)")
         }
     }
     
