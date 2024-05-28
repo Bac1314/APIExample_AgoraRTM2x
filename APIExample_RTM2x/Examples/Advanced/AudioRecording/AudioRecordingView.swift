@@ -20,10 +20,6 @@ struct AudioRecordingView: View {
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
     
-    // To Play audio files
-//    @State private var player: AVPlayer?
-
-    
     var body: some View {
         ZStack(alignment: .center){
             // MARK: LOGIN VIEW
@@ -32,6 +28,7 @@ struct AudioRecordingView: View {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
+                            let _ = await agoraRTMVM.subscribeChannel(channelName: agoraRTMVM.mainChannel)
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -49,33 +46,13 @@ struct AudioRecordingView: View {
             
             // MARK: Main View
             if agoraRTMVM.isLoggedIn {
-                
                 VStack {
-                    Button(action: {
-                        agoraRTMVM.listAllAudioFiles()
-                    }, label: {
-                        Text("List files")
-                            .padding()
-                    })
-                    
-                    
-                    Button(action: {
-                        agoraRTMVM.deleteAllAudioFiles()
-                    }, label: {
-                        Text("Delete All Files")
-                            .padding()
-                    })
-                    
-                    ForEach(agoraRTMVM.audioFiles) { audioFile in
-                      
-                        Text("\(audioFile.duration) s")
-                            .padding(10)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(16)
+                    ForEach(agoraRTMVM.audioMessageInfo) { audioFile in
+                        AudioItemView(audioMessage: audioFile, currentUser: agoraRTMVM.userID)
                             .onTapGesture {
                                 agoraRTMVM.playAudio(fileURL: audioFile.fileURL)
                             }
+
                     }
                     
                     Spacer()
@@ -86,6 +63,11 @@ struct AudioRecordingView: View {
                         Image(systemName: "waveform")
                             .symbolEffect(.bounce, options: .speed(3).repeat(agoraRTMVM.isRecording ? 60 : 0), value: agoraRTMVM.isRecording)
                             .font(.title)
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background(LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
 
                     })
                     
@@ -118,33 +100,20 @@ struct AudioRecordingView: View {
                     }
                 }
             }
+            
+//            ToolbarItem(placement: .topBarTrailing) {
+//                Button(action: {
+//                    agoraRTMVM.deleteAllAudioFiles()
+//                }, label: {
+//                    Text("Delete all files")
+//                        .padding()
+//                })
+//                
+//            }
 
             
         }
     }
-    
-//    
-//    func playAudio(audioFileName: String) {
-//        guard let fileURL = Bundle.main.url(forResource: audioFileName, withExtension: "m4a") else {
-//            return
-//        }
-//        
-//        let playerItem = AVPlayerItem(url: fileURL)
-//        player = AVPlayer(playerItem: playerItem)
-//        player?.play()
-//    }
-//    
-//    func pauseAudio(){
-//        player?.pause()
-//    }
-//    
-//    func resumeAudio() {
-//        player?.play()
-//    }
-//    
-//    func stopAudio() {
-//        player = nil
-//    }
 }
 
 #Preview {

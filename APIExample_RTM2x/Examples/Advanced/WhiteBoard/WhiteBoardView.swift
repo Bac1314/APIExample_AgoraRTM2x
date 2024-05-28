@@ -69,7 +69,7 @@ struct WhiteBoardView: View {
                             let _ = await agoraRTMVM.publishNewDrawing(drawing: newDrawing)
                         }
                         break
-                    case .submitFinishedDrawing(let newDrawing):
+                    case .submitFinishedDrawing(_):
                         Task {
                             // Save new finished drawing to Storage
                             let _ = await agoraRTMVM.saveDrawingsToStorage()

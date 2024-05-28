@@ -282,7 +282,7 @@ struct ChannelMessagingDetailedView: View {
     func loadImage() {
         Task {
             if let image = userSelectedImage {
-                let result = await agoraRTMVM.publishImageToChannel(channelName: selectedChannel, image: image)
+                _ = await agoraRTMVM.publishImageToChannel(channelName: selectedChannel, image: image)
             }
         }
     }

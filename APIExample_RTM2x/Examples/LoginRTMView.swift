@@ -176,22 +176,22 @@ struct LoginRTMView: View {
                     
                 }
             }
-            .toolbar(content: {
-                ToolbarItem(placement: .topBarTrailing){
-                    Button(action: {
-                        // TODO: REMOVE BEFORE PUBLISHING
-                        Task {
-                            isLoading = true
-                            token = try await Personalize().generateRTMToken(userID: userID)
-                            streamToken = isStreamChannel ? try await Personalize().generateRTCToken(channelName: "ChannelA") : ""
-                            isLoading = false
-                        }
-                        
-                    }, label: {
-                        Text("Internal Testing")
-                    })
-                }
-            })
+//            .toolbar(content: {
+//                ToolbarItem(placement: .topBarTrailing){
+//                    Button(action: {
+//                        // TODO: REMOVE BEFORE PUBLISHING
+//                        Task {
+//                            isLoading = true
+//                            token = try await Personalize().generateRTMToken(userID: userID)
+//                            streamToken = isStreamChannel ? try await Personalize().generateRTCToken(channelName: "ChannelA") : ""
+//                            isLoading = false
+//                        }
+//                        
+//                    }, label: {
+//                        Text("Internal Testing")
+//                    })
+//                }
+//            })
         }
     }
 }

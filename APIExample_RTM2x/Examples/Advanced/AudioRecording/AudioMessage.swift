@@ -14,5 +14,6 @@ struct AudioMessage : Identifiable, Codable {
     var fileURL: URL
     var sender: String
     var duration: Int // In Seconds
-    // var timestamp: Date
+//    var timestamp: Date
+//    var channel: String
 }
