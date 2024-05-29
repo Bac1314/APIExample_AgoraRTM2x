@@ -1,36 +1,41 @@
 //
-//  AudioItemView.swift
+//  FileInfoItemView.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/5/28.
+//  Created by BBC on 2024/5/29.
 //
 
 import SwiftUI
 
-struct AudioItemView: View {
-    var audioMessage: AudioMessage
+struct FileInfoItemView: View {
+    var fileInfo: FileInfo
     var currentUser: String
+    @Binding var fileChunks : [Data]?
     
     var body: some View {
-        if currentUser == audioMessage.sender {
+        if currentUser == fileInfo.owner {
             HStack {
                 Image(systemName: "person.crop.circle")
                     .font(.title)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("\(audioMessage.sender)")
+                    Text("\(fileInfo.owner)")
                         .padding(.leading, 4)
                     
                     HStack {
-                        Image(systemName: "dot.radiowaves.right")
-                        Text("\(audioMessage.duration)s")
-                        Spacer()
+                        Image(systemName: "doc")
+                        Text("\(fileInfo.name)")
                     }
-                    .frame(width: max(60 ,min(CGFloat(audioMessage.duration) * 20, 200)))
                     .padding(10)
-                    .background(Color.blue)
+                    .background(Color.indigo.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(16)
+                    
+                    if let fileChunkCount = fileChunks?.count {
+                        ProgressView(value: Float(fileChunkCount), total: Float(fileInfo.size))
+                            .frame(width: 300)
+                    }
+                    
                 }
 
                 
@@ -39,25 +44,26 @@ struct AudioItemView: View {
             .padding(.leading)
         }else {
             HStack {
-                
                 Spacer()
-
              
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text("\(audioMessage.sender)")
+                    Text("\(fileInfo.owner)")
                         .padding(.trailing, 4)
                     
                     HStack {
-                        Spacer()
-                        Text("\(audioMessage.duration)s")
-                        Image(systemName: "dot.radiowaves.right")
-                            .scaleEffect(x: -1, y: 1)
+                        Image(systemName: "doc")
+                        Text("\(fileInfo.name)")
                     }
-                    .frame(width: max(60 ,min(CGFloat(audioMessage.duration) * 20, 200)))
                     .padding(10)
-                    .background(Color.blue)
+                    .background(Color.indigo.opacity(0.8))
                     .foregroundColor(.white)
                     .cornerRadius(16)
+                    
+                    if let fileChunkCount = fileChunks?.count {
+                        ProgressView(value: Float(fileChunkCount), total: Float(fileInfo.size))
+                            .frame(width: 300)
+                    }
+                    
                 }
 
                 Image(systemName: "person.crop.circle")
@@ -70,6 +76,3 @@ struct AudioItemView: View {
     }
 }
 
-#Preview {
-    AudioItemView(audioMessage: AudioMessage(id: UUID(), fileName: "filename", fileURL: URL(string: "/someting/something")!, sender: "bac", duration: 4 ), currentUser: "bac2")
-}

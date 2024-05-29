@@ -24,7 +24,9 @@ struct ListOfSamplesView: View {
         ("Live Bidding", ("dollarsign.circle", AnyView(BiddingView(serviceIcon:"dollarsign.circle")))),
         ("Location Sharing", ("location.viewfinder", AnyView(LocationView(serviceIcon:"location.viewfinder")))),
         ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw")))),
-        ("Audio Recording", ("waveform", AnyView(AudioRecordingView(serviceIcon:"waveform"))))
+        ("Audio Recording", ("waveform", AnyView(AudioRecordingView(serviceIcon:"waveform")))),
+        ("File Sharing", ("filemenu.and.cursorarrow", AnyView(FileSharingView(serviceIcon:"filemenu.and.cursorarrow"))))
+
 
     ]
     

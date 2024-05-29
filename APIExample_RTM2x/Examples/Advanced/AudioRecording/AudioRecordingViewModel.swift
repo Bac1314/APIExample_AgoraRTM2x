@@ -172,7 +172,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             Task {
                 if let audioData = convertAudioToData(fileName: currentRecordinFileName)  {
                     
-                    var fileURL = getDocumentsDirectory().appendingPathComponent(currentRecordinFileName)
+                    let fileURL = getDocumentsDirectory().appendingPathComponent(currentRecordinFileName)
                     
                     let audioPlayer = try? AVAudioPlayer(contentsOf: fileURL)
                     let duration : Int = Int(audioPlayer?.duration ?? 0)
@@ -280,44 +280,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             print("An error occurred while deleting files: \(error)")
         }
     }
-    
-    
-//    // MARK: LOCAL FILE FOR SAVING THE AUDIO FILE LOCATIONS/URLS
-//    func fileURLForAudioMessagesListFile() throws -> URL {
-//        try FileManager.default.url(for: .documentDirectory,
-//                                    in: .userDomainMask,
-//                                    appropriateFor: nil,
-//                                    create: false)
-//        .appendingPathComponent("audioMessagesList.data")
-//    }
-//
-//
-//    func loadMessagesFromLocalStorage() async throws {
-//        let task = Task<[AudioMessage], Error> {
-//            let fileURL = try fileURLForAudioMessagesListFile()
-//            guard let data = try? Data(contentsOf: fileURL) else {
-//                return []
-//            }
-//            let customMessages = try JSONDecoder().decode([AudioMessage].self, from: data)
-//            return customMessages
-//        }
-//        let loadedAudioMessages = try await task.value
-//        
-//        Task {
-//            await MainActor.run {
-//                self.audioMessageInfo = loadedAudioMessages
-//            }
-//        }
-//    }
-//
-//    func saveMessagesToLocalStorage(messages: [AudioMessage]) async throws {
-//        let task = Task {
-//            let data = try JSONEncoder().encode(audioMessageInfo)
-//            let outfile = try fileURLForAudioMessagesListFile()
-//            try data.write(to: outfile)
-//        }
-//        _ = try await task.value
-//    }
+
     
     // MARK: AUDIO AND DATA CONVERSION
     func convertAudioToData(fileName: String) -> Data? {
@@ -346,7 +309,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
         return nil
     }
     
-    func splitDataIntoChunks(data: Data, chunkSize: Int = 30720) -> [Data] {
+    func splitDataIntoChunks(data: Data, chunkSize: Int = 32000) -> [Data] {
         var offset = 0
         var chunks = [Data]()
         
@@ -367,6 +330,43 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
         return combinedData
     }
     
+    
+    //    // MARK: LOCAL FILE FOR SAVING THE AUDIO FILE LOCATIONS/URLS
+    //    func fileURLForAudioMessagesListFile() throws -> URL {
+    //        try FileManager.default.url(for: .documentDirectory,
+    //                                    in: .userDomainMask,
+    //                                    appropriateFor: nil,
+    //                                    create: false)
+    //        .appendingPathComponent("audioMessagesList.data")
+    //    }
+    //
+    //
+    //    func loadMessagesFromLocalStorage() async throws {
+    //        let task = Task<[AudioMessage], Error> {
+    //            let fileURL = try fileURLForAudioMessagesListFile()
+    //            guard let data = try? Data(contentsOf: fileURL) else {
+    //                return []
+    //            }
+    //            let customMessages = try JSONDecoder().decode([AudioMessage].self, from: data)
+    //            return customMessages
+    //        }
+    //        let loadedAudioMessages = try await task.value
+    //
+    //        Task {
+    //            await MainActor.run {
+    //                self.audioMessageInfo = loadedAudioMessages
+    //            }
+    //        }
+    //    }
+    //
+    //    func saveMessagesToLocalStorage(messages: [AudioMessage]) async throws {
+    //        let task = Task {
+    //            let data = try JSONEncoder().encode(audioMessageInfo)
+    //            let outfile = try fileURLForAudioMessagesListFile()
+    //            try data.write(to: outfile)
+    //        }
+    //        _ = try await task.value
+    //    }
     
 }
 
