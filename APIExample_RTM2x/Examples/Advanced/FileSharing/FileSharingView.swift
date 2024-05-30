@@ -22,7 +22,8 @@ struct FileSharingView: View {
     // File Import and Export
     @State var showFileImporter = false
     @State var showFileExporter = false
-    @State var exportFile : Data?
+//    @State var exportFile : Data?
+//    @State var fileURL: URL?
     
     
     var body: some View {
@@ -52,22 +53,13 @@ struct FileSharingView: View {
             // MARK: Main View
             if agoraRTMVM.isLoggedIn {
                 VStack {
-                    ForEach(agoraRTMVM.fileInfos) { file in
-                        
-//                        if let fileURL = URL(string: file.url) {
-//                            Link("open \(file.name)", destination: fileURL)
-//                        }
-                        
-                        FileInfoItemView(file: file, currentUser: agoraRTMVM.userID, fileChunks: $agoraRTMVM.fileChunks[file.id])
-                            .onTapGesture {
-                                if let fileURL = URL(string: file.url) {
-                                }
-                                
-                            }
+                    ScrollView {
+                        ForEach(agoraRTMVM.fileInfos) { file in
+                            FileInfoItemView(file: file, currentUser: agoraRTMVM.userID, fileChunks: $agoraRTMVM.fileChunks[file.id])
+                        }
                     }
-                    
+                        
                     Spacer()
-                
                     
                     Button(action: {
                         showFileImporter.toggle()
@@ -82,9 +74,8 @@ struct FileSharingView: View {
                             .padding()
                     })
                     .padding(.bottom)
+                    
                 }
-                
-                
             }
             
             

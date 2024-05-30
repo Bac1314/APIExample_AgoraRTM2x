@@ -24,7 +24,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
     var fileInfoKey = "fileIntoKey"
     var fileChunkKey = "fileChunkKey"
     
-//    @Published var testingData : Data?
+    @Published var testingData : Data?
     
     //MARK: AGORA RELATED METHODS
     @MainActor
@@ -135,6 +135,13 @@ class FileSharingViewModel: NSObject, ObservableObject {
                             
                             if fileChunks[fileInfos[index].id]?.count == fileInfos[index].countOf32KB {
                                 let mergeData = combineDataChunks(chunks: fileChunks[fileInfos[index].id]!)
+                                
+                                Task {
+                                    await MainActor.run {
+                                        testingData = mergeData
+                                    }
+                                }
+                                
                                 let url = convertSaveDataToFile(data: mergeData, fileName: fileInfos[index].name, fileType: fileInfos[index].type, sender: fileInfos[index].owner)
 
 //                                fileChunks.removeValue(forKey: fileInfos[index].id)
@@ -258,6 +265,13 @@ extension FileSharingViewModel: AgoraRtmClientDelegate {
 
 //                        fileChunks.removeValue(forKey: fileInfos[index].id)
                         fileInfos[index].url = url?.absoluteString ?? ""
+                        
+                        Task {
+                            await MainActor.run {
+                                testingData = mergeData
+                            }
+                        }
+                        
                     }
                 }
             }
