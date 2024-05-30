@@ -300,7 +300,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
             let tempFileURL = getDocumentsDirectory().appendingPathComponent("\(sender)_\(Date().timeIntervalSince1970)_recording.m4a")
             
             try data.write(to: tempFileURL)
-            
+                
             return tempFileURL
         } catch {
             print("Failed to convert data to audio: \(error)")

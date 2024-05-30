@@ -24,6 +24,8 @@ class FileSharingViewModel: NSObject, ObservableObject {
     var fileInfoKey = "fileIntoKey"
     var fileChunkKey = "fileChunkKey"
     
+//    @Published var testingData : Data?
+    
     //MARK: AGORA RELATED METHODS
     @MainActor
     func loginRTM() async throws {
@@ -44,7 +46,6 @@ class FileSharingViewModel: NSObject, ObservableObject {
                 if error == nil{
                     isLoggedIn = true
                 }else{
-                    print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
                     await agoraRtmKit?.logout()
                     throw error ?? customError.loginRTMError
                 }
@@ -91,6 +92,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
     }
     
     // Publish to channel in 'MessageChannel'
+    @MainActor
     func publishToChannel(channelName: String, fileURL: URL) async -> Bool{
         
         if let fileData = convertFileToData(fileURL: fileURL), !fileURL.pathExtension.isEmpty {
@@ -102,14 +104,16 @@ class FileSharingViewModel: NSObject, ObservableObject {
             pubOptions.channelType = .message
             pubOptions.customType = fileInfoKey
             
-            let FileInfo = FileInfo(name: fileURL.lastPathComponent, size: dataChunks.count, type: fileURL.pathExtension, url: "", owner: userID)
+            let fileInfo = FileInfo(id: UUID(), name: fileURL.lastPathComponent, countOf32KB: dataChunks.count, type: fileURL.pathExtension, url: "", owner: userID)
             
-            if let JSONString = convertObjectToJsonString(object: FileInfo) {
+            if let JSONString = convertObjectToJsonString(object: fileInfo) {
                 if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: JSONString, option: pubOptions){
                     if error == nil {
-                        print("publishToChannel fileInfoKey success ")
+                      // Add local record
+                        fileInfos.append(fileInfo)
+                        fileChunks[fileInfo.id] = []
                     }else{
-                        print("publishToChannel fileInfoKey failed ")
+                        print("publishToChannel fileInfoKey failed")
                         return false
                     }
                 }
@@ -125,7 +129,19 @@ class FileSharingViewModel: NSObject, ObservableObject {
             for dataChunk in dataChunks {
                 if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, data: dataChunk, option: pubOptions2){
                     if error == nil {
-                        print("publishToChannel fileChunkKey success \(dataChunk.count)")
+                        // Append to local record
+                        if let index = fileInfos.firstIndex(where: {$0.id == fileInfo.id}), fileChunks.keys.contains(fileInfos[index].id){
+                            fileChunks[fileInfos[index].id]?.append(dataChunk)
+                            
+                            if fileChunks[fileInfos[index].id]?.count == fileInfos[index].countOf32KB {
+                                let mergeData = combineDataChunks(chunks: fileChunks[fileInfos[index].id]!)
+                                let url = convertSaveDataToFile(data: mergeData, fileName: fileInfos[index].name, fileType: fileInfos[index].type, sender: fileInfos[index].owner)
+
+//                                fileChunks.removeValue(forKey: fileInfos[index].id)
+                                fileInfos[index].url = url?.absoluteString ?? ""
+                            }
+                        }
+                        
                     }else{
                         print("publishToChannel fileChunkKey failed \(String(describing: error))")
                     }
@@ -138,7 +154,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
         return false
     }
         
-    // MARK: FUNCTION TO RETRIEVE THE ACTUAL RECORDING FILES ON LOCAL DIRECTORY
+    // MARK: FUNCTION TO RETRIEVE THE ACTUAL FILES ON LOCAL DIRECTORY
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -231,16 +247,16 @@ extension FileSharingViewModel: AgoraRtmClientDelegate {
                 
             }else if event.customType == fileChunkKey {
                 //  Data chunks from remote user
-                if let index = fileInfos.firstIndex(where: {$0.owner == event.publisher}), fileChunks.keys.contains(fileInfos[index].id), let dataChunk = event.message.rawData {
+                
+                if let index = fileInfos.firstIndex(where: {$0.id == fileInfos.last(where: {$0.owner == event.publisher})?.id}), fileChunks.keys.contains(fileInfos[index].id), let dataChunk = event.message.rawData {
                     fileChunks[fileInfos[index].id]?.append(dataChunk)
                     
-                    if fileChunks[fileInfos[index].id]?.count == fileInfos[index].size {
+                    if fileChunks[fileInfos[index].id]?.count == fileInfos[index].countOf32KB {
                         let mergeData = combineDataChunks(chunks: fileChunks[fileInfos[index].id]!)
                         let url = convertSaveDataToFile(data: mergeData, fileName: fileInfos[index].name, fileType: fileInfos[index].type, sender: fileInfos[index].owner)
                         print("Bac's saved to \(String(describing: url))")
 
-                        fileChunks.removeValue(forKey: fileInfos[index].id)
-
+//                        fileChunks.removeValue(forKey: fileInfos[index].id)
                         fileInfos[index].url = url?.absoluteString ?? ""
                     }
                 }

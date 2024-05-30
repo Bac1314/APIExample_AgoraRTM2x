@@ -182,22 +182,29 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     @MainActor
     func publishDeleteAllDrawing() async -> Bool {
         if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteAllDrawingTopic, message: "yes", option: nil) {
-            if error == nil {
-                print("Bac's publishDeleteDrawing Success")
-                Task {
-                    await MainActor.run {
-                        drawings.removeAll()
-                    }
-                    let _ = await deleteAllDrawingsFromStorage() // Delete All drawings from storage
+            
+            Task {
+                await MainActor.run {
+                    drawings.removeAll()
                 }
-                return true
-            }else {
-//                fails += 1
-
-                print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
-
-               return false
+                let _ = await deleteAllDrawingsFromStorage() // Delete All drawings from storage
             }
+            
+            
+//            if error == nil {
+//                print("Bac's publishDeleteDrawing Success")
+//                Task {
+//                    await MainActor.run {
+//                        drawings.removeAll()
+//                    }
+//                    let _ = await deleteAllDrawingsFromStorage() // Delete All drawings from storage
+//                }
+//                return true
+//            }else {
+//                print("Bac's publishDeleteDrawing failed topic \(DeleteDrawingTopic) error \(String(describing: error))")
+//
+//               return false
+//            }
         }
         
         return false

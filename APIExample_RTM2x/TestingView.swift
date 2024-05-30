@@ -9,22 +9,48 @@ import SwiftUI
 
 struct TestingView: View {
     
-    @State var avatarImageNames : [String] = [
-        "avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7", "avatar8", "avatar9", "avatar10", "avatar11", "avatar12"
-    ]
-    
+
     var body: some View {
-        List{
-            ForEach(avatarImageNames, id: \.self) { imageName in
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+
+        VStack(spacing: 50){
+            Text("Hello World!")
+                .frame(width: 300)
+                .background(
+                    LinearGradient(colors: [Color.indigo, Color.white], startPoint: .leading, endPoint: .trailing)
+                )
+            
+            Text("Hello World! 90%")
+                .frame(width: 300)
+                .background(
+                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white], startPoint: .leading, endPoint: .trailing)
+                )
+            
+            Text("Hello World! 80%")
+                .frame(width: 300)
+                .background(
+                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white, Color.white], startPoint: .leading, endPoint: .trailing)
+                )
+            
+            Text("Hello World! 70%")
+                .frame(width: 300)
+                .background(
+                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white, Color.white, Color.white], startPoint: .leading, endPoint: .trailing)
+                )
+            
+            VStack {
+                Text("Hello World! 70%")
+                    .background(
+                        ProgressView(value: 0.5)
+                        .scaleEffect(CGSize(width: 1.0, height: 2.0))
+                    )
+     
             }
+            .padding()
+            .frame(height: 100)
+      
         }
-        .listStyle(.plain)
-        .padding(0)
+        
+
         
     }
 }

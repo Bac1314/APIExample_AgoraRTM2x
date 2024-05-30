@@ -26,8 +26,6 @@ struct ListOfSamplesView: View {
         ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw")))),
         ("Audio Recording", ("waveform", AnyView(AudioRecordingView(serviceIcon:"waveform")))),
         ("File Sharing", ("filemenu.and.cursorarrow", AnyView(FileSharingView(serviceIcon:"filemenu.and.cursorarrow"))))
-
-
     ]
     
     var body: some View {
@@ -56,7 +54,7 @@ struct ListOfSamplesView: View {
                     }
                 }
             }
-            .background(Color(UIColor.systemGroupedBackground))
+//            .background(Color(UIColor.systemGroupedBackground))
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("RTM API Examples")
         }

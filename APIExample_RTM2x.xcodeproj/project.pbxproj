@@ -67,6 +67,9 @@
 		29BDB2962C06CD9900BF8AF5 /* FileSharingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2952C06CD9900BF8AF5 /* FileSharingViewModel.swift */; };
 		29BDB2982C06D54800BF8AF5 /* FileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2972C06D54800BF8AF5 /* FileInfo.swift */; };
 		29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */; };
+		29BDB29E2C0730E900BF8AF5 /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */; };
+		29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */; };
+		29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2A32C08655400BF8AF5 /* CustomModifiers.swift */; };
 		29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */; };
 		29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */; };
 		29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E601092BD8A59B00D69079 /* Canvas.swift */; };
@@ -139,6 +142,11 @@
 		29BDB2952C06CD9900BF8AF5 /* FileSharingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSharingViewModel.swift; sourceTree = "<group>"; };
 		29BDB2972C06D54800BF8AF5 /* FileInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfo.swift; sourceTree = "<group>"; };
 		29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoItemView.swift; sourceTree = "<group>"; };
+		29BDB29B2C071CD100BF8AF5 /* APIExample-RTM2x-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "APIExample-RTM2x-Info.plist"; sourceTree = SOURCE_ROOT; };
+		29BDB29C2C071CEC00BF8AF5 /* APIExample_RTM2x.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = APIExample_RTM2x.entitlements; sourceTree = "<group>"; };
+		29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
+		29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocument.swift; sourceTree = "<group>"; };
+		29BDB2A32C08655400BF8AF5 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
 		29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageView.swift; sourceTree = "<group>"; };
 		29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		29E601092BD8A59B00D69079 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -200,6 +208,7 @@
 				296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */,
 				29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */,
 				292CDB252BBC10C700505913 /* CustomAlert.swift */,
+				29BDB2A32C08655400BF8AF5 /* CustomModifiers.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -292,6 +301,8 @@
 		297F7FF22BA420E20057200A /* APIExample_RTM2x */ = {
 			isa = PBXGroup;
 			children = (
+				29BDB29C2C071CEC00BF8AF5 /* APIExample_RTM2x.entitlements */,
+				29BDB29B2C071CD100BF8AF5 /* APIExample-RTM2x-Info.plist */,
 				29024AAE2BCE866100E871B2 /* Configurations.swift */,
 				297F7FF32BA420E20057200A /* APIExample_RTM2xApp.swift */,
 				29AFAC9D2BD0F36400088381 /* Personalize.swift */,
@@ -398,6 +409,8 @@
 				29BDB2952C06CD9900BF8AF5 /* FileSharingViewModel.swift */,
 				29BDB2972C06D54800BF8AF5 /* FileInfo.swift */,
 				29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */,
+				29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */,
+				29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */,
 			);
 			path = FileSharing;
 			sourceTree = "<group>";
@@ -548,6 +561,7 @@
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
+				29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
@@ -556,12 +570,14 @@
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */,
+				29BDB29E2C0730E900BF8AF5 /* TextDocument.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */,
 				29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */,
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
+				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
@@ -732,6 +748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = APIExample_RTM2x/APIExample_RTM2x.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"APIExample_RTM2x/Preview Content\"";
@@ -739,12 +756,15 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "APIExample-RTM2x-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -767,6 +787,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = APIExample_RTM2x/APIExample_RTM2x.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"APIExample_RTM2x/Preview Content\"";
@@ -774,12 +795,15 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "APIExample-RTM2x-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
