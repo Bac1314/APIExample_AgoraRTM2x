@@ -89,29 +89,25 @@ struct FileSharingView: View {
         .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.pdf, .plainText, .audio, .zip, .image, .webP], allowsMultipleSelection: false
         ) { result in
             switch result {
-            case .success(let file):
-                print("Bac success file \(file)")
-                Task {
-                    if let fileURL = file.first {
-                        let _ = await agoraRTMVM.publishToChannel(channelName: agoraRTMVM.mainChannel, fileURL: fileURL)
+            case .success(let files):
+                print("Bac success file \(files)")
+                
+                files.forEach { file in
+                    
+                    let gotAccess = file.startAccessingSecurityScopedResource()
+                    if !gotAccess { return }
+                    
+                    Task {
+                        let _ = await agoraRTMVM.publishToChannel(channelName: agoraRTMVM.mainChannel, fileURL: file)
+                        file.stopAccessingSecurityScopedResource()
                     }
                 }
+
             case .failure(let error):
                 // handle error
                 print(error)
             }
         }
-//        .fileExporter(isPresented: $showFileExporter, document: URL(string: agoraRTMVM.fileInfos[0].url), contentType: .png, onCompletion: { result in
-//            <#code#>
-//        })
-//        .fileExporter(isPresented: $showFileExporter, item: exportFile, onCompletion: { result in
-//            switch result {
-//            case .success(let url):
-//                print("Saved to \(url)")
-//            case .failure(let error):
-//                print("Bac's code \(error.localizedDescription)")
-//            }
-//        })
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "File Sharing" : "Login")

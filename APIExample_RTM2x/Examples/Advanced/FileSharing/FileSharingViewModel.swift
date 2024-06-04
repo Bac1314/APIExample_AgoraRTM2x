@@ -175,7 +175,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
             let fileData = try Data(contentsOf: fileURL)
             return fileData
         } catch {
-            print("Failed to get data from file")
+            print("Failed to get data from file \(error)")
         }
         return nil
     }
