@@ -118,7 +118,8 @@ The list of samples and what feature is used
 | [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding/)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
 | [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing/)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
 | [Whiteboard](APIExample_RTM2x/Examples/Advanced/WhiteBoard/)          | Real-time whiteboard collaboration tool  | Message, Stream             | `.message`, `.presence`             |
-| [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings | Message             | `.message`, `.presence`             |
+| [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings directly to users | Message             | `.message`, `.presence`             |
+| [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Send files directly to users | Message             | `.message`, `.presence`             |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

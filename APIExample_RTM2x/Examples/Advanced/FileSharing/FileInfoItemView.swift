@@ -79,6 +79,10 @@ struct FileInfoItemView: View {
                             ShareLink(item: fileURL) {
                                 Text("\(file.name)")
                             }
+                            
+//                            ShareLink(item: fileURL, preview: SharePreview("Preview", image: Image(.fileURL))) {
+//                                Label("Click to share", systemImage: "airplane")
+//                            }
                         }else {
                             Text("\(file.name)")
                         }
