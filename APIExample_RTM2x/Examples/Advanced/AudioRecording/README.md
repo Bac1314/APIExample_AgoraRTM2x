@@ -300,12 +300,7 @@ func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceivePresenceEvent event: AgoraRtm
 
 <!-- Note -->
 ## Note
-- This sample is using a customType property to differentiate whether an incoming message is a poll question or poll answer. 
-    - (Alternativel) You could also subscribe to 2 channels. 1 to publish the poll question, and 1 to receive the poll answers. 
-    - (Alternative 2) You could also use the `.presence` to update publish the answer
-- This sample is designed where every user will receive everyone's poll answer in real-time. This is helpful if you want to display the score or number of submissions in real-time. The number of messages (aka cost) increases **exponentially** the more users in the channel. 
-    - (Alternative) You could design a solution where only the publisher receives the poll answers from the user. After certain time, the host can send the poll result back to the users. The number of messages (aka cost) increases **linearly**. 
-    - (Alternative 2) You could design a solution where Linux Server (Agora Linux SDK) to manage all the answers and send back the poll result back to the users after a certain time.  **linearly**. 
+- (Alternative) You could upload the recording to a cloud storage (e.g. AWS S3), then send the download link via RTM 
 
 
 <!-- LICENSE -->

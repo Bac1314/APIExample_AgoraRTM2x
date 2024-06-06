@@ -13,7 +13,6 @@ struct APIExample_RTM2xApp: App {
     var body: some Scene {
         WindowGroup {
             ListOfSamplesView()
-
         }
     }
 }
