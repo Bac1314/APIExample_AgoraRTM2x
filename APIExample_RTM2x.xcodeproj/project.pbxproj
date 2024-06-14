@@ -13,6 +13,8 @@
 		29024AAA2BCE1F0600E871B2 /* Arch_ChannelMessaging.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */; };
 		29024AAB2BCE1F0600E871B2 /* Arch_Quiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */; };
 		29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29024AAE2BCE866100E871B2 /* Configurations.swift */; };
+		2904A1B82C1C47B4004A2D8C /* VideoCallInviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */; };
+		2904A1BA2C1C47C4004A2D8C /* VideoCallInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */; };
 		292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */; };
 		292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1D2BBA66C600505913 /* GlobalTools.swift */; };
 		292CDB202BBA94D100505913 /* CustomPoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1F2BBA94D100505913 /* CustomPoll.swift */; };
@@ -87,6 +89,8 @@
 		29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_ChannelMessaging.png; sourceTree = "<group>"; };
 		29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_Quiz.png; sourceTree = "<group>"; };
 		29024AAE2BCE866100E871B2 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
+		2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallInviteViewModel.swift; sourceTree = "<group>"; };
+		2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallInviteView.swift; sourceTree = "<group>"; };
 		292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRTMUser.swift; sourceTree = "<group>"; };
 		292CDB1D2BBA66C600505913 /* GlobalTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTools.swift; sourceTree = "<group>"; };
 		292CDB1F2BBA94D100505913 /* CustomPoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPoll.swift; sourceTree = "<group>"; };
@@ -189,6 +193,15 @@
 				29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */,
 			);
 			path = MyAssets;
+			sourceTree = "<group>";
+		};
+		2904A1B62C1C4784004A2D8C /* VideoCallInvitation */ = {
+			isa = PBXGroup;
+			children = (
+				2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */,
+				2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */,
+			);
+			path = VideoCallInvitation;
 			sourceTree = "<group>";
 		};
 		29538F812BC538C500299041 /* MockData */ = {
@@ -369,13 +382,14 @@
 		297F80082BA43F4E0057200A /* Advanced */ = {
 			isa = PBXGroup;
 			children = (
-				29AFACA22BD0F37700088381 /* LocationSharing */,
 				296CC1372BABE328006E14F5 /* Polling */,
 				296CC1382BABE330006E14F5 /* QuizGame */,
 				296CC1392BABE335006E14F5 /* Bidding */,
+				29AFACA22BD0F37700088381 /* LocationSharing */,
 				29E601082BD8A57800D69079 /* WhiteBoard */,
 				29BDB2852C003A6B00BF8AF5 /* AudioRecording */,
 				29BDB2922C06CD5600BF8AF5 /* FileSharing */,
+				2904A1B62C1C4784004A2D8C /* VideoCallInvitation */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -583,11 +597,13 @@
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
+				2904A1BA2C1C47C4004A2D8C /* VideoCallInviteView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
+				2904A1B82C1C47B4004A2D8C /* VideoCallInviteViewModel.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
 				29BDB2942C06CD8A00BF8AF5 /* FileSharingView.swift in Sources */,
 				29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */,
