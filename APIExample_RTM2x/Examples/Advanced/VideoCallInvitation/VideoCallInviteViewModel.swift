@@ -9,6 +9,8 @@
 import Foundation
 import SwiftUI
 import AgoraRtmKit
+import AgoraRtcKit
+
 
 class VideoCallInviteViewModel: NSObject, ObservableObject {
     
@@ -18,6 +20,21 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
+    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    
+    final var agoraKit: AgoraRtcEngineKit = AgoraRtcEngineKit()
+    
+    func initRTMRTC() async throws {
+        try await loginRTM()
+        _ = await subscribeChannel(channelName: mainChannel)
+        
+        initRtc()
+    }
+    
+    func deinitRTMRTC() {
+        logoutRTM()
+        leaveRTCChannel()
+    }
     
     @MainActor
     func loginRTM() async throws {
@@ -25,13 +42,11 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
             if userID.isEmpty {
                 throw customError.emptyUIDLoginError
             }
-            
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
-            
             // Login to RTM server
             // Use AppID to login if app certificate is NOT enabled for project
             if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
@@ -46,7 +61,6 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
                 // Handle any cases where login fails or error is present
                 print("Bac's code loginRTM login result = \(userID)")
             }
-            
         }catch {
             print("Bac's Some other error occurred: \(error.localizedDescription)")
             throw error
@@ -58,16 +72,17 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         agoraRtmKit?.logout()
         agoraRtmKit?.destroy()
         isLoggedIn = false
+        
+        // Leave RTC
+        agoraKit.leaveChannel()
+
     }
     
     //MARK: MESSAGE CHANNEL METHODS
-    // Subscribe to channel in 'MessageChannel'
     @MainActor
     func subscribeChannel(channelName: String) async -> Bool {
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
-        
-        
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
                 //subscribe success
@@ -82,10 +97,43 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         return false
     }
     
-    
     func callUser(userID: String) async -> Bool {
+        let pubOptions = AgoraRtmPublishOptions()
+//        pubOptions.customType = customType ?? ""
+        pubOptions.channelType = .user
+        
+        if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "calling", option: pubOptions){
+            if error == nil {
+                // MARK: if success
+                return true
+            }else{
+                print("Bac's sendMessageToChannel error \(String(describing: error))")
+                return false
+            }
+            
+        }
         return false
     }
+    
+
+    // MARK: RTC Functions
+    func initRtc() {
+        let config = AgoraRtcEngineConfig()
+        config.appId = Configurations.agora_AppdID
+        agoraKit = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
+        agoraKit.setChannelProfile(.liveBroadcasting)
+        agoraKit.setClientRole(.broadcaster)
+        
+    }
+    
+    func joinRTCChannel() {
+        agoraKit.joinChannel(byToken: nil, channelId: mainChannel, info: nil, uid: 0)
+    }
+    
+    func leaveRTCChannel(){
+        agoraKit.leaveChannel()
+    }
+    
 
 
 }
@@ -102,6 +150,8 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
         case .stream:
             break
         case .user:
+            
+            
             break
         case .none:
             break
@@ -155,6 +205,10 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
         connectionState = connectionState
     }
     
+    
+}
+
+extension VideoCallInviteViewModel: AgoraRtcEngineDelegate {
     
 }
 

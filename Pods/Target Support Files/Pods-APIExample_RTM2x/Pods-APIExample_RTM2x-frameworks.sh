@@ -176,9 +176,31 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AINS/AgoraAiNoiseSuppressionExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AudioBeauty/AgoraAudioBeautyExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ClearVision/AgoraClearVisionExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ContentInspect/AgoraContentInspectExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/AgoraRtcKit.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/aosl.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/Agorafdkaac.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/Agoraffmpeg.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/AgoraSoundTouch.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VQA/AgoraVideoQualityAnalyzerExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VirtualBackground/AgoraVideoSegmentationExtension.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtm_iOS/AgoraRtmKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AINS/AgoraAiNoiseSuppressionExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/AudioBeauty/AgoraAudioBeautyExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ClearVision/AgoraClearVisionExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/ContentInspect/AgoraContentInspectExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/AgoraRtcKit.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/aosl.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/Agorafdkaac.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/Agoraffmpeg.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/RtcBasic/AgoraSoundTouch.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VQA/AgoraVideoQualityAnalyzerExtension.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtcEngine_iOS/VirtualBackground/AgoraVideoSegmentationExtension.framework"
   install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/AgoraRtm_iOS/AgoraRtmKit.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

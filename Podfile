@@ -6,7 +6,7 @@ target 'APIExample_RTM2x' do
   use_frameworks!
 
   # Pods for APIExample_RTM2x
-  #pod 'AgoraRtcEngine_iOS', '4.3.0', :subspecs => ['RtcBasic', 'AINS', 'AudioBeauty', 'ClearVision', 'ContentInspect', 'VirtualBackground' , 'VQA']
+  pod 'AgoraRtcEngine_iOS', '4.3.0', :subspecs => ['RtcBasic', 'AINS', 'AudioBeauty', 'ClearVision', 'ContentInspect', 'VirtualBackground' , 'VQA']
   pod 'AgoraRtm_iOS'
 
 end

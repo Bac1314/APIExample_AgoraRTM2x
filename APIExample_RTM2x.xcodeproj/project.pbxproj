@@ -50,6 +50,9 @@
 		297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80212BA454A40057200A /* P2PMessagingView.swift */; };
 		297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80232BA4550C0057200A /* StreamMessagingView.swift */; };
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
+		29851F9D2C25771900C16DF2 /* VideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9C2C25771900C16DF2 /* VideoListItemView.swift */; };
+		29851F9F2C25791600C16DF2 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9E2C25791600C16DF2 /* CallingView.swift */; };
+		29851FA12C257A7B00C16DF2 /* AgoraUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */; };
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
 		29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */; };
 		29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */; };
@@ -127,6 +130,9 @@
 		297F80212BA454A40057200A /* P2PMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PMessagingView.swift; sourceTree = "<group>"; };
 		297F80232BA4550C0057200A /* StreamMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingView.swift; sourceTree = "<group>"; };
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
+		29851F9C2C25771900C16DF2 /* VideoListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListItemView.swift; sourceTree = "<group>"; };
+		29851F9E2C25791600C16DF2 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
+		29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraUIView.swift; sourceTree = "<group>"; };
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
 		29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuctionItem.swift; sourceTree = "<group>"; };
 		29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionItemView.swift; sourceTree = "<group>"; };
@@ -200,6 +206,9 @@
 			children = (
 				2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */,
 				2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */,
+				29851F9C2C25771900C16DF2 /* VideoListItemView.swift */,
+				29851F9E2C25791600C16DF2 /* CallingView.swift */,
+				29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */,
 			);
 			path = VideoCallInvitation;
 			sourceTree = "<group>";
@@ -570,11 +579,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29851FA12C257A7B00C16DF2 /* AgoraUIView.swift in Sources */,
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
+				29851F9F2C25791600C16DF2 /* CallingView.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
+				29851F9D2C25771900C16DF2 /* VideoListItemView.swift in Sources */,
 				29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,

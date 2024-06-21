@@ -15,28 +15,22 @@ struct VideoCallInviteView: View {
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "phone.bubble"
-    
-    // First channelName
-    @State var channelName: String = "ChannelA"
+
     
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
-    @State var presentAlertSubscribe = false
-    @State var newChannelName = ""
-    
-    
+    @State var presentAlertSubscribe = false    
     
     
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $channelName, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
                     Task {
                         do{
-                            try await agoraRTMVM.loginRTM()
-                            _ = await agoraRTMVM.subscribeChannel(channelName: channelName)
+                            try await agoraRTMVM.initRTMRTC()
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -55,14 +49,17 @@ struct VideoCallInviteView: View {
             // MARK: Display list of subscribed channels
             if agoraRTMVM.isLoggedIn {
                 VStack {
-                    Text("\(agoraRTMVM.users) online")
+                    Text("\(agoraRTMVM.users.count) online")
                     
                     // List of users
                     List {
-                        ForEach(agoraRTMVM.users, id: \.userId) { user in
-                            Text("\(user.userId)")
+                        ForEach(agoraRTMVM.users.filter({$0.userId != agoraRTMVM.userID}), id: \.userId) { user in
+                            VideoListItemView(userName: user.userId) {
+                                // Tapped on call
+                            }
                         }
                     }
+                    .listStyle(.plain)
                     
                     // On tap 
                 }

@@ -1,16 +1,32 @@
 PODS:
+  - AgoraRtcEngine_iOS/AINS (4.3.0)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.3.0)
+  - AgoraRtcEngine_iOS/ClearVision (4.3.0)
+  - AgoraRtcEngine_iOS/ContentInspect (4.3.0)
+  - AgoraRtcEngine_iOS/RtcBasic (4.3.0)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.3.0)
+  - AgoraRtcEngine_iOS/VQA (4.3.0)
   - AgoraRtm_iOS (2.1.10)
 
 DEPENDENCIES:
+  - AgoraRtcEngine_iOS/AINS (= 4.3.0)
+  - AgoraRtcEngine_iOS/AudioBeauty (= 4.3.0)
+  - AgoraRtcEngine_iOS/ClearVision (= 4.3.0)
+  - AgoraRtcEngine_iOS/ContentInspect (= 4.3.0)
+  - AgoraRtcEngine_iOS/RtcBasic (= 4.3.0)
+  - AgoraRtcEngine_iOS/VirtualBackground (= 4.3.0)
+  - AgoraRtcEngine_iOS/VQA (= 4.3.0)
   - AgoraRtm_iOS
 
 SPEC REPOS:
   trunk:
+    - AgoraRtcEngine_iOS
     - AgoraRtm_iOS
 
 SPEC CHECKSUMS:
+  AgoraRtcEngine_iOS: 267c0980c1fb97e056d05b850f8629b05b6e467a
   AgoraRtm_iOS: b53a57502a35349aceea890df4416b483ea4153c
 
-PODFILE CHECKSUM: d37a5e91eee51d23da43778506a029df131060a6
+PODFILE CHECKSUM: c047ef48ed8637a985ab23b44e4fb16a50383cb2
 
 COCOAPODS: 1.15.2
