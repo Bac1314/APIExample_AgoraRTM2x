@@ -23,11 +23,21 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
     
     final var agoraKit: AgoraRtcEngineKit = AgoraRtcEngineKit()
+    @Published var localRtcUID: UInt = 0
+    @Published var remoteRtcUID: UInt = 0
+    @Published var enableCamera: Bool = false
+    @Published var enableMic: Bool = false
+    
+    // Call variables
+    @Published var currentCallState: CallState = .none
+
     
     func initRTMRTC() async throws {
+        //Init RTM
         try await loginRTM()
-        _ = await subscribeChannel(channelName: mainChannel)
+        _ = await subscribeRTMChannel(channelName: mainChannel)
         
+        //Init RTC
         initRtc()
     }
     
@@ -80,7 +90,7 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     
     //MARK: MESSAGE CHANNEL METHODS
     @MainActor
-    func subscribeChannel(channelName: String) async -> Bool {
+    func subscribeRTMChannel(channelName: String) async -> Bool {
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
@@ -126,13 +136,47 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         
     }
     
-    func joinRTCChannel() {
-        agoraKit.joinChannel(byToken: nil, channelId: mainChannel, info: nil, uid: 0)
+    func joinRTCChannel(channelName: String) {
+        agoraKit.joinChannel(byToken: nil, channelId: channelName, info: nil, uid: 0)
     }
     
     func leaveRTCChannel(){
         agoraKit.leaveChannel()
     }
+    
+    func setupLocalView(localView: UIView) {
+        agoraKit.enableVideo()
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = 0
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = localView
+        agoraKit.startPreview()
+        agoraKit.setupLocalVideo(videoCanvas)
+    }
+    
+    func setupRemoteView(remoteView: UIView) {
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = remoteRtcUID
+        // the view to be binded
+        videoCanvas.view = remoteView
+        videoCanvas.renderMode = .hidden
+        agoraKit.setupRemoteVideo(videoCanvas)
+    }
+    
+    func switchCamera(){
+        agoraKit.switchCamera()
+    }
+    
+    func toggleCamera(){
+        enableCamera = !enableCamera
+        agoraKit.enableLocalVideo(!enableCamera)
+    }
+    
+    func toggleMic(){
+        enableMic = !enableMic
+        agoraKit.enableLocalAudio(!enableMic)
+    }
+
     
 
 
@@ -209,6 +253,31 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
 }
 
 extension VideoCallInviteViewModel: AgoraRtcEngineDelegate {
+    // When local user joined
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
+        localRtcUID = uid
+        print("Joined channel success uid is \(uid)")
+    }
     
+    // When local user leaves
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
+        
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, permissionError type: AgoraPermissionType) {
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
+    }
+
+ 
+    func rtcEngine(_ engine: AgoraRtcEngineKit, localAudioStateChanged state: AgoraAudioLocalState, reason: AgoraAudioLocalReason) {
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, localVideoStateChangedOf state: AgoraVideoLocalState, reason: AgoraLocalVideoStreamReason, sourceType: AgoraVideoSourceType) {
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, connectionChangedTo state: AgoraConnectionState, reason: AgoraConnectionChangedReason) {
+    }
 }
 

@@ -8,14 +8,13 @@ import Foundation
 import SwiftUI
 import AgoraRtcKit
 
-struct AgoraUIView : UIViewRepresentable {
-//    @EnvironmentObject var agoraModel: AgoraRTCViewModel
+struct AgoraLocalUIView : UIViewRepresentable {
+    @EnvironmentObject var agoraModel: VideoCallInviteViewModel
     
     func makeUIView(context: Context) -> some UIView {
-        let agoraUIView: UIView = UIView()
-//        agoraModel.setupLocalView(localView: agoraUIView)
-        
-        return agoraUIView
+        let UIview: UIView = UIView()
+        agoraModel.setupLocalView(localView: UIview)
+        return UIview
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {

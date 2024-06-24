@@ -9,33 +9,29 @@ import SwiftUI
 import Foundation
 
 enum CallState {
+    case none
+    case calling
     case incoming
     case incall
     case ended
 }
 
 struct CallingView: View {
-    var caller: String = "Bac"
-    var callee: String = "Brandon"
-    @Binding var currentCallState: CallState
-    @State var agoraRemoteUIView = AgoraUIView()
-    @State var agoraLocalUIView = AgoraUIView()
-    @State var enableCamera: Bool = false
-    @State var enableMic: Bool = false
-
+    var caller: String = "caller"
+    var callee: String = "callee"
+    @StateObject var agoraVM: VideoCallInviteViewModel = VideoCallInviteViewModel()
+    @State var agoraRemoteUIView : AgoraRemoteUIView?
+    @State var agoraLocalUIView : AgoraLocalUIView?
+    
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            // Incoming call
-            if currentCallState == .incoming {
-                Image(systemName: "person")
-                    .font(.largeTitle)
-                    .padding(24)
-                    .foregroundStyle(Color.white)
-                    .background(Color.blue.opacity(0.5))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+        ZStack(alignment: .top) {
+            // MARK: UI Views to display local and remote users
+            if agoraVM.currentCallState == .calling {
+                agoraLocalUIView
+                    .ignoresSafeArea(.all)
                 
-            }else if currentCallState == .incall {
+            }else if agoraVM.currentCallState == .incall {
                 agoraRemoteUIView
                     .ignoresSafeArea(.all)
                 
@@ -45,16 +41,21 @@ struct CallingView: View {
                         .frame(width: 300, height: 300)
                 }
                 .padding()
-                
-                // MARK: Stream Controls
+            }
+            
+            
+            
+            // MARK: Stream Controls
+            VStack {
+                Spacer()
                 HStack {
-                    
                     Button(action: {
                         // Flip Camera
+                        agoraVM.switchCamera()
                     }, label: {
                         Image(systemName: "arrow.triangle.2.circlepath.camera.fill")
                             .foregroundStyle(.white)
-                            .imageScale(.large)
+                            .frame(width: 30, height: 30)
                             .padding(12)
                             .background(Color.white.opacity(0.2))
                             .clipShape(Circle())
@@ -62,10 +63,11 @@ struct CallingView: View {
                     
                     Button(action: {
                         // Camera
+                        agoraVM.toggleCamera()
                     }, label: {
-                        Image(systemName: enableCamera ? "video.slash" : "video.fill")
+                        Image(systemName: agoraVM.enableCamera ? "video.slash" : "video.fill")
                             .foregroundStyle(.white)
-                            .imageScale(.large)
+                            .frame(width: 30, height: 30)
                             .padding(12)
                             .background(Color.white.opacity(0.2))
                             .clipShape(Circle())
@@ -73,23 +75,25 @@ struct CallingView: View {
                     
                     Button(action: {
                         // Mic
+                        agoraVM.toggleMic()
                     }, label: {
-                        Image(systemName:  enableMic ? "mic.slash" : "mic.fill")
+                        Image(systemName:  agoraVM.enableMic ? "mic.slash" : "mic.fill")
                             .foregroundStyle(.white)
-                            .imageScale(.large)
+                            .frame(width: 30, height: 30)
                             .padding(12)
                             .background(Color.white.opacity(0.2))
                             .clipShape(Circle())
                     })
-
                     
-
+                    
+                    
                     Button(action: {
                         // End call
+                        agoraVM.leaveRTCChannel()
                     }, label: {
                         Image(systemName: "phone.arrow.up.right")
                             .foregroundStyle(.white)
-                            .imageScale(.large)
+                            .frame(width: 30, height: 30)
                             .padding(12)
                             .background(Color.red)
                             .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
@@ -98,14 +102,20 @@ struct CallingView: View {
                 }
                 .font(.title2)
                 .padding(10)
-                .background(Color.gray.blur(radius: 12))
+                .background(Color.black.opacity(0.5).blur(radius: 12))
                 .cornerRadius(15)
             }
-
+        }
+        .task {
+            // When first appeared, do something
+            await agoraVM.callUser(userID: callee)
+            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)_\(caller)_\(callee)")
+            agoraVM.currentCallState = .calling
+            agoraLocalUIView = AgoraLocalUIView()
         }
     }
 }
 
 #Preview {
-    CallingView(currentCallState: .constant(.incall))
+    CallingView()
 }
