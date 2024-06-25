@@ -36,6 +36,9 @@ struct CallingView: View {
                     .disabled(agoraVM.currentCallState == .incall ? false : true)
                     .frame(width: agoraVM.currentCallState == .incall && !remoteViewLarge ? 150 : nil, height: agoraVM.currentCallState == .incall && !remoteViewLarge ? 150 : nil, alignment: .topTrailing)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16).stroke(Color.white, lineWidth: remoteViewLarge ? 0 : 2)
+                    )
                     .ignoresSafeArea(.all)
                     .position(x: agoraVM.currentCallState == .incall && !remoteViewLarge ? geo.size.width-100 : geo.size.width/2, y: agoraVM.currentCallState == .incall && !remoteViewLarge ? 100 : geo.size.height/2)
                     .zIndex(remoteViewLarge ? 1 : 2 )
@@ -52,6 +55,9 @@ struct CallingView: View {
                     .ignoresSafeArea(.all)
                     .frame(width: agoraVM.currentCallState == .incall && remoteViewLarge ? 150 : nil, height: agoraVM.currentCallState == .incall && remoteViewLarge ? 150 : nil, alignment: .topTrailing)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16).stroke(Color.white, lineWidth:  remoteViewLarge ? 2 : 0)
+                    )
                     .ignoresSafeArea(.all)
                     .position(x: agoraVM.currentCallState == .incall && remoteViewLarge ? geo.size.width-100 : geo.size.width/2, y: agoraVM.currentCallState == .incall && remoteViewLarge ? 100 : geo.size.height/2)
                     .zIndex(remoteViewLarge ? 2 : 1)

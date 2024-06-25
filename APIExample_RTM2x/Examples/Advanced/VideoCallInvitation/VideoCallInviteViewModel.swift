@@ -214,7 +214,7 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
                     await MainActor.run {
                         incomingUserID = event.publisher
                         currentCallState = .incoming
-                        AudioServicesPlaySystemSound(SystemSoundID(1013))
+                        AudioServicesPlaySystemSound(SystemSoundID(1009))
                     }
                 }
             }

@@ -242,7 +242,7 @@ struct Canvas: View {
                         .frame(width: 1, height: 25)
                         .background(Color.black)
                     
-                    // Color whilte
+                    // Color white
                     Circle()
                         .fill(selectedColor)
                         .strokeBorder(
