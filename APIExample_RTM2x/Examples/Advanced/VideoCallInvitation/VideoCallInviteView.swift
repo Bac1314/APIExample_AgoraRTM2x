@@ -16,7 +16,6 @@ struct VideoCallInviteView: View {
     
     var serviceIcon: String = "phone.bubble"
     
-    
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
@@ -66,6 +65,45 @@ struct VideoCallInviteView: View {
                 
             }
             
+            // MARK: Show incoming call from remote users
+            if agoraVM.currentCallState == .incoming {
+                VStack{
+                    HStack {
+                        Image(systemName: "person")
+                        Text("\(agoraVM.incomingUserID)")
+
+                        // Decline call
+                        Image(systemName: "phone.down.fill")
+                            .foregroundStyle(.white)
+                            .frame(width: 30, height: 30)
+                            .padding(12)
+                            .background(Color.red)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                            .onTapGesture {
+                                withAnimation {
+                                    agoraVM.currentCallState = .none
+                                }
+                            }
+
+                        
+                        NavigationLink(destination: CallingView(caller: agoraVM.incomingUserID, callee: agoraVM.userID).environmentObject(agoraVM)) {
+                            Image(systemName: "phone.arrow.up.right")
+                                .foregroundStyle(.white)
+                                .frame(width: 30, height: 30)
+                                .padding(12)
+                                .background(Color.green)
+                                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                        }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .shadow(radius: 8)
+                    Spacer()
+                }
+          
+            }
+            
             // MARK: SHOW CUSTOM ALERT
             if showAlert {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
@@ -75,7 +113,6 @@ struct VideoCallInviteView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraVM.isLoggedIn ? "Online Users" : "Login")
         .toolbar{
-            
             // Back button
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {

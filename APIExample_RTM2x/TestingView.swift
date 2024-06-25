@@ -6,61 +6,57 @@
 //
 
 import SwiftUI
+import AVFoundation
+
 
 struct TestingView: View {
-    
+    @State private var isTopRightCorner = true
 
     var body: some View {
+        ZStack(alignment: .top){
+            GeometryReader { geo in
+                    VStack {
+                        Rectangle()
+                            .fill(Color.red)
+                            .frame(width: isTopRightCorner ? 150 : nil, height: isTopRightCorner ? 150 : nil, alignment: .topTrailing)
+                            .edgesIgnoringSafeArea(.all)
+                            .position(x: isTopRightCorner ? geo.size.width-100 : geo.size.width/2, y: isTopRightCorner ? 100 : geo.size.height/2)
 
-        VStack(spacing: 50){
-            Text("Hello World!")
-                .frame(width: 300)
-                .background(
-                    LinearGradient(colors: [Color.indigo, Color.white], startPoint: .leading, endPoint: .trailing)
-                )
+                    }
+                }
+                
             
-            Text("Hello World! 90%")
-                .frame(width: 300)
-                .background(
-                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white], startPoint: .leading, endPoint: .trailing)
-                )
+//            Rectangle()
+//                .background(Color.red)
+//                .frame(width: isTopRightCorner ? 150 : nil, height: isTopRightCorner ? 150 : nil, alignment: .topTrailing)
+//                .edgesIgnoringSafeArea(.all)
             
-            Text("Hello World! 80%")
-                .frame(width: 300)
-                .background(
-                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white, Color.white], startPoint: .leading, endPoint: .trailing)
-                )
+//            Button("Switch") {
+//                withAnimation {
+//                    self.isTopRightCorner.toggle()
+//                    AudioServicesPlaySystemSound(SystemSoundID(1016))
+//                    // 1004 sendMessage 1009 tingting 1013 ding 1016 tweet
+//                      // 1022 calypso 1052 1054 1055
+//                      // 1060 1110
+//                      // 1004 tweet, 1052 duang, 1055 fuwu
+//
+//                }
+//            }
             
-            Text("Hello World! 70%")
-                .frame(width: 300)
-                .background(
-                    LinearGradient(colors: [Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.indigo, Color.white, Color.white, Color.white], startPoint: .leading, endPoint: .trailing)
-                )
-            
-            VStack {
-                Text("Hello World! 70%")
-                    .background(
-                        ProgressView(value: 0.5)
-                        .scaleEffect(CGSize(width: 1.0, height: 2.0))
-                    )
-     
+            Button {
+                AudioServicesPlaySystemSound(SystemSoundID(1016))
+            } label: {
+                Text("Play")
             }
-            .padding()
-            .frame(height: 100)
-      
-        }
-        
 
-        
+        }
+     
     }
 }
 
-
 #Preview {
     struct Preview: View {
-        //        @State private var currentDrawing: Drawing = Drawing()
-        //        @State private var drawings: [Drawing] = [Drawing]()
-        //
+
         var body: some View {
             TestingView()
         }

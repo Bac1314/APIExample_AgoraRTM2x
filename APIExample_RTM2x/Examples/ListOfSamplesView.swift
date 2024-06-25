@@ -32,6 +32,7 @@ struct ListOfSamplesView: View {
     var body: some View {
         NavigationStack {
             VStack {
+            
                 Form{
                     // MARK: BASIC SAMPLES
                     Section(header: Text("Basic").font(.title3)) {

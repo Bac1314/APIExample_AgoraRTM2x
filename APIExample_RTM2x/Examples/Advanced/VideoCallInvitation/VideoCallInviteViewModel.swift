@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import AgoraRtmKit
 import AgoraRtcKit
+import AVFoundation
 
 
 class VideoCallInviteViewModel: NSObject, ObservableObject {
@@ -22,7 +23,8 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     @Published var users: [AgoraRtmUserState] = []
     @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
     
-    final var agoraKit: AgoraRtcEngineKit = AgoraRtcEngineKit()
+    var agoraRTCKit: AgoraRtcEngineKit? = nil
+//    final var agoraKit: AgoraRtcEngineKit = AgoraRtcEngineKit()
     @Published var localRtcUID: UInt = 0
     @Published var remoteRtcUID: UInt = 0
     @Published var enableCamera: Bool = false
@@ -30,6 +32,8 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     
     // Call variables
     @Published var currentCallState: CallState = .none
+    @Published var incomingUserID: String = ""
+    var callType = "callType"
 
     
     func initRTMRTC() async throws {
@@ -38,7 +42,7 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         _ = await subscribeRTMChannel(channelName: mainChannel)
         
         //Init RTC
-        initRtc()
+        await initRtc()
     }
     
     func deinitRTMRTC() {
@@ -84,7 +88,7 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         isLoggedIn = false
         
         // Leave RTC
-        agoraKit.leaveChannel()
+        agoraRTCKit?.leaveChannel()
 
     }
     
@@ -109,12 +113,20 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     
     func callUser(userID: String) async -> Bool {
         let pubOptions = AgoraRtmPublishOptions()
-//        pubOptions.customType = customType ?? ""
+        pubOptions.customType = callType
         pubOptions.channelType = .user
         
         if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "calling", option: pubOptions){
             if error == nil {
                 // MARK: if success
+                Task {
+                    await MainActor.run {
+                        withAnimation {
+                            currentCallState = .calling
+                        }
+                    }
+                }
+
                 return true
             }else{
                 print("Bac's sendMessageToChannel error \(String(describing: error))")
@@ -127,31 +139,34 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     
 
     // MARK: RTC Functions
-    func initRtc() {
+    func initRtc() async {
+    
         let config = AgoraRtcEngineConfig()
         config.appId = Configurations.agora_AppdID
-        agoraKit = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
-        agoraKit.setChannelProfile(.liveBroadcasting)
-        agoraKit.setClientRole(.broadcaster)
-        
+        agoraRTCKit = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
+        agoraRTCKit?.setChannelProfile(.liveBroadcasting)
+        agoraRTCKit?.setClientRole(.broadcaster)
     }
     
     func joinRTCChannel(channelName: String) {
-        agoraKit.joinChannel(byToken: nil, channelId: channelName, info: nil, uid: 0)
+
+        let result = agoraRTCKit?.joinChannel(byToken: nil, channelId: channelName, info: nil, uid: 0)
+        print("Bac's joinRTCChannel \(channelName) result \(String(describing: result))")
+
     }
     
     func leaveRTCChannel(){
-        agoraKit.leaveChannel()
+        agoraRTCKit?.leaveChannel()
     }
     
     func setupLocalView(localView: UIView) {
-        agoraKit.enableVideo()
+        agoraRTCKit?.enableVideo()
         let videoCanvas = AgoraRtcVideoCanvas()
         videoCanvas.uid = 0
         videoCanvas.renderMode = .hidden
         videoCanvas.view = localView
-        agoraKit.startPreview()
-        agoraKit.setupLocalVideo(videoCanvas)
+        agoraRTCKit?.startPreview()
+        agoraRTCKit?.setupLocalVideo(videoCanvas)
     }
     
     func setupRemoteView(remoteView: UIView) {
@@ -160,21 +175,21 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         // the view to be binded
         videoCanvas.view = remoteView
         videoCanvas.renderMode = .hidden
-        agoraKit.setupRemoteVideo(videoCanvas)
+        agoraRTCKit?.setupRemoteVideo(videoCanvas)
     }
     
     func switchCamera(){
-        agoraKit.switchCamera()
+        agoraRTCKit?.switchCamera()
     }
     
     func toggleCamera(){
         enableCamera = !enableCamera
-        agoraKit.enableLocalVideo(!enableCamera)
+        agoraRTCKit?.enableLocalVideo(!enableCamera)
     }
     
     func toggleMic(){
         enableMic = !enableMic
-        agoraKit.enableLocalAudio(!enableMic)
+        agoraRTCKit?.enableLocalAudio(!enableMic)
     }
 
     
@@ -194,7 +209,15 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
         case .stream:
             break
         case .user:
-            
+            if event.customType == callType {
+                Task {
+                    await MainActor.run {
+                        incomingUserID = event.publisher
+                        currentCallState = .incoming
+                        AudioServicesPlaySystemSound(SystemSoundID(1013))
+                    }
+                }
+            }
             
             break
         case .none:
@@ -207,37 +230,40 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
     // Receive presence event notifications in subscribed message channels and joined stream channels.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceivePresenceEvent event: AgoraRtmPresenceEvent) {
         print("Bac's didReceivePresenceEvent channelType \(event.channelType) publisher \(String(describing: event.publisher)) channel \(event.channelName) type \(event.type) ")
-        
-        if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
-            
-            // Remove user from list
-            if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
-                users.remove(at: userIndex)
-            }
-        }else if event.type == .remoteJoinChannel && event.publisher != nil {
-            
-            // Add user to list if it doesn't exist
-            if !users.contains(where: {$0.userId == event.publisher}) && event.publisher != nil {
-                let userState = AgoraRtmUserState()
-                userState.userId = event.publisher!
-                userState.states = event.states
-                users.append(userState)
-            }
-            
-        }else if event.type == .snapshot {
-            print("Bac's didReceivePresenceEvent snapshot")
-            users = event.snapshot
-        }else if event.type == .remoteStateChanged {
-            print("Bac's didReceivePresenceEvent remoteStateChanged")
-            
-            if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
-                // User exist, update the states
-                users[userIndex].states = event.states
-                
-                for state in event.states {
-                    print("Bac's didReceivePresenceEvent remoteStateChanged key: \(state.key) value: \(state.value)")
-                }
+        Task {
+            await MainActor.run {
+                if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
+                    
+                    // Remove user from list
+                    if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
+                        users.remove(at: userIndex)
+                    }
+                }else if event.type == .remoteJoinChannel && event.publisher != nil {
+                    
+                    // Add user to list if it doesn't exist
+                    if !users.contains(where: {$0.userId == event.publisher}) && event.publisher != nil {
+                        let userState = AgoraRtmUserState()
+                        userState.userId = event.publisher!
+                        userState.states = event.states
+                        users.append(userState)
+                    }
+                    
+                }else if event.type == .snapshot {
+                    print("Bac's didReceivePresenceEvent snapshot")
+                    users = event.snapshot
+                }else if event.type == .remoteStateChanged {
+                    print("Bac's didReceivePresenceEvent remoteStateChanged")
+                    
+                    if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
+                        // User exist, update the states
+                        users[userIndex].states = event.states
+                        
+                        for state in event.states {
+                            print("Bac's didReceivePresenceEvent remoteStateChanged key: \(state.key) value: \(state.value)")
+                        }
 
+                    }
+                }
             }
         }
     }
@@ -256,18 +282,33 @@ extension VideoCallInviteViewModel: AgoraRtcEngineDelegate {
     // When local user joined
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
         localRtcUID = uid
-        print("Joined channel success uid is \(uid)")
+        print("Bac's Joined channel success uid is \(uid)")
     }
     
-    // When local user leaves
+
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
-        
+        Task {
+            await MainActor.run {
+                withAnimation {
+                    remoteRtcUID = uid
+                    currentCallState = .incall
+                    print("Bac's didJoinedOfUid is \(uid)")
+                }
+
+            }
+        }
+
+
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, permissionError type: AgoraPermissionType) {
+        print("Bac's permissionError is \(type)")
+
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurError errorCode: AgoraErrorCode) {
+        print("Bac's didOccurError is \(errorCode)")
+
     }
 
  
