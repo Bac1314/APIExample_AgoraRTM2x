@@ -17,3 +17,4 @@ class Configurations: NSObject {
 
     static let agora_AppdID: String = ""
 }
+

@@ -48,15 +48,20 @@ struct VideoCallInviteView: View {
             // MARK: Display list of subscribed channels
             if agoraVM.isLoggedIn {
                 VStack {
-                    Text("\(agoraVM.users.count) online")
+                    Text("\(agoraVM.users.count-1) online")
                     
                     // List of users
                     List {
                         ForEach(agoraVM.users.filter({$0.userId != agoraVM.userID}), id: \.userId) { user in
                             
-                            NavigationLink(destination: CallingView(caller: agoraVM.userID, callee: user.userId).environmentObject(agoraVM)) {
-                                VideoListItemView(userName: user.userId)
+//                            NavigationLink(destination: CallingView(caller: agoraVM.userID, callee: user.userId).environmentObject(agoraVM)) {
+                            VideoListItemView(userName: user.userId) {
+                                // User tapped call button
+                                Task {
+                                    await agoraVM.callUser(userID: user.userId)
+                                }
                             }
+//                            }
                         }
                     }
                     .listStyle(.plain)
@@ -65,44 +70,61 @@ struct VideoCallInviteView: View {
                 
             }
             
-            // MARK: Show incoming call from remote users
-            if agoraVM.currentCallState == .incoming {
-                VStack{
-                    HStack {
-                        Image(systemName: "person")
-                        Text("\(agoraVM.incomingUserID)")
-
-                        // Decline call
-                        Image(systemName: "phone.down.fill")
-                            .foregroundStyle(.white)
-                            .frame(width: 30, height: 30)
-                            .padding(12)
-                            .background(Color.red)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                            .onTapGesture {
-                                withAnimation {
-                                    agoraVM.currentCallState = .none
-                                }
-                            }
-
-                        
-                        NavigationLink(destination: CallingView(caller: agoraVM.incomingUserID, callee: agoraVM.userID).environmentObject(agoraVM)) {
-                            Image(systemName: "phone.arrow.up.right")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                                .padding(12)
-                                .background(Color.green)
-                                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                        }
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .shadow(radius: 8)
-                    Spacer()
-                }
-          
-            }
+//            // MARK: Show incoming call, CUSTOM UI from remote users
+//            if agoraVM.currentCallState == .incoming {
+//                VStack{
+//                    HStack {
+//                        Text("\(agoraVM.incomingUserID.first ?? "😃")")
+//                            .frame(width: 30, height: 30)
+//                            .padding(12)
+//                            .background(LinearGradient(colors: [.blue, .pink, .orange], startPoint: .topLeading, endPoint: .bottomTrailing))
+//                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+//                        
+//                        VStack(alignment: .leading) {
+//                            Text("Incoming call")
+//                                .font(.footnote)
+//                                .foregroundStyle(Color.white.opacity(0.7))
+//                            
+//                            Text("\(agoraVM.incomingUserID)")
+//                                .font(.headline)
+//                        }
+//                        
+//                        Spacer()
+//
+//                        // Decline call
+//                        Image(systemName: "phone.down.fill")
+//                            .foregroundStyle(.white)
+//                            .frame(width: 30, height: 30)
+//                            .padding(12)
+//                            .background(Color.red)
+//                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+//                            .onTapGesture {
+//                                withAnimation {
+//                                    agoraVM.currentCallState = .none
+//                                }
+//                            }
+//                        
+//                        NavigationLink(destination: CallingView(caller: agoraVM.incomingUserID, callee: agoraVM.userID).environmentObject(agoraVM)) {
+//                            Image(systemName: "phone.arrow.up.right")
+//                                .foregroundStyle(.white)
+//                                .frame(width: 30, height: 30)
+//                                .padding(12)
+//                                .background(Color.green)
+//                                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+//                        }
+//                    }
+//                    .padding()
+//                    .frame(width: .infinity)
+//                    .background(Color.black.opacity(0.7))
+//                    .foregroundStyle(Color.white)
+//                    .clipShape(RoundedRectangle(cornerRadius: 16))
+//                    .shadow(radius: 8)
+//                    .padding(.horizontal)
+//        
+//                    Spacer()
+//                }
+//          
+//            }
             
             // MARK: SHOW CUSTOM ALERT
             if showAlert {
@@ -116,7 +138,7 @@ struct VideoCallInviteView: View {
             // Back button
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
-                    agoraVM.logoutRTM()
+                    agoraVM.logoutAll()
                     self.mode.wrappedValue.dismiss()
                 }){
                     HStack{

@@ -14,41 +14,54 @@ struct TestingView: View {
 
     var body: some View {
         ZStack(alignment: .top){
-            GeometryReader { geo in
-                    VStack {
-                        Rectangle()
-                            .fill(Color.red)
-                            .frame(width: isTopRightCorner ? 150 : nil, height: isTopRightCorner ? 150 : nil, alignment: .topTrailing)
-                            .edgesIgnoringSafeArea(.all)
-                            .position(x: isTopRightCorner ? geo.size.width-100 : geo.size.width/2, y: isTopRightCorner ? 100 : geo.size.height/2)
-
+            VStack{
+                HStack {
+                    Text("B")
+                        .frame(width: 30, height: 30)
+                        .padding(12)
+                        .background(LinearGradient(colors: [.blue, .pink, .orange], startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Incoming call")
+                            .font(.footnote)
+                            .foregroundStyle(Color.white.opacity(0.7))
+                        
+                        Text("Bac Huang")
+                            .font(.headline)
                     }
+                    
+                    Spacer()
+                    
+                    // Decline call
+                    Image(systemName: "phone.down.fill")
+                        .foregroundStyle(.white)
+                        .frame(width: 30, height: 30)
+                        .padding(12)
+                        .background(Color.red)
+                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                        .onTapGesture {
+                            withAnimation {
+                            }
+                        }
+                    
+//                    NavigationLink(destination: CallingView(caller: agoraVM.incomingUserID, callee: agoraVM.userID).environmentObject(agoraVM)) {
+                        Image(systemName: "phone.arrow.up.right")
+                            .foregroundStyle(.white)
+                            .frame(width: 30, height: 30)
+                            .padding(12)
+                            .background(Color.green)
+                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+//                    }
                 }
-                
-            
-//            Rectangle()
-//                .background(Color.red)
-//                .frame(width: isTopRightCorner ? 150 : nil, height: isTopRightCorner ? 150 : nil, alignment: .topTrailing)
-//                .edgesIgnoringSafeArea(.all)
-            
-//            Button("Switch") {
-//                withAnimation {
-//                    self.isTopRightCorner.toggle()
-//                    AudioServicesPlaySystemSound(SystemSoundID(1016))
-//                    // 1004 sendMessage 1009 tingting 1013 ding 1016 tweet
-//                      // 1022 calypso 1052 1054 1055
-//                      // 1060 1110
-//                      // 1004 tweet, 1052 duang, 1055 fuwu
-//
-//                }
-//            }
-            
-            Button {
-                AudioServicesPlaySystemSound(SystemSoundID(1016))
-            } label: {
-                Text("Play")
+                .padding()
+                .background(Color.black.opacity(0.5))
+                .foregroundStyle(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(radius: 8)
+                .padding()
+                Spacer()
             }
-
         }
      
     }

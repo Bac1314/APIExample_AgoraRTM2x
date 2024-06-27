@@ -48,8 +48,11 @@ struct CallingView: View {
                                 remoteViewLarge.toggle()
                             }
                         }
-
                     }
+                    .overlay(alignment: .bottom) {
+                        Text("")
+                    }
+                    
                 
                 agoraLocalUIView
                     .ignoresSafeArea(.all)
@@ -138,11 +141,9 @@ struct CallingView: View {
         .task {
             // When first appeared, do something
             let _ = await agoraVM.callUser(userID: callee)
-            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)_\(caller)_\(callee)")
-//            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)")
-            
-            agoraVM.currentCallState = .calling
-            agoraLocalUIView = AgoraLocalUIView()
+//            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)_\(caller)_\(callee)")
+//            agoraVM.currentCallState = .calling
+//            agoraLocalUIView = AgoraLocalUIView()
         }
         .onChange(of: agoraVM.remoteRtcUID) { oldValue, newValue in
             if newValue != 0 {
