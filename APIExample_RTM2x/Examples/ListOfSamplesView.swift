@@ -26,7 +26,7 @@ struct ListOfSamplesView: View {
         ("Whiteboard", ("hand.draw", AnyView(WhiteBoardView(serviceIcon:"hand.draw")))),
         ("Audio Recording", ("waveform", AnyView(AudioRecordingView(serviceIcon:"waveform")))),
         ("File Sharing", ("filemenu.and.cursorarrow", AnyView(FileSharingView(serviceIcon:"filemenu.and.cursorarrow")))),
-        ("Call Invitation", ("phone.bubble", AnyView(VideoCallInviteView(serviceIcon:"phone.bubble"))))
+        ("Call Invitation", ("phone.bubble", AnyView(AudioCallKitView(serviceIcon:"phone.bubble"))))
     ]
     
     var body: some View {

@@ -120,6 +120,7 @@ The list of samples and what feature is used
 | [Whiteboard](APIExample_RTM2x/Examples/Advanced/WhiteBoard/)          | Real-time whiteboard collaboration tool  | Message, Stream             | `.message`, `.presence`             |
 | [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings directly to users | Message             | `.message`, `.presence`             |
 | [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Send files directly to users | Message             | `.message`, `.presence`             |
+| [Video Call Invitation (Pending)](APIExample_RTM2x/Examples/Advanced/VideoCallInvitation/)          | Make a P2P video call with Agora RTC SDK | Message             | `.message`, `.presence` ,  `RTC_SDK`          |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -142,7 +143,7 @@ The list of samples and what feature is used
 - Interactive games
 - Real-time IoT event sharing
 
-If you have any requests, feel free let send us a 
+If you have any requests/ideas, feel free to let me know. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

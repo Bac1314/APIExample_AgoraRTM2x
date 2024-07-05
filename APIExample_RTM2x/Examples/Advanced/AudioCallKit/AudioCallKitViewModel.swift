@@ -1,9 +1,10 @@
 //
-//  VideoCallInviteViewModel.swift
+//  AudioCallKitViewModel.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/6/14.
+//  Created by BBC on 2024/7/5.
 //
+
 
 
 import Foundation
@@ -12,10 +13,11 @@ import AgoraRtmKit
 import AgoraRtcKit
 import AVFoundation
 import CallKit
+import UIKit
 
 
-class VideoCallInviteViewModel: NSObject, ObservableObject {
-    
+class AudioCallKitViewModel: NSObject, ObservableObject {
+    // RTM variables
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
     @Published var token: String = ""
@@ -24,18 +26,21 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     @Published var users: [AgoraRtmUserState] = []
     @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
     
+    // RTC variables
     var agoraRTCKit: AgoraRtcEngineKit? = nil
     @Published var localRtcUID: UInt = 0
     @Published var remoteRtcUID: UInt = 0
-    @Published var enableCamera: Bool = false
     @Published var enableMic: Bool = false
     
     // Call variables
     @Published var currentCallState: CallState = .none
     @Published var incomingUserID: String = ""
-    var callType = "callType"
+    var callingType = "calling"
+    var endingCallType = "endingCall"
+
     
     // CallKit Variables
+    @State var callKitUID = UUID()
     let provider = CXProvider(configuration: CXProviderConfiguration())
     let callController = CXCallController()
 
@@ -89,8 +94,8 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         }
     }
     
-    // Logout RTM server
     func logoutAll(){
+        // Logout RTM server
         agoraRtmKit?.logout()
         agoraRtmKit?.destroy()
         isLoggedIn = false
@@ -124,22 +129,23 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     }
     
     func callUser(userID: String) async -> Bool {
-        let callKitID = UUID()
+        callKitUID = UUID()
         
         let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = callType
+        pubOptions.customType = callingType
         pubOptions.channelType = .user
         
-        if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "\(callKitID)", option: pubOptions){
+        if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "\(callKitUID)", option: pubOptions){
             if error == nil {
                 // MARK: if success
                 Task {
-                    await MainActor.run {
-                        withAnimation {
-                            currentCallState = .calling
-                        }
+                    // Perform CallKit call action
+                    do {
+                        let action = CXStartCallAction(call: callKitUID, handle: CXHandle(type: .generic, value: userID))
+                        try await callController.requestTransaction(with: action)
+                    }catch {
+                        print("Bac's CallKit \(error)")
                     }
-                    try? await startCall(id: callKitID, handle: userID)
                 }
 
                 return true
@@ -152,32 +158,54 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
         return false
     }
     
-    func startCall(id: UUID, handle: String) async throws {
-        print("Bac's startCall called")
-        do {
-            let handle = CXHandle(type: .generic, value: handle)
-            let action = CXStartCallAction(call: id, handle: handle)
-            action.isVideo = false
-            
-            try await callController.requestTransaction(with: action)
-        }catch {
-            print("Bac's startCall \(error)")
-        }
-    }
-    
+
     func reportIncomingCall(id: UUID, handle: String) async throws {
         print("Bac's reportIncomingCall called")
 
+        // Perform CallKit Incoming call action
         do {
             let handle = CXHandle(type: .generic, value: handle)
             let update = CXCallUpdate()
             update.remoteHandle = handle
+            update.hasVideo = false
             
             try await provider.reportNewIncomingCall(with: id, update: update)
         } catch {
             print("Bac's reportIncomingCall \(error)")
         }
     }
+    
+    func endCall(localEnd: Bool) async throws {
+        currentCallState = .none
+        leaveRTCChannel()
+        
+        // If local user is ending is the call, then send notification to remote client
+        if localEnd {
+            let pubOptions = AgoraRtmPublishOptions()
+            pubOptions.customType = endingCallType
+            pubOptions.channelType = .user
+            
+            if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "\(callKitUID)", option: pubOptions){
+                if error == nil {
+                    // MARK: if success
+                }else{
+                    print("Bac's sendMessageToChannel error \(String(describing: error))")
+                }
+                
+            }
+        }
+      
+        // End call
+        do {
+            let transaction = CXTransaction(action: CXEndCallAction(call: callKitUID))
+            try await callController.request(transaction)
+        }catch {
+            print("Bac's endCall \(error)")
+        }
+        
+
+    }
+    
 
     // MARK: RTC Functions
     func initRtc() async {
@@ -197,45 +225,7 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
     func leaveRTCChannel(){
         agoraRTCKit?.leaveChannel()
     }
-    
-    func setupLocalView(localView: UIView) {
-        agoraRTCKit?.enableVideo()
-        let videoCanvas = AgoraRtcVideoCanvas()
-        videoCanvas.uid = 0
-        videoCanvas.renderMode = .hidden
-        videoCanvas.view = localView
-        agoraRTCKit?.startPreview()
-        agoraRTCKit?.setupLocalVideo(videoCanvas)
-        
-        // Set Resolution
-        agoraRTCKit?.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(
-            size: CGSize(width: 720, height: 1280),
-            frameRate: AgoraVideoFrameRate(rawValue: 30) ?? .fps30,
-            bitrate: AgoraVideoBitrateStandard,
-            orientationMode: .adaptative, mirrorMode: .auto))
-    }
-    
-    func setupRemoteView(remoteView: UIView) {
-        let videoCanvas = AgoraRtcVideoCanvas()
-        videoCanvas.uid = remoteRtcUID
-        // the view to be binded
-        videoCanvas.view = remoteView
-        videoCanvas.renderMode = .hidden
-        agoraRTCKit?.setupRemoteVideo(videoCanvas)
-    }
-    
-    
-    @MainActor
-    func switchCamera(){
-        agoraRTCKit?.switchCamera()
-    }
-    
-    @MainActor
-    func toggleCamera(){
-        enableCamera = !enableCamera
-        agoraRTCKit?.enableLocalVideo(!enableCamera)
-    }
-    
+
     @MainActor
     func toggleMic(){
         enableMic = !enableMic
@@ -247,8 +237,8 @@ class VideoCallInviteViewModel: NSObject, ObservableObject {
 
 }
 
-
-extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
+// RTM Callbacks
+extension AudioCallKitViewModel: AgoraRtmClientDelegate {
     
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
@@ -260,16 +250,15 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
         case .stream:
             break
         case .user:
-            if event.customType == callType {
+            if event.customType == callingType {
                 Task {
-                    let callKitID = UUID(uuidString: event.message.stringData!) ?? UUID()
-                    try? await reportIncomingCall(id: callKitID, handle: userID)
-                    
-//                    await MainActor.run {
-//                        incomingUserID = event.publisher
-//                        currentCallState = .incoming
-//                        AudioServicesPlaySystemSound(SystemSoundID(1009))
-//                    }
+                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
+                    try? await reportIncomingCall(id: callKitUID, handle: userID)
+                }
+            }else if event.customType == endingCallType {
+                Task {
+                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
+                    try? await endCall(localEnd: false)
                 }
             }
             
@@ -332,14 +321,14 @@ extension VideoCallInviteViewModel: AgoraRtmClientDelegate {
     
 }
 
-extension VideoCallInviteViewModel: AgoraRtcEngineDelegate {
+// RTC Callbacks
+extension AudioCallKitViewModel: AgoraRtcEngineDelegate {
     // When local user joined
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinChannel channel: String, withUid uid: UInt, elapsed: Int) {
         localRtcUID = uid
         print("Bac's Joined channel success uid is \(uid)")
     }
     
-
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         Task {
             await MainActor.run {
@@ -365,8 +354,8 @@ extension VideoCallInviteViewModel: AgoraRtcEngineDelegate {
 
 }
 
-
-extension VideoCallInviteViewModel: CXProviderDelegate {
+// CallKit Callbacks
+extension AudioCallKitViewModel: CXProviderDelegate {
     /// Called when the provider has been reset. Delegates must respond to this callback by cleaning up all internal call state (disconnecting communication channels, releasing network resources, etc.). This callback can be treated as a request to end all calls without the need to respond to any actions
     func providerDidReset(_ provider: CXProvider){
         print("Bac's providerDidReset")
@@ -377,7 +366,6 @@ extension VideoCallInviteViewModel: CXProviderDelegate {
          print("Bac's providerDidBegin")
 
     }
-
     /// Called whenever a new transaction should be executed. Return whether or not the transaction was handled:
     ///
     /// - NO: the transaction was not handled indicating that the perform*CallAction methods should be called sequentially for each action in the transaction
@@ -387,11 +375,10 @@ extension VideoCallInviteViewModel: CXProviderDelegate {
     func provider(_ provider: CXProvider, execute transaction: CXTransaction) -> Bool {
         print("Bac's execute transaction")
         currentCallState = .incoming
-
-         return false
+        return false
     }
 
-    // If provider:executeTransaction:error: returned NO, each perform*CallAction method is called sequentially for each action in the transaction
+    // START CALL - If provider:executeTransaction:error: returned NO, each perform*CallAction method is called sequentially for each action in the transaction
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
         print("Bac's  perform action: CXStartCallAction")
         currentCallState = .incall
@@ -399,6 +386,7 @@ extension VideoCallInviteViewModel: CXProviderDelegate {
         action.fulfill()
     }
 
+    // ANSWER CALL
      func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
          print("Bac's  perform action: CXAnswerCallAction")
          currentCallState = .incall
@@ -406,23 +394,35 @@ extension VideoCallInviteViewModel: CXProviderDelegate {
          action.fulfill()
     }
 
+    // END CALL
      func provider(_ provider: CXProvider, perform action: CXEndCallAction){
          print("Bac's  perform action: CXEndCallAction")
-         currentCallState = .ended
-         leaveRTCChannel()
+         Task {
+             try? await endCall(localEnd: true)
+
+         }
+
          action.fulfill()
     }
 
+    // HELD CALL
      func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction){
          print("Bac's  perform action: CXSetHeldCallAction")
          action.fulfill()
     }
 
+    // MUTE CALL
      func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
          print("Bac's  perform action: CXSetMutedCallAction")
+         Task{
+             await MainActor.run {
+                 toggleMic()
+             }
+         }
          action.fulfill()
     }
 
+    //
      func provider(_ provider: CXProvider, perform action: CXSetGroupCallAction){
          print("Bac's  perform action: CXSetGroupCallAction")
          action.fulfill()
@@ -449,3 +449,16 @@ extension VideoCallInviteViewModel: CXProviderDelegate {
         print("Bac's  perform didDeactivate: audioSession")
     }
 }
+
+//extension AudioCallKitViewModel: CXCallObserverDelegate {
+//    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+//        if call.hasEnded {
+//            // Handle call end
+//        } else if call.isOutgoing && !call.hasConnected {
+//            // Handle outgoing call
+//        } else if call.hasConnected {
+//            // Handle call connection
+//        }
+//    }
+//
+//}

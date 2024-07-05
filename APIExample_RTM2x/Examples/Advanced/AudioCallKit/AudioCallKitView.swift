@@ -1,15 +1,15 @@
 //
-//  VideoCallInviteView.swift
+//  AudioCallKitView.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/6/14.
+//  Created by BBC on 2024/7/5.
 //
 
 import SwiftUI
 import AgoraRtmKit
 
-struct VideoCallInviteView: View {
-    @StateObject var agoraVM: VideoCallInviteViewModel = VideoCallInviteViewModel()
+struct AudioCallKitView: View {
+    @StateObject var agoraVM: AudioCallKitViewModel = AudioCallKitViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @FocusState private var keyboardIsFocused: Bool
     @State var isLoading: Bool = false
@@ -54,17 +54,20 @@ struct VideoCallInviteView: View {
                     // List of users
                     List {
                         ForEach(agoraVM.users.filter({$0.userId != agoraVM.userID}), id: \.userId) { user in
-                            NavigationLink(destination: CallView().environmentObject(agoraVM)) {
-                                VideoListItemView(userName: user.userId)
-                            }
+                            Text("Call \(user.userId)")
+                                .onTapGesture {
+                                    Task {
+                                        await agoraVM.callUser(userID:user.userId)
+                                    }
+                                }
+                            
                         }
                     }
                     .listStyle(.plain)
-                    
                 }
                 
             }
-            
+                        
             
             // MARK: SHOW CUSTOM ALERT
             if showAlert {
@@ -88,17 +91,9 @@ struct VideoCallInviteView: View {
                 }
             }
         }
-        .onChange(of: agoraVM.currentCallState) { oldValue, newValue in
-            if newValue != oldValue && newValue == .incall {
-                path.append("callingview")
-            }
-        }
-        .navigationDestination(for: String.self) { Hashable in
-            CallView().environmentObject(agoraVM)
-        }
     }
 }
 
 #Preview {
-    VideoCallInviteView()
+    AudioCallKitView()
 }

@@ -28,6 +28,7 @@
 		29538F832BC538E700299041 /* quizmockdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 29538F822BC538E700299041 /* quizmockdata.json */; };
 		29538F852BC539E100299041 /* QuizMockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F842BC539E100299041 /* QuizMockItem.swift */; };
 		29538F872BC67E1900299041 /* QuizUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F862BC67E1900299041 /* QuizUser.swift */; };
+		296845EA2C29777200F8D7FE /* AgoraRemoteUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */; };
 		296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */; };
 		296CC1272BA99690006E14F5 /* MessageItemRemoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */; };
 		296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */; };
@@ -51,8 +52,10 @@
 		297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80232BA4550C0057200A /* StreamMessagingView.swift */; };
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
 		29851F9D2C25771900C16DF2 /* VideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9C2C25771900C16DF2 /* VideoListItemView.swift */; };
-		29851F9F2C25791600C16DF2 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9E2C25791600C16DF2 /* CallingView.swift */; };
-		29851FA12C257A7B00C16DF2 /* AgoraUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */; };
+		29851F9F2C25791600C16DF2 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9E2C25791600C16DF2 /* CallView.swift */; };
+		29851FA12C257A7B00C16DF2 /* AgoraLocalUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */; };
+		298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */; };
+		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
 		29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */; };
 		29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */; };
@@ -107,6 +110,7 @@
 		29538F822BC538E700299041 /* quizmockdata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = quizmockdata.json; sourceTree = "<group>"; };
 		29538F842BC539E100299041 /* QuizMockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizMockItem.swift; sourceTree = "<group>"; };
 		29538F862BC67E1900299041 /* QuizUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUser.swift; sourceTree = "<group>"; };
+		296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraRemoteUIView.swift; sourceTree = "<group>"; };
 		296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemLocalView.swift; sourceTree = "<group>"; };
 		296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemRemoteView.swift; sourceTree = "<group>"; };
 		296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundedRectView.swift; sourceTree = "<group>"; };
@@ -131,8 +135,10 @@
 		297F80232BA4550C0057200A /* StreamMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingView.swift; sourceTree = "<group>"; };
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
 		29851F9C2C25771900C16DF2 /* VideoListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListItemView.swift; sourceTree = "<group>"; };
-		29851F9E2C25791600C16DF2 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
-		29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraUIView.swift; sourceTree = "<group>"; };
+		29851F9E2C25791600C16DF2 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
+		29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraLocalUIView.swift; sourceTree = "<group>"; };
+		298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitViewModel.swift; sourceTree = "<group>"; };
+		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
 		29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuctionItem.swift; sourceTree = "<group>"; };
 		29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionItemView.swift; sourceTree = "<group>"; };
@@ -207,8 +213,9 @@
 				2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */,
 				2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */,
 				29851F9C2C25771900C16DF2 /* VideoListItemView.swift */,
-				29851F9E2C25791600C16DF2 /* CallingView.swift */,
-				29851FA02C257A7B00C16DF2 /* AgoraUIView.swift */,
+				29851F9E2C25791600C16DF2 /* CallView.swift */,
+				29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */,
+				296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */,
 			);
 			path = VideoCallInvitation;
 			sourceTree = "<group>";
@@ -398,9 +405,19 @@
 				29E601082BD8A57800D69079 /* WhiteBoard */,
 				29BDB2852C003A6B00BF8AF5 /* AudioRecording */,
 				29BDB2922C06CD5600BF8AF5 /* FileSharing */,
+				298BC2B82C37EA2D00376036 /* AudioCallKit */,
 				2904A1B62C1C4784004A2D8C /* VideoCallInvitation */,
 			);
 			path = Advanced;
+			sourceTree = "<group>";
+		};
+		298BC2B82C37EA2D00376036 /* AudioCallKit */ = {
+			isa = PBXGroup;
+			children = (
+				298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */,
+				298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */,
+			);
+			path = AudioCallKit;
 			sourceTree = "<group>";
 		};
 		29AFACA22BD0F37700088381 /* LocationSharing */ = {
@@ -579,9 +596,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29851FA12C257A7B00C16DF2 /* AgoraUIView.swift in Sources */,
+				29851FA12C257A7B00C16DF2 /* AgoraLocalUIView.swift in Sources */,
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
-				29851F9F2C25791600C16DF2 /* CallingView.swift in Sources */,
+				29851F9F2C25791600C16DF2 /* CallView.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
@@ -604,6 +621,7 @@
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
 				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
+				296845EA2C29777200F8D7FE /* AgoraRemoteUIView.swift in Sources */,
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
@@ -616,9 +634,11 @@
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
 				2904A1B82C1C47B4004A2D8C /* VideoCallInviteViewModel.swift in Sources */,
+				298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
 				29BDB2942C06CD8A00BF8AF5 /* FileSharingView.swift in Sources */,
 				29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */,
+				298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */,
 				296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */,
 				29AFACA32BD0F37700088381 /* LocationUser.swift in Sources */,
 				297F80162BA4540D0057200A /* ChannelMessagingView.swift in Sources */,
@@ -786,8 +806,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "APIExample-RTM2x-Info.plist";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Video call";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio call";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -825,8 +846,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "APIExample-RTM2x-Info.plist";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Video call";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "To share location with your friends only";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "For recording audio files ";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio call";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

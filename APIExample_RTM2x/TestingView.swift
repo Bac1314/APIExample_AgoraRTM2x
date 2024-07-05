@@ -14,54 +14,23 @@ struct TestingView: View {
 
     var body: some View {
         ZStack(alignment: .top){
-            VStack{
-                HStack {
-                    Text("B")
-                        .frame(width: 30, height: 30)
-                        .padding(12)
-                        .background(LinearGradient(colors: [.blue, .pink, .orange], startPoint: .topLeading, endPoint: .bottomTrailing))
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Incoming call")
-                            .font(.footnote)
-                            .foregroundStyle(Color.white.opacity(0.7))
-                        
-                        Text("Bac Huang")
-                            .font(.headline)
-                    }
-                    
-                    Spacer()
-                    
-                    // Decline call
-                    Image(systemName: "phone.down.fill")
-                        .foregroundStyle(.white)
-                        .frame(width: 30, height: 30)
-                        .padding(12)
-                        .background(Color.red)
-                        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                        .onTapGesture {
-                            withAnimation {
-                            }
-                        }
-                    
-//                    NavigationLink(destination: CallingView(caller: agoraVM.incomingUserID, callee: agoraVM.userID).environmentObject(agoraVM)) {
-                        Image(systemName: "phone.arrow.up.right")
-                            .foregroundStyle(.white)
-                            .frame(width: 30, height: 30)
-                            .padding(12)
-                            .background(Color.green)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-//                    }
+            Button {
+                let urlString = "https://bin.bnbstatic.com/static/live-ag/10212909921185/1fc7fc3f2d4fb874a8209aa4e78543f4_10212909921185.m3u8"
+                guard let url = URL(string: urlString) else {
+                    return
                 }
-                .padding()
-                .background(Color.black.opacity(0.5))
-                .foregroundStyle(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .shadow(radius: 8)
-                .padding()
-                Spacer()
+
+                let asset = AVAsset(url: url)
+                let playerItem = AVPlayerItem(asset: asset)
+
+                let player = AVPlayer(playerItem: playerItem)
+                player.play()
+                
+                print("Reached here")
+            } label: {
+                Text("Load and play ")
             }
+
         }
      
     }

@@ -16,9 +16,9 @@ enum CallState {
     case ended
 }
 
-struct CallingView: View {
-    var caller: String = "caller"
-    var callee: String = "callee"
+struct CallView: View {
+//    var caller: String = "caller"
+//    var callee: String = "callee"
     @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     
     @EnvironmentObject var agoraVM: VideoCallInviteViewModel
@@ -140,10 +140,9 @@ struct CallingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             // When first appeared, do something
-            let _ = await agoraVM.callUser(userID: callee)
-//            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)_\(caller)_\(callee)")
-//            agoraVM.currentCallState = .calling
-//            agoraLocalUIView = AgoraLocalUIView()
+////            agoraVM.joinRTCChannel(channelName: "\(agoraVM.mainChannel)_\(caller)_\(callee)")
+            agoraVM.currentCallState = .calling
+            agoraLocalUIView = AgoraLocalUIView()
         }
         .onChange(of: agoraVM.remoteRtcUID) { oldValue, newValue in
             if newValue != 0 {
@@ -155,5 +154,5 @@ struct CallingView: View {
 }
 
 #Preview {
-    CallingView()
+    CallView()
 }
