@@ -13,8 +13,6 @@
 		29024AAA2BCE1F0600E871B2 /* Arch_ChannelMessaging.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */; };
 		29024AAB2BCE1F0600E871B2 /* Arch_Quiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */; };
 		29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29024AAE2BCE866100E871B2 /* Configurations.swift */; };
-		2904A1B82C1C47B4004A2D8C /* VideoCallInviteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */; };
-		2904A1BA2C1C47C4004A2D8C /* VideoCallInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */; };
 		292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */; };
 		292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1D2BBA66C600505913 /* GlobalTools.swift */; };
 		292CDB202BBA94D100505913 /* CustomPoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1F2BBA94D100505913 /* CustomPoll.swift */; };
@@ -22,13 +20,13 @@
 		292CDB242BBBA55100505913 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB232BBBA55100505913 /* TestingView.swift */; };
 		292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB252BBC10C700505913 /* CustomAlert.swift */; };
 		29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29307D262BBD5819005BB4CC /* PollCreationView.swift */; };
+		29450F742C4522AB009CA034 /* InCallAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29450F732C4522AB009CA034 /* InCallAudioView.swift */; };
 		29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F782BC3E94700299041 /* QuizViewModel.swift */; };
 		29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */; };
 		29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F7F2BC523C200299041 /* QuizGameItemView.swift */; };
 		29538F832BC538E700299041 /* quizmockdata.json in Resources */ = {isa = PBXBuildFile; fileRef = 29538F822BC538E700299041 /* quizmockdata.json */; };
 		29538F852BC539E100299041 /* QuizMockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F842BC539E100299041 /* QuizMockItem.swift */; };
 		29538F872BC67E1900299041 /* QuizUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F862BC67E1900299041 /* QuizUser.swift */; };
-		296845EA2C29777200F8D7FE /* AgoraRemoteUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */; };
 		296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */; };
 		296CC1272BA99690006E14F5 /* MessageItemRemoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */; };
 		296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */; };
@@ -51,9 +49,6 @@
 		297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80212BA454A40057200A /* P2PMessagingView.swift */; };
 		297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80232BA4550C0057200A /* StreamMessagingView.swift */; };
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
-		29851F9D2C25771900C16DF2 /* VideoListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9C2C25771900C16DF2 /* VideoListItemView.swift */; };
-		29851F9F2C25791600C16DF2 /* CallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851F9E2C25791600C16DF2 /* CallView.swift */; };
-		29851FA12C257A7B00C16DF2 /* AgoraLocalUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */; };
 		298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */; };
 		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
@@ -95,8 +90,6 @@
 		29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_ChannelMessaging.png; sourceTree = "<group>"; };
 		29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_Quiz.png; sourceTree = "<group>"; };
 		29024AAE2BCE866100E871B2 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
-		2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallInviteViewModel.swift; sourceTree = "<group>"; };
-		2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallInviteView.swift; sourceTree = "<group>"; };
 		292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRTMUser.swift; sourceTree = "<group>"; };
 		292CDB1D2BBA66C600505913 /* GlobalTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTools.swift; sourceTree = "<group>"; };
 		292CDB1F2BBA94D100505913 /* CustomPoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPoll.swift; sourceTree = "<group>"; };
@@ -104,13 +97,13 @@
 		292CDB232BBBA55100505913 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		292CDB252BBC10C700505913 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		29307D262BBD5819005BB4CC /* PollCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationView.swift; sourceTree = "<group>"; };
+		29450F732C4522AB009CA034 /* InCallAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCallAudioView.swift; sourceTree = "<group>"; };
 		29538F782BC3E94700299041 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		29538F7A2BC3EC0A00299041 /* CustomQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuiz.swift; sourceTree = "<group>"; };
 		29538F7F2BC523C200299041 /* QuizGameItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizGameItemView.swift; sourceTree = "<group>"; };
 		29538F822BC538E700299041 /* quizmockdata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = quizmockdata.json; sourceTree = "<group>"; };
 		29538F842BC539E100299041 /* QuizMockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizMockItem.swift; sourceTree = "<group>"; };
 		29538F862BC67E1900299041 /* QuizUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizUser.swift; sourceTree = "<group>"; };
-		296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraRemoteUIView.swift; sourceTree = "<group>"; };
 		296CC1212BA99690006E14F5 /* MessageItemLocalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemLocalView.swift; sourceTree = "<group>"; };
 		296CC1222BA99690006E14F5 /* MessageItemRemoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItemRemoteView.swift; sourceTree = "<group>"; };
 		296CC1282BA998F7006E14F5 /* CustomRoundedRectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRoundedRectView.swift; sourceTree = "<group>"; };
@@ -134,9 +127,6 @@
 		297F80212BA454A40057200A /* P2PMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P2PMessagingView.swift; sourceTree = "<group>"; };
 		297F80232BA4550C0057200A /* StreamMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamMessagingView.swift; sourceTree = "<group>"; };
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
-		29851F9C2C25771900C16DF2 /* VideoListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListItemView.swift; sourceTree = "<group>"; };
-		29851F9E2C25791600C16DF2 /* CallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallView.swift; sourceTree = "<group>"; };
-		29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgoraLocalUIView.swift; sourceTree = "<group>"; };
 		298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitViewModel.swift; sourceTree = "<group>"; };
 		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
@@ -205,19 +195,6 @@
 				29AFACA62BD0FB0200088381 /* Arch_LocationSharing.png */,
 			);
 			path = MyAssets;
-			sourceTree = "<group>";
-		};
-		2904A1B62C1C4784004A2D8C /* VideoCallInvitation */ = {
-			isa = PBXGroup;
-			children = (
-				2904A1B92C1C47C4004A2D8C /* VideoCallInviteView.swift */,
-				2904A1B72C1C47B4004A2D8C /* VideoCallInviteViewModel.swift */,
-				29851F9C2C25771900C16DF2 /* VideoListItemView.swift */,
-				29851F9E2C25791600C16DF2 /* CallView.swift */,
-				29851FA02C257A7B00C16DF2 /* AgoraLocalUIView.swift */,
-				296845E92C29777200F8D7FE /* AgoraRemoteUIView.swift */,
-			);
-			path = VideoCallInvitation;
 			sourceTree = "<group>";
 		};
 		29538F812BC538C500299041 /* MockData */ = {
@@ -406,7 +383,6 @@
 				29BDB2852C003A6B00BF8AF5 /* AudioRecording */,
 				29BDB2922C06CD5600BF8AF5 /* FileSharing */,
 				298BC2B82C37EA2D00376036 /* AudioCallKit */,
-				2904A1B62C1C4784004A2D8C /* VideoCallInvitation */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -416,6 +392,7 @@
 			children = (
 				298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */,
 				298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */,
+				29450F732C4522AB009CA034 /* InCallAudioView.swift */,
 			);
 			path = AudioCallKit;
 			sourceTree = "<group>";
@@ -596,17 +573,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29851FA12C257A7B00C16DF2 /* AgoraLocalUIView.swift in Sources */,
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
-				29851F9F2C25791600C16DF2 /* CallView.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
-				29851F9D2C25771900C16DF2 /* VideoListItemView.swift in Sources */,
 				29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
+				29450F742C4522AB009CA034 /* InCallAudioView.swift in Sources */,
 				29538F802BC523C200299041 /* QuizGameItemView.swift in Sources */,
 				29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */,
 				29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */,
@@ -621,19 +596,16 @@
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
 				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
-				296845EA2C29777200F8D7FE /* AgoraRemoteUIView.swift in Sources */,
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
-				2904A1BA2C1C47C4004A2D8C /* VideoCallInviteView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
-				2904A1B82C1C47B4004A2D8C /* VideoCallInviteViewModel.swift in Sources */,
 				298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
 				29BDB2942C06CD8A00BF8AF5 /* FileSharingView.swift in Sources */,

@@ -15,6 +15,14 @@ import AVFoundation
 import CallKit
 import UIKit
 
+enum CallState : String{
+    case none = "none"
+    case calling = "calling"
+    case incoming = "incoming"
+    case incall = "incall"
+    case ended = "ended"
+}
+
 
 class AudioCallKitViewModel: NSObject, ObservableObject {
     // RTM variables
@@ -25,12 +33,18 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
     @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var currentCallUser = "" //
     
     // RTC variables
     var agoraRTCKit: AgoraRtcEngineKit? = nil
     @Published var localRtcUID: UInt = 0
     @Published var remoteRtcUID: UInt = 0
-    @Published var enableMic: Bool = false
+    @Published var enableMic: Bool = true
+    @Published var enableCamera: Bool = false
+    @Published var remotePublishedCamera: Bool = false
+    @Published var remotePublishedAudio: Bool = false
+    @Published var enableSpeaker: Bool = false
+
     
     // Call variables
     @Published var currentCallState: CallState = .none
@@ -76,6 +90,7 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
             }
             // Login to RTM server
             // Use AppID to login if app certificate is NOT enabled for project
+            
             if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
                 if error == nil{
                     isLoggedIn = true
@@ -128,13 +143,15 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         return false
     }
     
+    @MainActor
     func callUser(userID: String) async -> Bool {
+        currentCallUser = userID
         callKitUID = UUID()
         
         let pubOptions = AgoraRtmPublishOptions()
         pubOptions.customType = callingType
         pubOptions.channelType = .user
-        
+                
         if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "\(callKitUID)", option: pubOptions){
             if error == nil {
                 // MARK: if success
@@ -158,7 +175,7 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         return false
     }
     
-
+    @MainActor
     func reportIncomingCall(id: UUID, handle: String) async throws {
         print("Bac's reportIncomingCall called")
 
@@ -175,19 +192,23 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         }
     }
     
+    @MainActor
     func endCall(localEnd: Bool) async throws {
         currentCallState = .none
         leaveRTCChannel()
         
+        print("bac's end call")
         // If local user is ending is the call, then send notification to remote client
         if localEnd {
             let pubOptions = AgoraRtmPublishOptions()
             pubOptions.customType = endingCallType
             pubOptions.channelType = .user
             
-            if let (_, error) = await agoraRtmKit?.publish(channelName: userID, message: "\(callKitUID)", option: pubOptions){
+            if let (_, error) = await agoraRtmKit?.publish(channelName: currentCallUser, message: "\(callKitUID)", option: pubOptions){
                 if error == nil {
                     // MARK: if success
+                    print("bac's end call success")
+
                 }else{
                     print("Bac's sendMessageToChannel error \(String(describing: error))")
                 }
@@ -215,6 +236,9 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         agoraRTCKit = AgoraRtcEngineKit.sharedEngine(with: config, delegate: self)
         agoraRTCKit?.setChannelProfile(.liveBroadcasting)
         agoraRTCKit?.setClientRole(.broadcaster)
+        
+        agoraRTCKit?.enableAudio()
+        agoraRTCKit?.setEnableSpeakerphone(enableSpeaker)
 
     }
     
@@ -226,10 +250,57 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         agoraRTCKit?.leaveChannel()
     }
 
+
+    @MainActor
+    func setupLocalView(localView: UIView) {
+        agoraRTCKit?.enableVideo()
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = 0
+        videoCanvas.renderMode = .hidden
+        videoCanvas.view = localView
+        agoraRTCKit?.startPreview()
+        agoraRTCKit?.setupLocalVideo(videoCanvas)
+        
+        // Set Resolution
+        agoraRTCKit?.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(
+            size: CGSize(width: 720, height: 1280),
+            frameRate: AgoraVideoFrameRate(rawValue: 30) ?? .fps30,
+            bitrate: AgoraVideoBitrateStandard,
+            orientationMode: .adaptative, mirrorMode: .auto))
+    }
+    
+    @MainActor
+    func setupRemoteView(remoteView: UIView) {
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = remoteRtcUID
+        // the view to be binded
+        videoCanvas.view = remoteView
+        videoCanvas.renderMode = .hidden
+        agoraRTCKit?.setupRemoteVideo(videoCanvas)
+    }
+    
+    
+    @MainActor
+    func switchCamera(){
+        agoraRTCKit?.switchCamera()
+    }
+    
+    @MainActor
+    func toggleCamera(){
+        enableCamera = !enableCamera
+        agoraRTCKit?.enableLocalVideo(!enableCamera)
+    }
+    
     @MainActor
     func toggleMic(){
         enableMic = !enableMic
         agoraRTCKit?.enableLocalAudio(!enableMic)
+    }
+
+    @MainActor
+    func toggleSpeakerPhone(){
+        enableSpeaker = !enableSpeaker
+        agoraRTCKit?.setEnableSpeakerphone(enableSpeaker)
     }
 
     
@@ -252,12 +323,14 @@ extension AudioCallKitViewModel: AgoraRtmClientDelegate {
         case .user:
             if event.customType == callingType {
                 Task {
+                    currentCallUser = event.publisher
                     callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
                     try? await reportIncomingCall(id: callKitUID, handle: userID)
                 }
             }else if event.customType == endingCallType {
+                print("Bac's didReceive Endcall")
                 Task {
-                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
+//                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
                     try? await endCall(localEnd: false)
                 }
             }
@@ -352,6 +425,24 @@ extension AudioCallKitViewModel: AgoraRtcEngineDelegate {
 
     }
 
+    
+
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didVideoMuted muted: Bool, byUid uid: UInt) {
+        Task {
+            await MainActor.run {
+                remotePublishedCamera = !muted
+            }
+        }
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, didAudioMuted muted: Bool, byUid uid: UInt) {
+        Task {
+            await MainActor.run {
+                remotePublishedAudio = !muted
+            }
+        }
+    }
 }
 
 // CallKit Callbacks
@@ -397,10 +488,10 @@ extension AudioCallKitViewModel: CXProviderDelegate {
     // END CALL
      func provider(_ provider: CXProvider, perform action: CXEndCallAction){
          print("Bac's  perform action: CXEndCallAction")
-         Task {
-             try? await endCall(localEnd: true)
-
-         }
+//         Task {
+//             try? await endCall(localEnd: true)
+//
+//         }
 
          action.fulfill()
     }
