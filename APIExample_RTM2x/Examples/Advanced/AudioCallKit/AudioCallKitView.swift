@@ -121,7 +121,7 @@ struct AudioCallKitView: View {
             }
             .navigationDestination(for: String.self) { value in
                 if value == CallState.incall.rawValue || value == CallState.incoming.rawValue {
-                    InCallAudioView()
+                    InCallAudioView(path: $path)
                         .environmentObject(agoraVM)
                 }
             }

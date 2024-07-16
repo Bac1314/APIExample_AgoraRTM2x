@@ -9,8 +9,9 @@ import SwiftUI
 import Foundation
 
 struct InCallAudioView: View {
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
+//    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @EnvironmentObject var agoraVM: AudioCallKitViewModel
+    @Binding var path: NavigationPath
 
     let columns: [GridItem] = [
         GridItem(.flexible()),
@@ -106,6 +107,9 @@ struct InCallAudioView: View {
                 .background(Color.red)
                 .clipShape(Circle())
                 .padding(.bottom, 80)
+                .onTapGesture {
+                    path.removeLast()
+                }
 
         }
         .ignoresSafeArea(.all)
@@ -117,6 +121,6 @@ struct InCallAudioView: View {
 }
 
 #Preview {
-    InCallAudioView()
+    InCallAudioView(path: .constant(NavigationPath()))
         .environmentObject(AudioCallKitViewModel())
 }
