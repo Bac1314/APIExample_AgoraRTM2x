@@ -12,7 +12,6 @@ import AgoraRtmKit
 
 struct LocationView: View {
     @StateObject var agoraRTMVM: LocationViewModel = LocationViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
@@ -24,6 +23,8 @@ struct LocationView: View {
     @State var customAmount: Int = 0
     
     @FocusState private var keyboardIsFocused: Bool
+    
+    @Binding var path: NavigationPath
     
     var body: some View {
         ZStack(alignment: .center){
@@ -92,7 +93,9 @@ struct LocationView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -106,5 +109,5 @@ struct LocationView: View {
 }
 
 #Preview {
-    LocationView()
+    LocationView(path: .constant(NavigationPath()))
 }

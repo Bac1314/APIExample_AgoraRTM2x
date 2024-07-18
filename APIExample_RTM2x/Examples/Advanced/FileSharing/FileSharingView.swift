@@ -11,7 +11,6 @@ import AgoraRtmKit
 struct FileSharingView: View {
     // Agora RTM
     @StateObject var agoraRTMVM: FileSharingViewModel = FileSharingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     var serviceIcon: String = "waveform"
     
@@ -25,6 +24,7 @@ struct FileSharingView: View {
 //    @State var exportFile : Data?
 //    @State var fileURL: URL?
     
+    @Binding var path: NavigationPath
     
     var body: some View {
         ZStack(alignment: .center){
@@ -116,7 +116,9 @@ struct FileSharingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -131,5 +133,5 @@ struct FileSharingView: View {
 }
 
 #Preview {
-    FileSharingView()
+    FileSharingView(path: .constant(NavigationPath()))
 }

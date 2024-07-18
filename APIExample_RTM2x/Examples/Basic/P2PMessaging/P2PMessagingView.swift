@@ -10,7 +10,6 @@ import AgoraRtmKit
 
 struct P2PMessagingView: View {
     @StateObject var agoraRTMVM: P2PMessagingViewModel = P2PMessagingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @FocusState private var keyboardIsFocused: Bool
     @State var newUser = ""
     @State var presentAlert = false
@@ -18,12 +17,16 @@ struct P2PMessagingView: View {
     
     var serviceIcon: String = "message"
     
+    @Binding var path: NavigationPath
+
     // First user
     @State var userName: String = "DummyUser"
     
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
+    
+    @State var selectedUserDetail: String = ""
     
     var body: some View {
         ZStack {
@@ -53,7 +56,6 @@ struct P2PMessagingView: View {
             if agoraRTMVM.isLoggedIn {
                 VStack {
                     List(agoraRTMVM.subscribedUsers.sorted(by: { $0.key < $1.key }), id: \.key) { user in
-                        NavigationLink(destination: P2PMessagingDetailedView(selectedUser: user.key).environmentObject(agoraRTMVM)) {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(user.key)
@@ -67,8 +69,10 @@ struct P2PMessagingView: View {
                             .padding(24)
                             .background(Color.gray.opacity(0.2))
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
-                            
-                        }
+                            .onTapGesture {
+                                selectedUserDetail = user.key
+                                path.append("P2PMessagingDetailedView")
+                            }
                     }
                     .listStyle(.plain)
                     .task {
@@ -122,7 +126,9 @@ struct P2PMessagingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -132,13 +138,19 @@ struct P2PMessagingView: View {
             }
 
         }
+        .navigationDestination(for: String.self) { Hashable in
+            if Hashable == "P2PMessagingDetailedView" {
+                P2PMessagingDetailedView(selectedUser: selectedUserDetail, path: $path)
+                    .environmentObject(agoraRTMVM)
+            }
+        }
         
     }
     
 }
 
 #Preview {
-    P2PMessagingView()
+    P2PMessagingView(path: .constant(NavigationPath()))
         .environmentObject(P2PMessagingViewModel())
 
 }
@@ -150,6 +162,8 @@ struct P2PMessagingDetailedView: View {
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedUser: String = ""
     @State var message: String = ""
+    @Binding var path: NavigationPath
+
     
     var body: some View {
         // List of messages

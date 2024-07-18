@@ -10,7 +10,6 @@ import AgoraRtmKit
 
 struct StreamMessagingView: View {
     @StateObject var agoraRTMVM: StreamMessagingViewModel = StreamMessagingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @FocusState private var keyboardIsFocused: Bool
     @State var isLoading: Bool = false
     
@@ -25,9 +24,13 @@ struct StreamMessagingView: View {
         GridItem(.flexible()),
         GridItem(.flexible()),
     ]
-
+    
     var serviceIcon: String = "message"
-
+    
+    @Binding var path: NavigationPath
+    
+    @State var selectedTopicDetail : String = ""
+    
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
@@ -60,34 +63,34 @@ struct StreamMessagingView: View {
                         .padding()
                     
                     LazyVGrid(columns: columns, spacing: 16) {
-                  
+                        
                         ForEach(agoraRTMVM.customStreamTopicList, id: \.id) { topicChannel in
-                            NavigationLink(destination: StreamMessagingDetailedView(selectedTopic: topicChannel.topic).environmentObject(agoraRTMVM)
-                            ){
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(topicChannel.topic)
-                                            .font(.headline)
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.8)
-                                        Text(topicChannel.lastMessage)
-                                            .font(.callout)
-                                            .foregroundStyle(Color.secondary)
-                                            .lineLimit(1)
-                                    }
-                                    Spacer()
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(topicChannel.topic)
+                                        .font(.headline)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                    Text(topicChannel.lastMessage)
+                                        .font(.callout)
+                                        .foregroundStyle(Color.secondary)
+                                        .lineLimit(1)
                                 }
-                                .padding(24)
-                                .background(Color.gray.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
-                                
+                                Spacer()
+                            }
+                            .padding(24)
+                            .background(Color.gray.opacity(0.2))
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
+                            .onTapGesture {
+                                selectedTopicDetail = topicChannel.topic
+                                path.append("StreamMessagingDetailedView")
                             }
                         }
                     }
                     .padding()
-
+                    
                     Spacer()
-                
+                    
                     // Displayed Logged in Username
                     Text("Logged in as \(agoraRTMVM.userID)")
                 }
@@ -97,27 +100,27 @@ struct StreamMessagingView: View {
                         
                     }
                 }
-                .alert("Subscribe", isPresented: $presentAlertSubscribe, actions: {
-                    TextField("Enter new topic", text: $newTopic)
-                        .focused($keyboardIsFocused)
-                    
-                    Button("Subscribe", action: {
-                        Task{
-                            if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
-                                return
-                            }
-                            _ = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
-                            newTopic = "" //Reset
-                            
-                            keyboardIsFocused = false // dismiss keyboard
-
-                        }
-                    })
-                    
-                    Button("Cancel", role: .cancel, action: {})
-                }, message: {
-                    Text("Subscribe to another channel")
-                })
+//                .alert("Subscribe", isPresented: $presentAlertSubscribe, actions: {
+//                    TextField("Enter new topic", text: $newTopic)
+//                        .focused($keyboardIsFocused)
+//                    
+//                    Button("Subscribe", action: {
+//                        Task{
+//                            if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
+//                                return
+//                            }
+//                            _ = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
+//                            newTopic = "" //Reset
+//                            
+//                            keyboardIsFocused = false // dismiss keyboard
+//                            
+//                        }
+//                    })
+//                    
+//                    Button("Cancel", role: .cancel, action: {})
+//                }, message: {
+//                    Text("Subscribe to another channel")
+//                })
             }
             
             // MARK: SHOW CUSTOM ALERT
@@ -144,7 +147,9 @@ struct StreamMessagingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -153,11 +158,17 @@ struct StreamMessagingView: View {
                 }
             }
         }
+        .navigationDestination(for: String.self) { Hashable in
+            if Hashable == "StreamMessagingDetailedView" {
+                StreamMessagingDetailedView(selectedTopic: selectedTopicDetail, path: $path)
+                    .environmentObject(agoraRTMVM)
+            }
+        }
     }
 }
 
 #Preview {
-    StreamMessagingView()
+    StreamMessagingView(path: .constant(NavigationPath()))
 }
 
 // MARK: TO SHOW THE LIST OF MESSAGES OF SPECIFIED CHANNEL
@@ -166,7 +177,8 @@ struct StreamMessagingDetailedView: View {
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedTopic: String = ""
     @State var message: String = ""
-
+    @Binding var path: NavigationPath
+    
     
     var body: some View {
         // List of messages
@@ -209,7 +221,7 @@ struct StreamMessagingDetailedView: View {
                         }
                         
                         keyboardIsFocused = false // dismiss keyboard
-
+                        
                     }
                 }, label: {
                     Text("Publish")
@@ -220,14 +232,14 @@ struct StreamMessagingDetailedView: View {
         }
         .padding(.horizontal)
         .navigationTitle("\(selectedTopic)")
-    
+        
     }
     
 }
 
 
 #Preview {
-    StreamMessagingDetailedView()
+    StreamMessagingDetailedView(path: .constant(NavigationPath()))
         .environmentObject(StreamMessagingViewModel())
 }
 

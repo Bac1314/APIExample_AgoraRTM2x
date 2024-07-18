@@ -15,12 +15,17 @@ import AVFoundation
 import CallKit
 import UIKit
 
+enum somethingElse: String {
+    case something
+    case something2
+}
+
 enum CallState : String{
-    case none = "none"
     case calling = "calling"
-    case incoming = "incoming"
     case incall = "incall"
     case ended = "ended"
+    case none = "none"
+
 }
 
 
@@ -39,11 +44,11 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
     var agoraRTCKit: AgoraRtcEngineKit? = nil
     @Published var localRtcUID: UInt = 0
     @Published var remoteRtcUID: UInt = 0
-    @Published var enableMic: Bool = true
-    @Published var enableCamera: Bool = false
     @Published var remotePublishedCamera: Bool = false
     @Published var remotePublishedAudio: Bool = false
-    @Published var enableSpeaker: Bool = false
+    @Published var enableMic: Bool = true
+    @Published var enableCamera: Bool = false
+    @Published var enableSpeaker: Bool = true
 
     
     // Call variables
@@ -143,10 +148,16 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         return false
     }
     
-    @MainActor
+//    @MainActor
     func callUser(userID: String) async -> Bool {
-        currentCallUser = userID
-        callKitUID = UUID()
+        // Run in main thread
+        Task {
+            await MainActor.run {
+                currentCallUser = userID
+                callKitUID = UUID()
+            }
+        }
+
         
         let pubOptions = AgoraRtmPublishOptions()
         pubOptions.customType = callingType
@@ -175,7 +186,7 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         return false
     }
     
-    @MainActor
+//    @MainActor
     func reportIncomingCall(id: UUID, handle: String) async throws {
         print("Bac's reportIncomingCall called")
 
@@ -197,7 +208,6 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         currentCallState = .none
         leaveRTCChannel()
         
-        print("bac's end call")
         // If local user is ending is the call, then send notification to remote client
         if localEnd {
             let pubOptions = AgoraRtmPublishOptions()
@@ -207,7 +217,7 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
             if let (_, error) = await agoraRtmKit?.publish(channelName: currentCallUser, message: "\(callKitUID)", option: pubOptions){
                 if error == nil {
                     // MARK: if success
-                    print("bac's end call success")
+                    print("bac's end call sending success")
 
                 }else{
                     print("Bac's sendMessageToChannel error \(String(describing: error))")
@@ -220,9 +230,11 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
         do {
             let transaction = CXTransaction(action: CXEndCallAction(call: callKitUID))
             try await callController.request(transaction)
+        
         }catch {
             print("Bac's endCall \(error)")
         }
+        
         
 
     }
@@ -288,13 +300,13 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
     @MainActor
     func toggleCamera(){
         enableCamera = !enableCamera
-        agoraRTCKit?.enableLocalVideo(!enableCamera)
+        agoraRTCKit?.enableLocalVideo(enableCamera)
     }
     
     @MainActor
     func toggleMic(){
         enableMic = !enableMic
-        agoraRTCKit?.enableLocalAudio(!enableMic)
+        agoraRTCKit?.enableLocalAudio(enableMic)
     }
 
     @MainActor
@@ -323,12 +335,14 @@ extension AudioCallKitViewModel: AgoraRtmClientDelegate {
         case .user:
             if event.customType == callingType {
                 Task {
-                    currentCallUser = event.publisher
-                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
+                    await MainActor.run {
+                        currentCallUser = event.publisher
+                        callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
+                    }
                     try? await reportIncomingCall(id: callKitUID, handle: userID)
+
                 }
             }else if event.customType == endingCallType {
-                print("Bac's didReceive Endcall")
                 Task {
 //                    callKitUID = UUID(uuidString: event.message.stringData!) ?? UUID()
                     try? await endCall(localEnd: false)
@@ -465,33 +479,40 @@ extension AudioCallKitViewModel: CXProviderDelegate {
     /// If the method is not implemented, NO is assumed.
     func provider(_ provider: CXProvider, execute transaction: CXTransaction) -> Bool {
         print("Bac's execute transaction")
-        currentCallState = .incoming
         return false
     }
 
     // START CALL - If provider:executeTransaction:error: returned NO, each perform*CallAction method is called sequentially for each action in the transaction
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
         print("Bac's  perform action: CXStartCallAction")
-        currentCallState = .incall
-        joinRTCChannel(channelName: "\(mainChannel)_\(remoteRtcUID)_\(localRtcUID)")
+        Task {
+            await MainActor.run {
+                currentCallState = .incall
+                joinRTCChannel(channelName: "\(mainChannel)_\(remoteRtcUID)_\(localRtcUID)")
+            }
+        }
+
         action.fulfill()
     }
 
     // ANSWER CALL
      func provider(_ provider: CXProvider, perform action: CXAnswerCallAction){
          print("Bac's  perform action: CXAnswerCallAction")
-         currentCallState = .incall
-         joinRTCChannel(channelName: "\(mainChannel)_\(localRtcUID)_\(remoteRtcUID)")
+         Task {
+             await MainActor.run {
+                 currentCallState = .incall
+                 joinRTCChannel(channelName: "\(mainChannel)_\(localRtcUID)_\(remoteRtcUID)")
+             }
+         }
          action.fulfill()
     }
 
     // END CALL
      func provider(_ provider: CXProvider, perform action: CXEndCallAction){
          print("Bac's  perform action: CXEndCallAction")
-//         Task {
-//             try? await endCall(localEnd: true)
-//
-//         }
+         Task {
+             try? await endCall(localEnd: true)
+         }
 
          action.fulfill()
     }

@@ -26,7 +26,6 @@ struct LoginRTMView: View {
     var onButtonTap: (() -> Void)?
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 // MARK: LOGIN RTM VIEW
                 VStack {
@@ -193,7 +192,6 @@ struct LoginRTMView: View {
 //                }
 //            })
         }
-    }
 }
 
 #Preview {

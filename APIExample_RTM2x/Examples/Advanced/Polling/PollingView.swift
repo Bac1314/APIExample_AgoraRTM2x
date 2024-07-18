@@ -10,7 +10,6 @@ import AgoraRtmKit
 
 struct PollingView: View {
     @StateObject var agoraRTMVM: PollingViewModel = PollingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
@@ -25,6 +24,8 @@ struct PollingView: View {
     @State var option: String = ""
     @State var tempOptions = Array<String>.init(repeating: "", count: 4)
     @State var pollAnswer: String = ""
+
+    @Binding var path: NavigationPath
 
     
     var body: some View {
@@ -111,7 +112,9 @@ struct PollingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -195,5 +198,5 @@ struct PollingView: View {
 }
 
 #Preview {
-    PollingView()
+    PollingView(path: .constant(NavigationPath()))
 }

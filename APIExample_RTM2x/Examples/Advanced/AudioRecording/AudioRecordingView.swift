@@ -12,13 +12,14 @@ import AVFoundation
 struct AudioRecordingView: View {
     // Agora RTM
     @StateObject var agoraRTMVM: AudioRecordingViewModel = AudioRecordingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     var serviceIcon: String = "waveform"
 
     // Show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
+    
+    @Binding var path: NavigationPath
     
     var body: some View {
         ZStack(alignment: .center){
@@ -92,7 +93,9 @@ struct AudioRecordingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -117,5 +120,5 @@ struct AudioRecordingView: View {
 }
 
 #Preview {
-    AudioRecordingView()
+    AudioRecordingView(path: .constant(NavigationPath()))
 }

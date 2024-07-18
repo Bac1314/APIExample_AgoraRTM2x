@@ -10,12 +10,12 @@ import AgoraRtmKit
 
 struct ChannelMessagingView: View {
     @StateObject var agoraRTMVM: ChannelMessagingViewModel = ChannelMessagingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @FocusState private var keyboardIsFocused: Bool
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
-    
+    @Binding var path: NavigationPath
+
     // First channelName
     @State var channelName: String = "ChannelA"
     
@@ -24,6 +24,8 @@ struct ChannelMessagingView: View {
     @State var alertMessage: String = "Error"
     @State var presentAlertSubscribe = false
     @State var newChannelName = ""
+    
+    @State var selectedDetailedChannel = ""
     
     var body: some View {
         ZStack {
@@ -53,7 +55,6 @@ struct ChannelMessagingView: View {
             if agoraRTMVM.isLoggedIn {
                 VStack {
                     List(agoraRTMVM.customRTMChannelList, id: \.channelName) { channel in
-                        NavigationLink(destination: ChannelMessagingDetailedView(selectedChannel: channel.channelName).environmentObject(agoraRTMVM)) {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(channel.channelName)
@@ -73,19 +74,14 @@ struct ChannelMessagingView: View {
                             .padding(24)
                             .background(Color.gray.opacity(0.2))
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
+                            .onTapGesture {
+                                selectedDetailedChannel = channel.channelName
+                                path.append("ChannelMessagingDetailedView")
+                            }
                             
-                        }
+                        
                     }
                     .listStyle(.plain)
-                    //                    .task {
-                    //                        if agoraRTMVM.customRTMChannelList.count == 0 {
-                    //                            // When user first the screen, subscribe to a couple random channels
-                    //                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelA")
-                    //                            let _ = await agoraRTMVM.subscribeChannel(channelName: "ChannelB")
-                    //                        }
-                    //                    }
-                    
-                    
                     // Displayed Logged in Username
                     Text("Logged in as \(agoraRTMVM.userID)")
                 }
@@ -123,6 +119,9 @@ struct ChannelMessagingView: View {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
             }
         }
+        .onAppear {
+            print("Appear ChannelMessaging")
+        }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
@@ -142,13 +141,21 @@ struct ChannelMessagingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
                         Text(agoraRTMVM.isLoggedIn ? "Logout" : "Back")
                     }
                 }
+            }
+        }
+        .navigationDestination(for: String.self) { Hashable in
+            if Hashable == "ChannelMessagingDetailedView" {
+                ChannelMessagingDetailedView(selectedChannel: selectedDetailedChannel, path: $path)
+                    .environmentObject(agoraRTMVM)
             }
         }
     }
@@ -172,6 +179,8 @@ struct ChannelMessagingDetailedView: View {
     // To display user selected image
     @State var presentImagePicker = false
     @State var userSelectedImage: UIImage?
+
+    @Binding var path: NavigationPath
 
     
     var body: some View {
@@ -291,9 +300,9 @@ struct ChannelMessagingDetailedView: View {
 
 
 #Preview {
-    ChannelMessagingView()
+    ChannelMessagingView(path: .constant(NavigationPath()))
         .environmentObject(ChannelMessagingViewModel())
     
-//    ChannelMessagingDetailedView()
+//    ChannelMessagingDetailedView(path: .constant(NavigationPath()))
 //        .environmentObject(ChannelMessagingViewModel())
 }

@@ -11,24 +11,21 @@ import AVFoundation
 
 struct TestingView: View {
     @State private var isTopRightCorner = true
+    @State var value = 0  {
+        willSet(newVal) {
+            print("NavigationPath new \(newVal)")
+        }
+        didSet(oldVal) {
+            print("NavigationPath old \(oldVal)")
+        }
+    }
 
     var body: some View {
         ZStack(alignment: .top){
             Button {
-                let urlString = "https://bin.bnbstatic.com/static/live-ag/10212909921185/1fc7fc3f2d4fb874a8209aa4e78543f4_10212909921185.m3u8"
-                guard let url = URL(string: urlString) else {
-                    return
-                }
-
-                let asset = AVAsset(url: url)
-                let playerItem = AVPlayerItem(asset: asset)
-
-                let player = AVPlayer(playerItem: playerItem)
-                player.play()
-                
-                print("Reached here")
+                value += 1
             } label: {
-                Text("Load and play ")
+                Text("Tapp me")
             }
 
         }

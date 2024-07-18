@@ -19,7 +19,6 @@ struct InCallAudioView: View {
         GridItem(.flexible()),
     ]
 
-
     var body: some View {
         VStack{
             // MARK: User details
@@ -108,7 +107,9 @@ struct InCallAudioView: View {
                 .clipShape(Circle())
                 .padding(.bottom, 80)
                 .onTapGesture {
-                    path.removeLast()
+                    Task {
+                        try await agoraVM.endCall(localEnd: true)
+                    }
                 }
 
         }
@@ -117,6 +118,13 @@ struct InCallAudioView: View {
         .background(LinearGradient(colors: [.black.opacity(1), .black.opacity(0.9), .black.opacity(0.75), .black.opacity(0.8), .black.opacity(1)], startPoint: .topLeading, endPoint: .bottomTrailing))
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: agoraVM.currentCallState) { oldValue, newValue in
+            if oldValue != newValue && newValue == .none {
+                if path.count > 0 {
+                    path.removeLast()
+                }
+            }
+        }
     }
 }
 

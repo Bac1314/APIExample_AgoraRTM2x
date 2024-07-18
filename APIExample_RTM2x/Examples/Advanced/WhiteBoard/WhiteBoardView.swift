@@ -11,7 +11,6 @@ import AgoraRtmKit
 struct WhiteBoardView: View {
     // Agora RTM
     @StateObject var agoraRTMVM: WhiteBoardViewModel = WhiteBoardViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "hand.draw"
@@ -23,6 +22,9 @@ struct WhiteBoardView: View {
     // Whiteboard properties
     @State private var currentDrawing: Drawing = Drawing()
 //    @State private var drawings: [Drawing] = [Drawing]()
+    
+    @Binding var path: NavigationPath
+
     
     var body: some View {
         
@@ -125,7 +127,9 @@ struct WhiteBoardView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -140,5 +144,5 @@ struct WhiteBoardView: View {
 }
 
 #Preview {
-    WhiteBoardView()
+    WhiteBoardView(path: .constant(NavigationPath()))
 }

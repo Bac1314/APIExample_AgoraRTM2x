@@ -10,7 +10,6 @@ import AgoraRtmKit
 
 struct QuizGameView: View {
     @StateObject var agoraRTMVM: QuizViewModel = QuizViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
@@ -24,6 +23,8 @@ struct QuizGameView: View {
     @State var userAnswer: String = ""
     @State var tempScore: Int = 3
     
+    @Binding var path: NavigationPath
+
     var body: some View {
         ZStack(alignment: .center){
             
@@ -139,7 +140,9 @@ struct QuizGameView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -155,5 +158,5 @@ struct QuizGameView: View {
 
 
 #Preview {
-    QuizGameView()
+    QuizGameView(path: .constant(NavigationPath()))
 }

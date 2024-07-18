@@ -11,7 +11,6 @@ import AgoraRtmKit
 
 struct BiddingView: View {
     @StateObject var agoraRTMVM: BiddingViewModel = BiddingViewModel()
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode> // For the custom back button
     @State var isLoading: Bool = false
     
     var serviceIcon: String = "message"
@@ -27,6 +26,8 @@ struct BiddingView: View {
     
     // bidding properties
     //    @State var tenMoreDollars: Int = 0
+    @Binding var path: NavigationPath
+
     
     var body: some View {
         ZStack(alignment: .center){
@@ -160,7 +161,9 @@ struct BiddingView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action : {
                     agoraRTMVM.logoutRTM()
-                    self.mode.wrappedValue.dismiss()
+                    if path.count > 0 {
+                        path.removeLast()
+                    }
                 }){
                     HStack{
                         Image(systemName: "arrow.left")
@@ -214,5 +217,5 @@ struct BiddingView: View {
 }
 
 #Preview {
-    BiddingView()
+    BiddingView(path: .constant(NavigationPath()))
 }
