@@ -29,13 +29,13 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
             
             // Initialize RTM instance
             if agoraRtmKit == nil {
-                let config = AgoraRtmClientConfig(appId: Configurations.agora_AppdID , userId: userID)
+                let config = AgoraRtmClientConfig(appId: Configurations.agora_AppID , userId: userID)
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
             // Login to RTM server
             // Use AppID to login if app certificate is NOT enabled for project
-            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppdID : token) {
+            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{

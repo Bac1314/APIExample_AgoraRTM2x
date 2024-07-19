@@ -8,6 +8,7 @@
 import SwiftUI
 import AgoraRtmKit
 
+
 struct ChannelMessagingView: View {
     @StateObject var agoraRTMVM: ChannelMessagingViewModel = ChannelMessagingViewModel()
     @FocusState private var keyboardIsFocused: Bool
@@ -24,9 +25,7 @@ struct ChannelMessagingView: View {
     @State var alertMessage: String = "Error"
     @State var presentAlertSubscribe = false
     @State var newChannelName = ""
-    
-    @State var selectedDetailedChannel = ""
-    
+        
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
@@ -75,8 +74,7 @@ struct ChannelMessagingView: View {
                             .background(Color.gray.opacity(0.2))
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
                             .onTapGesture {
-                                selectedDetailedChannel = channel.channelName
-                                path.append("ChannelMessagingDetailedView")
+                                path.append(CustomChildNavType.ChannelMessagingDetailedView(selectedChannel: channel.channelName))
                             }
                             
                         
@@ -119,9 +117,6 @@ struct ChannelMessagingView: View {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
             }
         }
-        .onAppear {
-            print("Appear ChannelMessaging")
-        }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
@@ -152,11 +147,15 @@ struct ChannelMessagingView: View {
                 }
             }
         }
-        .navigationDestination(for: String.self) { Hashable in
-            if Hashable == "ChannelMessagingDetailedView" {
-                ChannelMessagingDetailedView(selectedChannel: selectedDetailedChannel, path: $path)
+        .navigationDestination(for: CustomChildNavType.self) { value in
+            switch value {
+            case .ChannelMessagingDetailedView(let selectedChannel):
+                ChannelMessagingDetailedView(selectedChannel: selectedChannel, path: $path)
                     .environmentObject(agoraRTMVM)
+            default:
+                Text("ChannelMessagingView Not found")
             }
+            
         }
     }
     

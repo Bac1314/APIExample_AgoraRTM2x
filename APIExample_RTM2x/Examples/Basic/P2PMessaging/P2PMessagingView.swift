@@ -25,9 +25,7 @@ struct P2PMessagingView: View {
     // show alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
-    
-    @State var selectedUserDetail: String = ""
-    
+        
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
@@ -70,8 +68,7 @@ struct P2PMessagingView: View {
                             .background(Color.gray.opacity(0.2))
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
                             .onTapGesture {
-                                selectedUserDetail = user.key
-                                path.append("P2PMessagingDetailedView")
+                                path.append(CustomChildNavType.P2PMessagingDetailedView(selectedUser: user.key))
                             }
                     }
                     .listStyle(.plain)
@@ -138,11 +135,15 @@ struct P2PMessagingView: View {
             }
 
         }
-        .navigationDestination(for: String.self) { Hashable in
-            if Hashable == "P2PMessagingDetailedView" {
-                P2PMessagingDetailedView(selectedUser: selectedUserDetail, path: $path)
+        .navigationDestination(for: CustomChildNavType.self) { value in
+            switch value {
+            case .P2PMessagingDetailedView(let selectedUser):
+                P2PMessagingDetailedView(selectedUser: selectedUser, path: $path)
                     .environmentObject(agoraRTMVM)
+            default:
+                Text("ChannelMessagingView Not found")
             }
+            
         }
         
     }

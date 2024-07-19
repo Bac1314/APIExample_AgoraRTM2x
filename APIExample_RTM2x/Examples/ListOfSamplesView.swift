@@ -22,12 +22,15 @@ enum CustomNavigationType: Hashable {
     case AudioRecordingView(serviceIcon: String)
     case FileSharingView(serviceIcon: String)
     case AudioCallKitView(serviceIcon: String)
+}
+
+enum CustomChildNavType: Hashable {
+   // ChildViews
+    case ChannelMessagingDetailedView(selectedChannel: String)
+    case P2PMessagingDetailedView(selectedUser: String)
+    case StreamMessagingDetailedView(selectedTopic: String)
+    case InCallAudioView
     
-//    // ChildViews
-//    case ChannelMessagingDetailedView
-//    case P2PMessagingDetailedView
-//    case StreamMessagingDetailedView
-//    case InCallAudioView
 }
 
 struct ListOfSamplesView: View {
@@ -58,7 +61,7 @@ struct ListOfSamplesView: View {
         ("Whiteboard", ("hand.draw",CustomNavigationType.WhiteBoardView(serviceIcon:"hand.draw"))),
         ("Audio Recording", ("waveform", CustomNavigationType.AudioRecordingView(serviceIcon:"waveform"))),
         ("File Sharing", ("filemenu.and.cursorarrow", CustomNavigationType.FileSharingView(serviceIcon:"filemenu.and.cursorarrow"))),
-        ("Call Invitation", ("phone.bubble", CustomNavigationType.AudioCallKitView(serviceIcon:"phone.bubble")))
+        ("P2P Audio Call", ("phone.down", CustomNavigationType.AudioCallKitView(serviceIcon:"phone.down")))
     ]
     
     var body: some View {
@@ -71,6 +74,7 @@ struct ListOfSamplesView: View {
                             HStack {
                                 Image(systemName: sample.1.0)
                                 Text(sample.0)
+                                Spacer()
                             }
                             .onTapGesture {
                                 print("Bac's basic navigation to \(sample.1.1)")
@@ -86,7 +90,9 @@ struct ListOfSamplesView: View {
                             HStack {
                                 Image(systemName: sample.1.0)
                                 Text(sample.0)
+                                Spacer()
                             }
+                            .background()
                             .onTapGesture {
                                 path.append(sample.1.1)
                             }

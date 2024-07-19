@@ -29,8 +29,6 @@ struct StreamMessagingView: View {
     
     @Binding var path: NavigationPath
     
-    @State var selectedTopicDetail : String = ""
-    
     var body: some View {
         ZStack {
             // MARK: LOGIN VIEW
@@ -82,8 +80,7 @@ struct StreamMessagingView: View {
                             .background(Color.gray.opacity(0.2))
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 12, height: 12)))
                             .onTapGesture {
-                                selectedTopicDetail = topicChannel.topic
-                                path.append("StreamMessagingDetailedView")
+                                path.append(CustomChildNavType.StreamMessagingDetailedView(selectedTopic: topicChannel.topic))
                             }
                         }
                     }
@@ -100,27 +97,6 @@ struct StreamMessagingView: View {
                         
                     }
                 }
-//                .alert("Subscribe", isPresented: $presentAlertSubscribe, actions: {
-//                    TextField("Enter new topic", text: $newTopic)
-//                        .focused($keyboardIsFocused)
-//                    
-//                    Button("Subscribe", action: {
-//                        Task{
-//                            if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
-//                                return
-//                            }
-//                            _ = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
-//                            newTopic = "" //Reset
-//                            
-//                            keyboardIsFocused = false // dismiss keyboard
-//                            
-//                        }
-//                    })
-//                    
-//                    Button("Cancel", role: .cancel, action: {})
-//                }, message: {
-//                    Text("Subscribe to another channel")
-//                })
             }
             
             // MARK: SHOW CUSTOM ALERT
@@ -158,11 +134,15 @@ struct StreamMessagingView: View {
                 }
             }
         }
-        .navigationDestination(for: String.self) { Hashable in
-            if Hashable == "StreamMessagingDetailedView" {
-                StreamMessagingDetailedView(selectedTopic: selectedTopicDetail, path: $path)
+        .navigationDestination(for: CustomChildNavType.self) { value in
+            switch value {
+            case .StreamMessagingDetailedView(let selectedTopic):
+                StreamMessagingDetailedView(selectedTopic: selectedTopic, path: $path)
                     .environmentObject(agoraRTMVM)
+            default:
+                Text("ChannelMessagingView Not found")
             }
+            
         }
     }
 }
