@@ -90,8 +90,6 @@ struct FileSharingView: View {
         ) { result in
             switch result {
             case .success(let files):
-                print("Bac success file \(files)")
-                
                 files.forEach { file in
                     
                     let gotAccess = file.startAccessingSecurityScopedResource()

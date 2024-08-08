@@ -42,7 +42,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
             
             // Login to RTM server
             // Use AppID to login if app certificate is NOT enabled for project
-            if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppID : token) {
+            if let (_, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppID : token) {
                 if error == nil{
                     isLoggedIn = true
                 }else{

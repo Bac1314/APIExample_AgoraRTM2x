@@ -51,6 +51,9 @@
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
 		298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */; };
 		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
+		29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */; };
+		29A48EAE2C64B4F4006F1338 /* VirtualGiftingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */; };
+		29A48EB02C64B7DD006F1338 /* UserGift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAF2C64B7DD006F1338 /* UserGift.swift */; };
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
 		29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */; };
 		29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */; };
@@ -70,8 +73,6 @@
 		29BDB2962C06CD9900BF8AF5 /* FileSharingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2952C06CD9900BF8AF5 /* FileSharingViewModel.swift */; };
 		29BDB2982C06D54800BF8AF5 /* FileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2972C06D54800BF8AF5 /* FileInfo.swift */; };
 		29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */; };
-		29BDB29E2C0730E900BF8AF5 /* TextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */; };
-		29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */; };
 		29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDB2A32C08655400BF8AF5 /* CustomModifiers.swift */; };
 		29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */; };
 		29DF1E422BE0D87C00F6D47A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */; };
@@ -129,6 +130,9 @@
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
 		298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitViewModel.swift; sourceTree = "<group>"; };
 		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
+		29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingView.swift; sourceTree = "<group>"; };
+		29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingViewModel.swift; sourceTree = "<group>"; };
+		29A48EAF2C64B7DD006F1338 /* UserGift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGift.swift; sourceTree = "<group>"; };
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
 		29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuctionItem.swift; sourceTree = "<group>"; };
 		29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionItemView.swift; sourceTree = "<group>"; };
@@ -150,8 +154,6 @@
 		29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInfoItemView.swift; sourceTree = "<group>"; };
 		29BDB29B2C071CD100BF8AF5 /* APIExample-RTM2x-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "APIExample-RTM2x-Info.plist"; sourceTree = SOURCE_ROOT; };
 		29BDB29C2C071CEC00BF8AF5 /* APIExample_RTM2x.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = APIExample_RTM2x.entitlements; sourceTree = "<group>"; };
-		29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDocument.swift; sourceTree = "<group>"; };
-		29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDocument.swift; sourceTree = "<group>"; };
 		29BDB2A32C08655400BF8AF5 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
 		29DF1E3F2BE0CA6900F6D47A /* FullImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageView.swift; sourceTree = "<group>"; };
 		29DF1E412BE0D87C00F6D47A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				29BDB2852C003A6B00BF8AF5 /* AudioRecording */,
 				29BDB2922C06CD5600BF8AF5 /* FileSharing */,
 				298BC2B82C37EA2D00376036 /* AudioCallKit */,
+				29A48EAA2C64B4BC006F1338 /* VirtualGifting */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -395,6 +398,16 @@
 				29450F732C4522AB009CA034 /* InCallAudioView.swift */,
 			);
 			path = AudioCallKit;
+			sourceTree = "<group>";
+		};
+		29A48EAA2C64B4BC006F1338 /* VirtualGifting */ = {
+			isa = PBXGroup;
+			children = (
+				29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */,
+				29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */,
+				29A48EAF2C64B7DD006F1338 /* UserGift.swift */,
+			);
+			path = VirtualGifting;
 			sourceTree = "<group>";
 		};
 		29AFACA22BD0F37700088381 /* LocationSharing */ = {
@@ -426,8 +439,6 @@
 				29BDB2952C06CD9900BF8AF5 /* FileSharingViewModel.swift */,
 				29BDB2972C06D54800BF8AF5 /* FileInfo.swift */,
 				29BDB2992C07069400BF8AF5 /* FileInfoItemView.swift */,
-				29BDB29D2C0730E900BF8AF5 /* TextDocument.swift */,
-				29BDB2A12C07318E00BF8AF5 /* ImageDocument.swift */,
 			);
 			path = FileSharing;
 			sourceTree = "<group>";
@@ -578,7 +589,6 @@
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
-				29BDB2A22C07318E00BF8AF5 /* ImageDocument.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
 				296CC1312BABCC0D006E14F5 /* ChannelMessagingViewModel.swift in Sources */,
 				29450F742C4522AB009CA034 /* InCallAudioView.swift in Sources */,
@@ -588,10 +598,11 @@
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */,
-				29BDB29E2C0730E900BF8AF5 /* TextDocument.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */,
 				29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */,
+				29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */,
+				29A48EB02C64B7DD006F1338 /* UserGift.swift in Sources */,
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
@@ -605,6 +616,7 @@
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,
+				29A48EAE2C64B4F4006F1338 /* VirtualGiftingViewModel.swift in Sources */,
 				297F800E2BA440A50057200A /* AgoraToken.swift in Sources */,
 				298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,

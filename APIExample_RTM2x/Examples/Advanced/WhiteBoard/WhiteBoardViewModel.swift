@@ -50,6 +50,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
             // Initialize RTM instance
             if agoraRtmKit == nil {
                 let config = AgoraRtmClientConfig(appId: Configurations.agora_AppID , userId: userID)
+                
                 agoraRtmKit = try AgoraRtmClientKit(config, delegate: self)
             }
             
