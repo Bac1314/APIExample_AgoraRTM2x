@@ -35,7 +35,7 @@ struct VirtualGiftingView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             // MARK: LOGIN VIEW
-            if agoraRTMVM.isLoggedIn {
+            if !agoraRTMVM.isLoggedIn {
                 LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $channelName, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
                     Task {
                         do{
@@ -57,7 +57,7 @@ struct VirtualGiftingView: View {
             }
             
             // MARK: Display list of gifts
-            if !agoraRTMVM.isLoggedIn {
+            if agoraRTMVM.isLoggedIn {
                 VStack{
                     
                     // List of gifts sent/received
