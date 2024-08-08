@@ -121,6 +121,7 @@ The list of samples and what feature is used
 | [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings directly to users | Message             | `.message`, `.presence`             |
 | [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Send files directly to users | Message             | `.message`, `.presence`             |
 | [Audio Call with CallKit (Pending)](APIExample_RTM2x/Examples/Advanced/AudioCallKit/)          | P2P audio call with Agora RTC and Apple callKit | Message             | `.message`, `.presence` ,  `RTC_SDK`          |
+| [Virtual Gifting (Pending)](APIExample_RTM2x/Examples/Advanced/VirtualGifting/)          | Send virtual emoji through message channel | Message             | `.message`          |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
