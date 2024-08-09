@@ -19,6 +19,7 @@
 		292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB212BBAAB7600505913 /* PollItemView.swift */; };
 		292CDB242BBBA55100505913 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB232BBBA55100505913 /* TestingView.swift */; };
 		292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB252BBC10C700505913 /* CustomAlert.swift */; };
+		292CED542C65BDE000002390 /* GiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CED532C65BDE000002390 /* GiftView.swift */; };
 		29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29307D262BBD5819005BB4CC /* PollCreationView.swift */; };
 		29450F742C4522AB009CA034 /* InCallAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29450F732C4522AB009CA034 /* InCallAudioView.swift */; };
 		29538F792BC3E94700299041 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29538F782BC3E94700299041 /* QuizViewModel.swift */; };
@@ -53,7 +54,7 @@
 		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
 		29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */; };
 		29A48EAE2C64B4F4006F1338 /* VirtualGiftingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */; };
-		29A48EB02C64B7DD006F1338 /* UserGift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAF2C64B7DD006F1338 /* UserGift.swift */; };
+		29A48EB02C64B7DD006F1338 /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAF2C64B7DD006F1338 /* Gift.swift */; };
 		29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */; };
 		29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */; };
 		29AB4A4F2BC92B4E00F9C1D3 /* AuctionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */; };
@@ -97,6 +98,7 @@
 		292CDB212BBAAB7600505913 /* PollItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollItemView.swift; sourceTree = "<group>"; };
 		292CDB232BBBA55100505913 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		292CDB252BBC10C700505913 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		292CED532C65BDE000002390 /* GiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftView.swift; sourceTree = "<group>"; };
 		29307D262BBD5819005BB4CC /* PollCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollCreationView.swift; sourceTree = "<group>"; };
 		29450F732C4522AB009CA034 /* InCallAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCallAudioView.swift; sourceTree = "<group>"; };
 		29538F782BC3E94700299041 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
 		29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingView.swift; sourceTree = "<group>"; };
 		29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingViewModel.swift; sourceTree = "<group>"; };
-		29A48EAF2C64B7DD006F1338 /* UserGift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGift.swift; sourceTree = "<group>"; };
+		29A48EAF2C64B7DD006F1338 /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
 		29AB4A4A2BC7E82E00F9C1D3 /* BiddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingViewModel.swift; sourceTree = "<group>"; };
 		29AB4A4C2BC7E92100F9C1D3 /* CustomAuctionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuctionItem.swift; sourceTree = "<group>"; };
 		29AB4A4E2BC92B4E00F9C1D3 /* AuctionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionItemView.swift; sourceTree = "<group>"; };
@@ -405,7 +407,8 @@
 			children = (
 				29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */,
 				29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */,
-				29A48EAF2C64B7DD006F1338 /* UserGift.swift */,
+				29A48EAF2C64B7DD006F1338 /* Gift.swift */,
+				292CED532C65BDE000002390 /* GiftView.swift */,
 			);
 			path = VirtualGifting;
 			sourceTree = "<group>";
@@ -602,11 +605,12 @@
 				29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */,
 				29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */,
 				29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */,
-				29A48EB02C64B7DD006F1338 /* UserGift.swift in Sources */,
+				29A48EB02C64B7DD006F1338 /* Gift.swift in Sources */,
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
 				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
+				292CED542C65BDE000002390 /* GiftView.swift in Sources */,
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,

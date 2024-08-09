@@ -18,7 +18,7 @@ class VirtualGiftingViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var listUserGifts: [UserGift] = []
+    @Published var listUserGifts: [Gift] = []
     
     let customGiftType = "giftMessage"
     
@@ -93,7 +93,7 @@ class VirtualGiftingViewModel: NSObject, ObservableObject {
         if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: messageString, option: pubOptions){
             if error == nil {
                 
-                let userGift = UserGift(userID: userID, gift: messageString, timestamp: Date())
+                let userGift = Gift(userID: userID, gift: messageString, timestamp: Date())
                 withAnimation {
                     listUserGifts.append(userGift)
                 }
@@ -121,7 +121,7 @@ extension VirtualGiftingViewModel: AgoraRtmClientDelegate {
             if event.customType ==  customGiftType {
                 Task {
                     await MainActor.run {
-                        let userGift = UserGift(userID: event.publisher, gift: event.message.stringData ?? "", timestamp: Date())
+                        let userGift = Gift(userID: event.publisher, gift: event.message.stringData ?? "", timestamp: Date())
                         withAnimation {
                             listUserGifts.append(userGift)
                         }

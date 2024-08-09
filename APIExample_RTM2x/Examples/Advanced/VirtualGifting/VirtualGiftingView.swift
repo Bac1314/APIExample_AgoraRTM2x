@@ -27,9 +27,7 @@ struct VirtualGiftingView: View {
     var virtualgifts : [String] = [
         "yougo", "flower1", "flowers2", "present", "gold1", "gold2", "heart1", "fireworks1"
     ]
-//    @State var newGift: String = "yougo"
-//    @State var newGiftPosition: CGFloat = 0.0
-//    @State var animateGift = false
+    @State var animateGiftList: [Gift] = []
     
     
     var body: some View {
@@ -111,15 +109,22 @@ struct VirtualGiftingView: View {
                                                       style: .continuous))
                     .ignoresSafeArea(.container, edges: .bottom) // Ignore only the bottom safe area
                 }
-                
-////                if animateGift {
-//                    Image(newGift) // Use your image here
-//                        .resizable()
-//                        .frame(width: 200, height: 200)
-//                        .offset(y: animateGift ? -800 : 0)
-//                        .animation(.easeInOut(duration: 2), value: animateGift) // Apply animation modifier
-////                }
 
+                // MARK: Animate gifts 
+                ForEach(animateGiftList.sorted(by: {$0.timestamp > $1.timestamp})) { giftInstance in
+                    GiftView(gift: giftInstance)
+                        .transition(.move(edge: .top))
+                        .zIndex(1) // Ensure gifts are on top
+                }
+                .onChange(of: agoraRTMVM.listUserGifts.count) { oldValue, newValue in
+                    if let lastGift = agoraRTMVM.listUserGifts.last {
+                        animateGiftList.append(lastGift)
+                    }
+                
+                    if animateGiftList.count > 10 {
+                        animateGiftList.removeFirst()
+                    }
+                }
                 
             }
             
@@ -128,6 +133,7 @@ struct VirtualGiftingView: View {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
             }
         }
+    
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")

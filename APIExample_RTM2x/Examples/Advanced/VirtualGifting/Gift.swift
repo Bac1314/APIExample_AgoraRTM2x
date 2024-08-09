@@ -8,7 +8,7 @@
 import Foundation
 import AgoraRtmKit
 
-struct UserGift : Identifiable{
+struct Gift : Identifiable{
     var id: UUID = UUID()
     var userID: String
     var gift: String
