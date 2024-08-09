@@ -58,6 +58,10 @@ struct AudioRecordingView: View {
                     
                     Spacer()
 
+                    Text("Tap once to record, tap again to stop")
+                        .font(.subheadline)
+                    
+                    
                     Button(action: {
                         agoraRTMVM.toggleRecording()
                     }, label: {
@@ -66,11 +70,16 @@ struct AudioRecordingView: View {
                             .font(.title)
                             .foregroundStyle(Color.white)
                             .padding()
-                            .background(LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .background(
+                                agoraRTMVM.isRecording ?
+                                LinearGradient(colors: [Color.green.opacity(0.5), Color.green, Color.green.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing) :
+                                LinearGradient(colors: [Color.accentColor.opacity(0.5), Color.accentColor, Color.accentColor.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing) 
+                            )
                             .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
                             .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
 
                     })
+                    
                     
                     
                 }

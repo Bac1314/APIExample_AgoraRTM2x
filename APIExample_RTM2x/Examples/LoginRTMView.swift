@@ -110,7 +110,7 @@ struct LoginRTMView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                             
-                            TextField("Stream channel requires RTC token", text: $streamToken)
+                            TextField("Stream channel requires RTC token (must)", text: $streamToken)
                                 .textFieldStyle(.plain)
                                 .font(.headline)
                                 .padding(12)
@@ -128,13 +128,6 @@ struct LoginRTMView: View {
                     Spacer()
                     
                     
-                    
-                    //                    Button {
-                    //                        isLoading = true
-                    //                        self.onButtonTap?()
-                    //                    } label: {
-                    //                        Text("LOGIN")
-                    //                    }
                     Text("LOGIN")
                         .font(.headline)
                         .bold()

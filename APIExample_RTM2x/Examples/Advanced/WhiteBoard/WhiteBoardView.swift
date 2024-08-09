@@ -21,7 +21,6 @@ struct WhiteBoardView: View {
     
     // Whiteboard properties
     @State private var currentDrawing: Drawing = Drawing()
-//    @State private var drawings: [Drawing] = [Drawing]()
     
     @Binding var path: NavigationPath
 
@@ -35,6 +34,11 @@ struct WhiteBoardView: View {
                 LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, isStreamChannel: true, streamToken: $agoraRTMVM.tokenRTC) {
                     Task {
                         do{
+                            // Whiteboar doesn't work properly if streamToken is not inputted
+                            if agoraRTMVM.tokenRTC.isEmpty {
+                                throw customTokenError.tokenEmptyError
+                            }
+                            
                             try await agoraRTMVM.loginRTM()
                             let _ = await agoraRTMVM.subscribeChannel()
                             await agoraRTMVM.createAndJoinStreamChannel()
