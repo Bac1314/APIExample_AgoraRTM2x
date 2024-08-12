@@ -1,16 +1,15 @@
 //
-//  VirtualGiftingViewModel.swift
+//  MiniTicTacToeViewModel.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/8/8.
+//  Created by BBC on 2024/8/12.
 //
-
 
 import Foundation
 import SwiftUI
 import AgoraRtmKit
 
-class VirtualGiftingViewModel: NSObject, ObservableObject {
+class MiniTicTacToeViewModel: NSObject, ObservableObject {
     
     var agoraRtmKit: AgoraRtmClientKit? = nil
     @AppStorage("userID") var userID: String = ""
@@ -18,9 +17,9 @@ class VirtualGiftingViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var gifts: [Gift] = []
+    @Published var players: [String] = []
     
-    let customGiftType = "giftMessage"
+    let customTTT = "miniTicTacToeMessage"
     
     
     @MainActor
@@ -85,17 +84,14 @@ class VirtualGiftingViewModel: NSObject, ObservableObject {
     @MainActor
     func publishToChannel(channelName: String, messageString: String) async -> Bool{
         let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customGiftType
+        pubOptions.customType = customTTT
         pubOptions.channelType = .message
         
         
         if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: messageString, option: pubOptions){
             if error == nil {
                 
-                let userGift = Gift(userID: userID, gift: messageString, timestamp: Date())
-                withAnimation {
-                    gifts.append(userGift)
-                }
+              
                 return true
             }else{
                 print("Bac's sendMessageToChannel error \(String(describing: error))")
@@ -109,7 +105,7 @@ class VirtualGiftingViewModel: NSObject, ObservableObject {
     
 }
 
-extension VirtualGiftingViewModel: AgoraRtmClientDelegate {
+extension MiniTicTacToeViewModel: AgoraRtmClientDelegate {
     
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
@@ -117,13 +113,9 @@ extension VirtualGiftingViewModel: AgoraRtmClientDelegate {
         
         switch event.channelType {
         case .message:
-            if event.customType ==  customGiftType {
+            if event.customType ==  customTTT {
                 Task {
                     await MainActor.run {
-                        let userGift = Gift(userID: event.publisher, gift: event.message.stringData ?? "", timestamp: Date())
-                        withAnimation {
-                            gifts.append(userGift)
-                        }
                     }
                 }
                 

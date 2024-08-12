@@ -1,18 +1,20 @@
 //
-//  TestingView.swift
+//  TicTacToeView.swift
 //  APIExample_RTM2x
 //
-//  Created by BBC on 2024/4/2.
+//  Created by BBC on 2024/8/12.
 //
 
 import SwiftUI
-import AVFoundation
 
-struct TestingView: View {
-    @State private var board: [[String]] = [["", "", ""], ["", "", ""], ["", "", ""]]
-    @State private var currentPlayer: String = "X"
-    @State private var winner: String?
-    @State private var showAlert: Bool = false
+struct TicTacToeView: View {
+    @State var board: [[String]] = [["", "", ""], ["", "", ""], ["", "", ""]]
+    @State var currentPlayer: String = "X"
+    @State var winner: String?
+    @State var showAlert: Bool = false
+    
+    @State var player1: String = ""
+    @State var player2: String = ""
 
     var body: some View {
         VStack {
@@ -37,6 +39,13 @@ struct TestingView: View {
                         .disabled(self.board[row][column] != "" || winner != nil) // Disable button if already chosen or game is over
                     }
                 }
+            }
+            .padding()
+            
+            HStack {
+                Text("Player 1 - \(player1)")
+                Spacer()
+                Text("Player 2 - \(player2)")
             }
             .padding()
 
@@ -113,14 +122,6 @@ struct TestingView: View {
     }
 }
 
-
 #Preview {
-    struct Preview: View {
-
-        var body: some View {
-            TestingView()
-        }
-    }
-    
-    return Preview()
+    TicTacToeView()
 }

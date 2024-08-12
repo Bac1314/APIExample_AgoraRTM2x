@@ -182,7 +182,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     // Publish delete ALL drawings
     @MainActor
     func publishDeleteAllDrawing() async -> Bool {
-        if let (_, error) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteAllDrawingTopic, message: "yes", option: nil) {
+        if let (_, _) = await agoraStreamChannel?.publishTopicMessage(topic: DeleteAllDrawingTopic, message: "yes", option: nil) {
             
             Task {
                 await MainActor.run {

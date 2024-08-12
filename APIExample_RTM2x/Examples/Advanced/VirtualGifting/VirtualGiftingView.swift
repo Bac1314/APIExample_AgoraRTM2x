@@ -61,7 +61,7 @@ struct VirtualGiftingView: View {
                     // List of gifts sent/received
                     ScrollView {
                         VStack {
-                            ForEach(agoraRTMVM.listUserGifts.sorted(by: {$0.timestamp > $1.timestamp})) { giftInstance in
+                            ForEach(agoraRTMVM.gifts.sorted(by: {$0.timestamp > $1.timestamp})) { giftInstance in
                                 
                                 Text("From \(giftInstance.userID)")
                                 Image(giftInstance.gift)
@@ -90,6 +90,7 @@ struct VirtualGiftingView: View {
                                         .padding()
                                         .padding(.top, 24)
                                         .onTapGesture {
+//                                            agoraRTMVM.listUserGifts.append(Gift(userID: "Me", gift: virtualgifts[Int.random(in: 0..<virtualgifts.count-1)], timestamp: Date()))
                                             Task {
                                                 // Send gift
                                                 let _ = await agoraRTMVM.publishToChannel(channelName: channelName, messageString: giftimage)
@@ -116,11 +117,13 @@ struct VirtualGiftingView: View {
                         .transition(.move(edge: .top))
                         .zIndex(1) // Ensure gifts are on top
                 }
-                .onChange(of: agoraRTMVM.listUserGifts.count) { oldValue, newValue in
-                    if let lastGift = agoraRTMVM.listUserGifts.last {
+                .onChange(of: agoraRTMVM.gifts.count) { oldValue, newValue in
+                    // Add the last gift received to be animated
+                    if let lastGift = agoraRTMVM.gifts.last {
                         animateGiftList.append(lastGift)
                     }
                 
+                    // Remove the animated gifts if it's above 10 to prevent array getting too big
                     if animateGiftList.count > 10 {
                         animateGiftList.removeFirst()
                     }

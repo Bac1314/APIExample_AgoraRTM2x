@@ -52,6 +52,9 @@
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
 		298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */; };
 		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
+		29A141432C69FD0700E92E58 /* TicTacToeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141422C69FD0700E92E58 /* TicTacToeView.swift */; };
+		29A141452C69FD2700E92E58 /* MiniTicTacToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */; };
+		29A141472C69FD3800E92E58 /* MiniTicTacToeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */; };
 		29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */; };
 		29A48EAE2C64B4F4006F1338 /* VirtualGiftingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */; };
 		29A48EB02C64B7DD006F1338 /* Gift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAF2C64B7DD006F1338 /* Gift.swift */; };
@@ -81,11 +84,11 @@
 		29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */; };
 		29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */; };
 		29E601102BD8E08100D69079 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010F2BD8E08100D69079 /* Drawing.swift */; };
-		7AA7A4164C9BEE92EF5180BB /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */; };
+		B7EB18E00F3D3F85B982EF56 /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F39D8121C972E6EB71F5844 /* Pods-APIExample_RTM2x.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.debug.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.debug.xcconfig"; sourceTree = "<group>"; };
+		085B17ADCFC305AD10455029 /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.release.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
 		29024AA22BCE1F0500E871B2 /* Arch_P2P.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_P2P.png; sourceTree = "<group>"; };
 		29024AA32BCE1F0500E871B2 /* Arch_Polling.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_Polling.png; sourceTree = "<group>"; };
 		29024AA42BCE1F0500E871B2 /* Arch_Livebidding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_Livebidding.png; sourceTree = "<group>"; };
@@ -132,6 +135,9 @@
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
 		298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitViewModel.swift; sourceTree = "<group>"; };
 		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
+		29A141422C69FD0700E92E58 /* TicTacToeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeView.swift; sourceTree = "<group>"; };
+		29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTicTacToe.swift; sourceTree = "<group>"; };
+		29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTicTacToeViewModel.swift; sourceTree = "<group>"; };
 		29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingView.swift; sourceTree = "<group>"; };
 		29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingViewModel.swift; sourceTree = "<group>"; };
 		29A48EAF2C64B7DD006F1338 /* Gift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gift.swift; sourceTree = "<group>"; };
@@ -163,8 +169,8 @@
 		29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardView.swift; sourceTree = "<group>"; };
 		29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardViewModel.swift; sourceTree = "<group>"; };
 		29E6010F2BD8E08100D69079 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
-		BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.release.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
-		E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4E55CAF6F22C3F801A9EC6C /* Pods-APIExample_RTM2x.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.debug.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AA7A4164C9BEE92EF5180BB /* Pods_APIExample_RTM2x.framework in Frameworks */,
+				B7EB18E00F3D3F85B982EF56 /* Pods_APIExample_RTM2x.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,8 +188,8 @@
 		2403D931E29907F9F2D179C4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1F39D8121C972E6EB71F5844 /* Pods-APIExample_RTM2x.debug.xcconfig */,
-				BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */,
+				A4E55CAF6F22C3F801A9EC6C /* Pods-APIExample_RTM2x.debug.xcconfig */,
+				085B17ADCFC305AD10455029 /* Pods-APIExample_RTM2x.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -296,7 +302,7 @@
 				297F7FF12BA420E20057200A /* Products */,
 				2403D931E29907F9F2D179C4 /* Pods */,
 				29024AA12BCE18E200E871B2 /* MyAssets */,
-				8A685BF4286D1F5002CE1D3A /* Frameworks */,
+				80022166EFD6AFFE1ACCB3A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -388,6 +394,7 @@
 				29BDB2922C06CD5600BF8AF5 /* FileSharing */,
 				298BC2B82C37EA2D00376036 /* AudioCallKit */,
 				29A48EAA2C64B4BC006F1338 /* VirtualGifting */,
+				29A1413F2C69FCC700E92E58 /* Minigame-TicTacToe */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -400,6 +407,16 @@
 				29450F732C4522AB009CA034 /* InCallAudioView.swift */,
 			);
 			path = AudioCallKit;
+			sourceTree = "<group>";
+		};
+		29A1413F2C69FCC700E92E58 /* Minigame-TicTacToe */ = {
+			isa = PBXGroup;
+			children = (
+				29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */,
+				29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */,
+				29A141422C69FD0700E92E58 /* TicTacToeView.swift */,
+			);
+			path = "Minigame-TicTacToe";
 			sourceTree = "<group>";
 		};
 		29A48EAA2C64B4BC006F1338 /* VirtualGifting */ = {
@@ -457,10 +474,10 @@
 			path = WhiteBoard;
 			sourceTree = "<group>";
 		};
-		8A685BF4286D1F5002CE1D3A /* Frameworks */ = {
+		80022166EFD6AFFE1ACCB3A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E718C4DD62283E03AE76BD68 /* Pods_APIExample_RTM2x.framework */,
+				8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -472,11 +489,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297F7FFE2BA420E40057200A /* Build configuration list for PBXNativeTarget "APIExample_RTM2x" */;
 			buildPhases = (
-				BCAF90EF4E787FADBCB69A8B /* [CP] Check Pods Manifest.lock */,
+				2AD810A74F5F042307146E9F /* [CP] Check Pods Manifest.lock */,
 				297F7FEC2BA420E20057200A /* Sources */,
 				297F7FED2BA420E20057200A /* Frameworks */,
 				297F7FEE2BA420E20057200A /* Resources */,
-				FF892C84FFC1853350DE0829 /* [CP] Embed Pods Frameworks */,
+				26FE2D88C97BC46E2F0EBEC1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -541,7 +558,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BCAF90EF4E787FADBCB69A8B /* [CP] Check Pods Manifest.lock */ = {
+		26FE2D88C97BC46E2F0EBEC1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2AD810A74F5F042307146E9F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -563,23 +597,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF892C84FFC1853350DE0829 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -590,6 +607,7 @@
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
+				29A141432C69FD0700E92E58 /* TicTacToeView.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
@@ -641,6 +659,8 @@
 				297F80142BA44C300057200A /* GlobalVariables.swift in Sources */,
 				292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */,
 				296CC1272BA99690006E14F5 /* MessageItemRemoteView.swift in Sources */,
+				29A141452C69FD2700E92E58 /* MiniTicTacToe.swift in Sources */,
+				29A141472C69FD3800E92E58 /* MiniTicTacToeViewModel.swift in Sources */,
 				29BDB2982C06D54800BF8AF5 /* FileInfo.swift in Sources */,
 				297F800C2BA440120057200A /* APIRequest.swift in Sources */,
 				292CDB202BBA94D100505913 /* CustomPoll.swift in Sources */,
@@ -779,7 +799,7 @@
 		};
 		297F7FFF2BA420E40057200A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F39D8121C972E6EB71F5844 /* Pods-APIExample_RTM2x.debug.xcconfig */;
+			baseConfigurationReference = A4E55CAF6F22C3F801A9EC6C /* Pods-APIExample_RTM2x.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -819,7 +839,7 @@
 		};
 		297F80002BA420E40057200A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF4B7661413360755B7643C1 /* Pods-APIExample_RTM2x.release.xcconfig */;
+			baseConfigurationReference = 085B17ADCFC305AD10455029 /* Pods-APIExample_RTM2x.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
