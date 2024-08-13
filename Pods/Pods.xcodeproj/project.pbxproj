@@ -16,6 +16,7 @@
 			dependencies = (
 			);
 			name = AgoraRtcEngine_iOS;
+			productName = AgoraRtcEngine_iOS;
 		};
 		C749B96AD7CBE862709769C59C7DF18E /* AgoraRtm_iOS */ = {
 			isa = PBXAggregateTarget;
@@ -26,6 +27,7 @@
 			dependencies = (
 			);
 			name = AgoraRtm_iOS;
+			productName = AgoraRtm_iOS;
 		};
 /* End PBXAggregateTarget section */
 
@@ -55,32 +57,32 @@
 /* Begin PBXFileReference section */
 		0726C7F203FB1384C0C7E0A41B738A86 /* Pods-APIExample_RTM2x.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-APIExample_RTM2x.modulemap"; sourceTree = "<group>"; };
 		180B52A22A037E94BCC9271E4E850B66 /* Pods-APIExample_RTM2x.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APIExample_RTM2x.debug.xcconfig"; sourceTree = "<group>"; };
-		1D0860E2E2D876256F7D3CD023BE9797 /* AgoraRtcKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraRtcKit.xcframework; sourceTree = "<group>"; };
+		1D0860E2E2D876256F7D3CD023BE9797 /* AgoraRtcKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraRtcKit.xcframework; sourceTree = "<group>"; };
 		1E3528CD691005A1C37189D2DAD1DA4C /* Pods-APIExample_RTM2x */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-APIExample_RTM2x"; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		214F314BB28F0B5B34C6BF136E0DD139 /* AgoraRtcEngine_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AgoraRtcEngine_iOS.release.xcconfig; sourceTree = "<group>"; };
 		36FCE3F90B2AED7DF57FB82BA066B254 /* Pods-APIExample_RTM2x-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-APIExample_RTM2x-frameworks.sh"; sourceTree = "<group>"; };
-		3DEC1DC0908EA8630DA0F011F3C025AB /* AgoraContentInspectExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraContentInspectExtension.xcframework; sourceTree = "<group>"; };
+		3DEC1DC0908EA8630DA0F011F3C025AB /* AgoraContentInspectExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraContentInspectExtension.xcframework; sourceTree = "<group>"; };
 		4264CB34C25032DF1E08BCED7E012AFC /* Pods-APIExample_RTM2x.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-APIExample_RTM2x.release.xcconfig"; sourceTree = "<group>"; };
-		4A62BEEAE2201A0AA738738759A02845 /* AgoraClearVisionExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraClearVisionExtension.xcframework; sourceTree = "<group>"; };
+		4A62BEEAE2201A0AA738738759A02845 /* AgoraClearVisionExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraClearVisionExtension.xcframework; sourceTree = "<group>"; };
 		4AA45D57B1A1D5906D1CA97D9F86B06D /* Pods-APIExample_RTM2x-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-APIExample_RTM2x-dummy.m"; sourceTree = "<group>"; };
 		515842470469E3451B585151D9AC9BE1 /* Pods-APIExample_RTM2x-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APIExample_RTM2x-acknowledgements.plist"; sourceTree = "<group>"; };
 		5F7A73EBBC1C72BB426330D59C75CFEC /* AgoraRtcEngine_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AgoraRtcEngine_iOS.debug.xcconfig; sourceTree = "<group>"; };
 		6C683CB42E5F877C9C5F68ABDDFC7331 /* Pods-APIExample_RTM2x-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-APIExample_RTM2x-umbrella.h"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7D991046F8B7C4C1BB20A5DCEE385B1D /* AgoraAudioBeautyExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraAudioBeautyExtension.xcframework; sourceTree = "<group>"; };
-		83AB6E3568BCAEC227C56B298F721D15 /* aosl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = aosl.xcframework; sourceTree = "<group>"; };
-		8B5F72098373989F57D1AE95B7DCCF20 /* Agoraffmpeg.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = Agoraffmpeg.xcframework; sourceTree = "<group>"; };
-		9A9CA52FFACA0AE82C3F5096113140AE /* AgoraAiNoiseSuppressionExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraAiNoiseSuppressionExtension.xcframework; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7D991046F8B7C4C1BB20A5DCEE385B1D /* AgoraAudioBeautyExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraAudioBeautyExtension.xcframework; sourceTree = "<group>"; };
+		83AB6E3568BCAEC227C56B298F721D15 /* aosl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = aosl.xcframework; sourceTree = "<group>"; };
+		8B5F72098373989F57D1AE95B7DCCF20 /* Agoraffmpeg.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = Agoraffmpeg.xcframework; sourceTree = "<group>"; };
+		9A9CA52FFACA0AE82C3F5096113140AE /* AgoraAiNoiseSuppressionExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraAiNoiseSuppressionExtension.xcframework; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AAAFE251AC9C39A49F3B1C59C5B21CB4 /* AgoraRtm_iOS-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "AgoraRtm_iOS-xcframeworks.sh"; sourceTree = "<group>"; };
-		BA2F87E86AB3E3F7001D978564E99234 /* Agorafdkaac.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = Agorafdkaac.xcframework; sourceTree = "<group>"; };
+		BA2F87E86AB3E3F7001D978564E99234 /* Agorafdkaac.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = Agorafdkaac.xcframework; sourceTree = "<group>"; };
 		BB8D3A22E2E531E9A1998DCD31D5C010 /* AgoraRtm_iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AgoraRtm_iOS.debug.xcconfig; sourceTree = "<group>"; };
-		C750382A2D5CAB80F296E7F7FA16DADF /* AgoraRtmKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraRtmKit.xcframework; sourceTree = "<group>"; };
-		E442C2462C1F68FFDCCCC1852F4F05B7 /* AgoraSoundTouch.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraSoundTouch.xcframework; sourceTree = "<group>"; };
-		E9892292390B5C74AF23D62D040CDCE1 /* AgoraVideoSegmentationExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraVideoSegmentationExtension.xcframework; sourceTree = "<group>"; };
+		C750382A2D5CAB80F296E7F7FA16DADF /* AgoraRtmKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraRtmKit.xcframework; sourceTree = "<group>"; };
+		E442C2462C1F68FFDCCCC1852F4F05B7 /* AgoraSoundTouch.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraSoundTouch.xcframework; sourceTree = "<group>"; };
+		E9892292390B5C74AF23D62D040CDCE1 /* AgoraVideoSegmentationExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraVideoSegmentationExtension.xcframework; sourceTree = "<group>"; };
 		F1B71B56D8EE092064591E9B8DECA306 /* Pods-APIExample_RTM2x-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-APIExample_RTM2x-acknowledgements.markdown"; sourceTree = "<group>"; };
 		F9023327F289901545A743C5FFF9E0CF /* Pods-APIExample_RTM2x-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-APIExample_RTM2x-Info.plist"; sourceTree = "<group>"; };
-		FC2329CDC85B2D960D5A138D44B2C44C /* AgoraVideoQualityAnalyzerExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = AgoraVideoQualityAnalyzerExtension.xcframework; sourceTree = "<group>"; };
+		FC2329CDC85B2D960D5A138D44B2C44C /* AgoraVideoQualityAnalyzerExtension.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = AgoraVideoQualityAnalyzerExtension.xcframework; sourceTree = "<group>"; };
 		FC3FA53AD6693C15AB3F3B7368F38C31 /* AgoraRtm_iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AgoraRtm_iOS.release.xcconfig; sourceTree = "<group>"; };
 		FEF9017128ED95EFC0CC841CA0C9CEEC /* AgoraRtcEngine_iOS-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "AgoraRtcEngine_iOS-xcframeworks.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +105,6 @@
 				A9B66BE667EB8DB98EDB7468F0A659C7 /* Frameworks */,
 				292B0CC9758A258AE8D878699E3B5278 /* Support Files */,
 			);
-			name = AgoraRtm_iOS;
 			path = AgoraRtm_iOS;
 			sourceTree = "<group>";
 		};
@@ -326,7 +327,6 @@
 				870433CAC756B67DA5A8BB4830E8C52A /* VirtualBackground */,
 				68663CD29646594ABB95E4BDE9D02121 /* VQA */,
 			);
-			name = AgoraRtcEngine_iOS;
 			path = AgoraRtcEngine_iOS;
 			sourceTree = "<group>";
 		};
@@ -543,7 +543,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -625,7 +625,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -642,7 +642,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -696,7 +696,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

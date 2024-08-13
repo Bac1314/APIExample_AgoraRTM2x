@@ -102,6 +102,27 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
         return false
     }
     
+    @MainActor
+    func publishMoveToChannel(channelName: String, messageString: String) async -> Bool{
+        let pubOptions = AgoraRtmPublishOptions()
+        pubOptions.customType = customTTT
+        pubOptions.channelType = .message
+        
+        
+        if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: messageString, option: pubOptions){
+            if error == nil {
+                
+              
+                return true
+            }else{
+                print("Bac's sendMessageToChannel error \(String(describing: error))")
+                return false
+            }
+            
+        }
+        return false
+    }
+    
     
 }
 

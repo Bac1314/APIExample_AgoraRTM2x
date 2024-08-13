@@ -29,7 +29,6 @@ struct GiftView: View {
     }
 
     private func animateGift() {
-
         withAnimation(.interactiveSpring(duration: 8)) {
             offset = CGSize(width: Int.random(in: -100..<100), height: -600) // Adjust height as needed
             opacity = 0.0
