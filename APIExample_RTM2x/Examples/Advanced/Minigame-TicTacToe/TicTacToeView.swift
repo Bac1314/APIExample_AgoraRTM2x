@@ -8,85 +8,84 @@
 import SwiftUI
 
 struct TicTacToeView: View {
-    @State var board: [[String]] = [["", "", ""], ["", "", ""], ["", "", ""]]
-    @State var currentXorO: String = "X"
-    @State var winner: String?
-    @State var player1Name: String = ""
-    @State var player2Name: String = ""
-    @State var userName: String = "Bac" // Could player1, player2, or spectator
-    @State var gameStarted: Bool = false
-    
+
+    @EnvironmentObject var agoraRTMVM: MiniTicTacToeViewModel
+    @State var virtualIndex = 0
     var virtualgifts : [String] = [
         "flower1", "flowers2", "present", "fireworks1"
     ]
-    @State var virtualIndex = 0
 
     var body: some View {
         ZStack {
             VStack {
-                if !gameStarted {
+                if !agoraRTMVM.tiktaktoeModel.gameStarted {
                     // Player Name Input
                     Text("Enter Game")
                         .font(.title)
                         .padding()
 
-                    Text(player1Name.isEmpty ? "P1 : Tap To Enter" : "P1: \(player1Name)")
+                    Text(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? "P1 : Tap To Enter" : "P1: \(agoraRTMVM.tiktaktoeModel.player1Name)")
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .foregroundStyle(player1Name.isEmpty ? Color.gray : Color.accentColor)
+                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? Color.gray : Color.accentColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(player1Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
+                                .stroke(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
                         )
                         .contentTransition(.numericText())
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         .background()
                         .onTapGesture {
-                            if player1Name.isEmpty && player2Name != userName {
+                            if agoraRTMVM.tiktaktoeModel.player1Name.isEmpty && agoraRTMVM.tiktaktoeModel.player2Name != agoraRTMVM.userID {
                                 withAnimation{
-                                    player1Name = userName
+                                    agoraRTMVM.tiktaktoeModel.player1Name = agoraRTMVM.userID
                                 }
                             }
-                            else if player1Name == userName {
+                            else if agoraRTMVM.tiktaktoeModel.player1Name == agoraRTMVM.userID {
                                 withAnimation {
-                                    player1Name = ""
+                                    agoraRTMVM.tiktaktoeModel.player1Name = ""
                                 }
                             }
+                            
+                            publishBoardUpdate()
                         }
                     
-                    Text(player2Name.isEmpty ? "P2 : Tap To Enter" : "P2: \(player2Name)")
+                    Text(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty ? "P2 : Tap To Enter" : "P2: \(agoraRTMVM.tiktaktoeModel.player2Name)")
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .foregroundStyle(player2Name.isEmpty  ? Color.gray : Color.accentColor)
+                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  ? Color.gray : Color.accentColor)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(player2Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
+                                .stroke(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
                         )
                         .contentTransition(.numericText())
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                         .onTapGesture {
-                            if player2Name.isEmpty  && player1Name != userName {
+                            if agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  && agoraRTMVM.tiktaktoeModel.player1Name != agoraRTMVM.userID {
                                 withAnimation{
-                                    player2Name = userName
+                                    agoraRTMVM.tiktaktoeModel.player2Name = agoraRTMVM.userID
                                 }
                             }
-                            else if player2Name == userName {
+                            else if agoraRTMVM.tiktaktoeModel.player2Name == agoraRTMVM.userID {
                                 withAnimation {
-                                    player2Name = ""
+                                    agoraRTMVM.tiktaktoeModel.player2Name = ""
                                 }
                             }
+                            
+                            publishBoardUpdate()
                         }
                     
                     Button("Start Game") {
                         startGame()
+                        publishBoardUpdate()
                     }
                     .buttonBorderShape(.roundedRectangle(radius: 16.0))
-                    .disabled(player1Name.isEmpty || player2Name.isEmpty)
+                    .disabled(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty || agoraRTMVM.tiktaktoeModel.player2Name.isEmpty)
                 } else {
                     // Spectator
-                    if userName != player1Name && userName != player2Name {
+                    if agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player1Name && agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player2Name {
                         Text("You are spectating")
                             .font(.caption2)
                             .bold()
@@ -103,18 +102,18 @@ struct TicTacToeView: View {
                         .padding()
                     
                     HStack {
-                        Text("X: \(player1Name)")
-                            .underline(currentXorO == "X", color: .accentColor)
-                            .bold(currentXorO == "X")
-                            .font(currentXorO == "X" ? .headline : .subheadline)
-                            .foregroundStyle(currentXorO == "X" ? Color.accentColor : Color.primary)
+                        Text("X: \(agoraRTMVM.tiktaktoeModel.player1Name)")
+                            .underline(agoraRTMVM.tiktaktoeModel.currentXorO == "X", color: .accentColor)
+                            .bold(agoraRTMVM.tiktaktoeModel.currentXorO == "X")
+                            .font(agoraRTMVM.tiktaktoeModel.currentXorO == "X" ? .headline : .subheadline)
+                            .foregroundStyle(agoraRTMVM.tiktaktoeModel.currentXorO == "X" ? Color.accentColor : Color.primary)
 
                         Spacer()
-                        Text("O: \(player2Name)")
-                            .underline(currentXorO == "O", color: .accentColor)
-                            .bold(currentXorO == "O")
-                            .font(currentXorO == "O" ? .headline : .subheadline)
-                            .foregroundStyle(currentXorO == "O" ? Color.accentColor : Color.primary)
+                        Text("O: \(agoraRTMVM.tiktaktoeModel.player2Name)")
+                            .underline(agoraRTMVM.tiktaktoeModel.currentXorO == "O", color: .accentColor)
+                            .bold(agoraRTMVM.tiktaktoeModel.currentXorO == "O")
+                            .font(agoraRTMVM.tiktaktoeModel.currentXorO == "O" ? .headline : .subheadline)
+                            .foregroundStyle(agoraRTMVM.tiktaktoeModel.currentXorO == "O" ? Color.accentColor : Color.primary)
 
                     }
                     .contentTransition(.numericText())
@@ -128,9 +127,9 @@ struct TicTacToeView: View {
                                 ForEach(0..<3) { column in
                                     Button(action: {
                                         self.makeMove(row: row, column: column)
-                                        
+                                        publishBoardUpdate()
                                     }) {
-                                        Text(self.board[row][column])
+                                        Text(agoraRTMVM.tiktaktoeModel.board[row][column])
                                             .font(.largeTitle)
                                             .frame(width: 100, height: 100)
                                             .background(Color.gray.opacity(0.5))
@@ -138,7 +137,7 @@ struct TicTacToeView: View {
                                             .cornerRadius(10)
                                             .contentTransition(.numericText())
                                     }
-                                    .disabled(self.board[row][column] != "" || winner != nil || (currentXorO == "X" && player1Name != userName) || (currentXorO == "O" && player2Name != userName)) // Disable button if already chosen or game is over
+                                    .disabled(agoraRTMVM.tiktaktoeModel.board[row][column] != "" || !agoraRTMVM.tiktaktoeModel.winner.isEmpty || (agoraRTMVM.tiktaktoeModel.currentXorO == "X" && agoraRTMVM.tiktaktoeModel.player1Name != agoraRTMVM.userID) || (agoraRTMVM.tiktaktoeModel.currentXorO == "O" && agoraRTMVM.tiktaktoeModel.player2Name != agoraRTMVM.userID)) // Disable button if already chosen or game is over
                                     .padding(8)
                                 }
                             }
@@ -147,8 +146,8 @@ struct TicTacToeView: View {
                     }
                     .padding()
                     
-                    if let winner = winner {
-                        Text("\(winner) wins!")
+                    if !agoraRTMVM.tiktaktoeModel.winner.isEmpty {
+                        Text("\(agoraRTMVM.tiktaktoeModel.winner) wins!")
                             .font(.title)
                             .padding()
                         
@@ -161,6 +160,7 @@ struct TicTacToeView: View {
 
                     Button("Reset Game") {
                         resetGame()
+                        publishBoardUpdate()
                     }
                     .padding()
                     .background(Color.blue)
@@ -170,8 +170,7 @@ struct TicTacToeView: View {
             }
             
             
-            if let winner = winner {
-    
+            if !agoraRTMVM.tiktaktoeModel.winner.isEmpty {
                 GiftView(gift: Gift(userID: "", gift: virtualgifts[virtualIndex], timestamp: Date()))
                     .transition(.move(edge: .top))
                     .zIndex(1)
@@ -182,23 +181,23 @@ struct TicTacToeView: View {
     }
 
     func startGame() {
-        guard !player1Name.isEmpty, !player2Name.isEmpty else { return }
-        currentXorO = "X" // Start with X
-        gameStarted = true
+        guard !agoraRTMVM.tiktaktoeModel.player1Name.isEmpty, !agoraRTMVM.tiktaktoeModel.player2Name.isEmpty else { return }
+        agoraRTMVM.tiktaktoeModel.currentXorO = "X" // Start with X
+        agoraRTMVM.tiktaktoeModel.gameStarted = true
         resetGame() // Reset the game state
     }
 
     func makeMove(row: Int, column: Int) {
         withAnimation {
-            guard board[row][column] == "" && winner == nil else { return }
-            board[row][column] = currentXorO
+            guard agoraRTMVM.tiktaktoeModel.board[row][column] == "" && !agoraRTMVM.tiktaktoeModel.winner.isEmpty else { return }
+            agoraRTMVM.tiktaktoeModel.board[row][column] = agoraRTMVM.tiktaktoeModel.currentXorO
             if checkWinner() {
-                winner = currentXorO == "X" ? player1Name : player2Name // Determine winner name
+                agoraRTMVM.tiktaktoeModel.winner = agoraRTMVM.tiktaktoeModel.currentXorO == "X" ? agoraRTMVM.tiktaktoeModel.player1Name : agoraRTMVM.tiktaktoeModel.player2Name // Determine winner name
                 virtualIndex = Int.random(in: 0...virtualgifts.count)
             } else if isBoardFull() {
                 // Handle draw
             } else {
-                currentXorO = currentXorO == "X" ? "O" : "X" // Switch players
+                agoraRTMVM.tiktaktoeModel.currentXorO = agoraRTMVM.tiktaktoeModel.currentXorO == "X" ? "O" : "X" // Switch players
             }
         }
 
@@ -207,17 +206,17 @@ struct TicTacToeView: View {
     func checkWinner() -> Bool {
         withAnimation {
             for i in 0..<3 {
-                if board[i][0] == currentXorO && board[i][1] == currentXorO && board[i][2] == currentXorO {
+                if agoraRTMVM.tiktaktoeModel.board[i][0] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[i][1] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[i][2] == agoraRTMVM.tiktaktoeModel.currentXorO {
                     return true
                 }
-                if board[0][i] == currentXorO && board[1][i] == currentXorO && board[2][i] == currentXorO {
+                if agoraRTMVM.tiktaktoeModel.board[0][i] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[1][i] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[2][i] == agoraRTMVM.tiktaktoeModel.currentXorO {
                     return true
                 }
             }
-            if board[0][0] == currentXorO && board[1][1] == currentXorO && board[2][2] == currentXorO {
+            if agoraRTMVM.tiktaktoeModel.board[0][0] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[1][1] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[2][2] == agoraRTMVM.tiktaktoeModel.currentXorO {
                 return true
             }
-            if board[0][2] == currentXorO && board[1][1] == currentXorO && board[2][0] == currentXorO {
+            if agoraRTMVM.tiktaktoeModel.board[0][2] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[1][1] == agoraRTMVM.tiktaktoeModel.currentXorO && agoraRTMVM.tiktaktoeModel.board[2][0] == agoraRTMVM.tiktaktoeModel.currentXorO {
                 return true
             }
             return false
@@ -226,7 +225,7 @@ struct TicTacToeView: View {
     }
 
     func isBoardFull() -> Bool {
-        for row in board {
+        for row in agoraRTMVM.tiktaktoeModel.board {
             if row.contains("") {
                 return false
             }
@@ -236,20 +235,27 @@ struct TicTacToeView: View {
 
     func resetGame() {
         withAnimation {
-            board = [["", "", ""], ["", "", ""], ["", "", ""]]
-            winner = nil
-            currentXorO = "X" // Reset to player X
+            agoraRTMVM.tiktaktoeModel.board = [["", "", ""], ["", "", ""], ["", "", ""]]
+            agoraRTMVM.tiktaktoeModel.winner = ""
+            agoraRTMVM.tiktaktoeModel.currentXorO = "X" // Reset to player X
             
             //Swap players
-            let tempPlayer = player1Name
-            player1Name = player2Name
-            player2Name = tempPlayer
+            let tempPlayer = agoraRTMVM.tiktaktoeModel.player1Name
+            agoraRTMVM.tiktaktoeModel.player1Name = agoraRTMVM.tiktaktoeModel.player2Name
+            agoraRTMVM.tiktaktoeModel.player2Name = tempPlayer
         }
+    }
+    
+    func publishBoardUpdate() {
+        Task {
+            await agoraRTMVM.PublishBoardUpdate()
 
+        }
     }
 }
 
 
 #Preview {
     TicTacToeView()
+        .environmentObject(MiniTicTacToeViewModel())
 }

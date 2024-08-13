@@ -23,6 +23,8 @@ enum CustomNavigationType: Hashable {
     case FileSharingView(serviceIcon: String)
     case AudioCallKitView(serviceIcon: String)
     case VirtualGiftingView(serviceIcon: String)
+    case MiniGameTicTacToe(serviceIcon: String)
+
 }
 
 enum CustomChildNavType: Hashable {
@@ -63,7 +65,9 @@ struct ListOfSamplesView: View {
         ("Audio Recording", ("waveform", CustomNavigationType.AudioRecordingView(serviceIcon:"waveform"))),
         ("File Sharing", ("filemenu.and.cursorarrow", CustomNavigationType.FileSharingView(serviceIcon:"filemenu.and.cursorarrow"))),
         ("P2P Audio Call", ("phone.down", CustomNavigationType.AudioCallKitView(serviceIcon:"phone.down"))),
-        ("Virtual Gifting", ("gift", CustomNavigationType.VirtualGiftingView(serviceIcon:"gift")))
+        ("Virtual Gifting", ("gift", CustomNavigationType.VirtualGiftingView(serviceIcon:"gift"))),
+        ("Minigame - TicTacToe", ("gamecontroller", CustomNavigationType.MiniGameTicTacToe(serviceIcon:"gamecontroller")))
+
     ]
     
     var body: some View {
@@ -131,7 +135,10 @@ struct ListOfSamplesView: View {
                     AudioCallKitView(serviceIcon: serviceIcon, path: $path)
                 case .VirtualGiftingView(serviceIcon: let serviceIcon):
                     VirtualGiftingView(serviceIcon: serviceIcon, path: $path)
+                case .MiniGameTicTacToe(serviceIcon: let serviceIcon):
+                    MiniTicTacToe(serviceIcon: serviceIcon, path: $path)
                 }
+                
             }
         }
         

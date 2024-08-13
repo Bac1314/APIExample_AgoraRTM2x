@@ -16,9 +16,7 @@ struct MiniTicTacToe: View {
     var serviceIcon: String = "gamecontroller"
     @Binding var path: NavigationPath
     
-    // First channelName
-    @State var channelName: String = "ChannelA"
-    
+        
     // Show Alert alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
@@ -28,11 +26,11 @@ struct MiniTicTacToe: View {
         ZStack(alignment: .bottom) {
             // MARK: LOGIN VIEW
             if !agoraRTMVM.isLoggedIn {
-                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $channelName, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
+                LoginRTMView(isLoading: $isLoading, userID: $agoraRTMVM.userID, token: $agoraRTMVM.token, channelName: $agoraRTMVM.mainChannel, isLoggedIn: $agoraRTMVM.isLoggedIn, icon: serviceIcon, streamToken: .constant("")) {
                     Task {
                         do{
                             try await agoraRTMVM.loginRTM()
-                            _ = await agoraRTMVM.subscribeChannel(channelName: channelName)
+                            _ = await agoraRTMVM.subscribeChannel(channelName: agoraRTMVM.mainChannel)
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -51,6 +49,7 @@ struct MiniTicTacToe: View {
             // MARK: Display TicTacToe Board
             if agoraRTMVM.isLoggedIn {
                 TicTacToeView()
+                    .environmentObject(agoraRTMVM)
             }
             
             // MARK: SHOW CUSTOM ALERT

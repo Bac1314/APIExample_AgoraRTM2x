@@ -84,6 +84,7 @@
 		29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */; };
 		29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */; };
 		29E601102BD8E08100D69079 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010F2BD8E08100D69079 /* Drawing.swift */; };
+		29FF598D2C6B541A00919BF4 /* TicTacToeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */; };
 		B7EB18E00F3D3F85B982EF56 /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
@@ -169,6 +170,7 @@
 		29E6010B2BD8A5EE00D69079 /* WhiteBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardView.swift; sourceTree = "<group>"; };
 		29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardViewModel.swift; sourceTree = "<group>"; };
 		29E6010F2BD8E08100D69079 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
+		29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeModel.swift; sourceTree = "<group>"; };
 		8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4E55CAF6F22C3F801A9EC6C /* Pods-APIExample_RTM2x.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.debug.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -415,6 +417,7 @@
 				29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */,
 				29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */,
 				29A141422C69FD0700E92E58 /* TicTacToeView.swift */,
+				29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */,
 			);
 			path = "Minigame-TicTacToe";
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */,
 				29538F7B2BC3EC0A00299041 /* CustomQuiz.swift in Sources */,
 				29BDB2942C06CD8A00BF8AF5 /* FileSharingView.swift in Sources */,
+				29FF598D2C6B541A00919BF4 /* TicTacToeModel.swift in Sources */,
 				29AFACA52BD0F37700088381 /* LocationViewModel.swift in Sources */,
 				298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */,
 				296CC1292BA998F7006E14F5 /* CustomRoundedRectView.swift in Sources */,

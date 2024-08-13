@@ -18,7 +18,10 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
     @Published var players: [String] = []
+    @Published var mainChannel = "TicTacToeChannel"
     
+    @Published var tiktaktoeModel : TicTacToeModel = TicTacToeModel()
+    @Published var currentMajorRevision : Int64?
     let customTTT = "miniTicTacToeMessage"
     
     
@@ -68,7 +71,7 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     @MainActor
     func subscribeChannel(channelName: String) async -> Bool {
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
-        subOptions.features =  [.message, .presence]
+        subOptions.features =  [.message, .presence, .metadata]
         
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
@@ -80,48 +83,69 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     }
     
     
-    // Publish to channel in 'MessageChannel'
-    @MainActor
-    func publishToChannel(channelName: String, messageString: String) async -> Bool{
-        let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customTTT
-        pubOptions.channelType = .message
-        
-        
-        if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: messageString, option: pubOptions){
+    func fetchMajorRevision() async -> Int64 {
+        if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){
             if error == nil {
-                
-              
-                return true
+                return response?.data?.getMajorRevision() ?? 0
             }else{
-                print("Bac's sendMessageToChannel error \(String(describing: error))")
-                return false
+                return 0
             }
-            
         }
-        return false
+        
+        return 0
     }
     
-    @MainActor
-    func publishMoveToChannel(channelName: String, messageString: String) async -> Bool{
-        let pubOptions = AgoraRtmPublishOptions()
-        pubOptions.customType = customTTT
-        pubOptions.channelType = .message
-        
-        
-        if let (_, error) = await agoraRtmKit?.publish(channelName: channelName, message: messageString, option: pubOptions){
-            if error == nil {
+    
+    func PublishBoardUpdate() async {
+        if let boardJSONString = convertObjectToJsonString(object: tiktaktoeModel) {
+            print("UpdateBoard boardJSONSTRING success")
+            
+            guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata()
+            else {return }
+            
+            let metaDataItem : AgoraRtmMetadataItem = AgoraRtmMetadataItem()
+            metaDataItem.key = customTTT
+            metaDataItem.value = boardJSONString
+            
+            metaData.setMetadataItem(metaDataItem)
+            
+            // Metadata options
+            let metaDataOption: AgoraRtmMetadataOptions = AgoraRtmMetadataOptions()
+            metaDataOption.recordUserId = true
+            metaDataOption.recordTs = true
+            
+            
+            if let currentMajorRevision = currentMajorRevision {
+                metaData.setMajorRevision(currentMajorRevision )
                 
-              
-                return true
-            }else{
-                print("Bac's sendMessageToChannel error \(String(describing: error))")
-                return false
+                if let (_, error) = await agoraRtmKit?.getStorage()?.updateChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
+                    if error == nil {
+            
+                    }
+                }
+            }else {
+                metaData.setMajorRevision(await fetchMajorRevision())
+                
+                if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
+                    if error == nil {
+            
+                    }
+                }
+                
             }
             
+
         }
-        return false
     }
+    
+    func UpdateBoard(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
+        if let newTTTBoardString = metadataItems.first(where: {$0.key == customTTT})?.value,  let newTTTBoard = convertJsonStringToObject(jsonString: newTTTBoardString, objectType: TicTacToeModel.self) {
+           
+            tiktaktoeModel = newTTTBoard
+            currentMajorRevision = majorRevision
+        }
+    }
+
     
     
 }
@@ -134,14 +158,6 @@ extension MiniTicTacToeViewModel: AgoraRtmClientDelegate {
         
         switch event.channelType {
         case .message:
-            if event.customType ==  customTTT {
-                Task {
-                    await MainActor.run {
-                    }
-                }
-                
-            }
-
             break
         case .stream:
             break
@@ -151,6 +167,22 @@ extension MiniTicTacToeViewModel: AgoraRtmClientDelegate {
             break
         @unknown default:
             print("Bac's didReceiveMessageEvent channelType is unknown")
+        }
+    }
+    
+    // Receive storage event
+    func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveStorageEvent event: AgoraRtmStorageEvent) {
+        if event.storageType == .channel {
+            // Channel Metadata is udpated
+            print("Bac's didReceiveStorageEvent updated \(event.eventType)")
+            
+            if event.eventType == .snapshot ||  event.eventType == .update || event.eventType == .set {
+                Task {
+                    await MainActor.run {
+                        UpdateBoard(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
+                    }
+                }
+            }
         }
     }
     
