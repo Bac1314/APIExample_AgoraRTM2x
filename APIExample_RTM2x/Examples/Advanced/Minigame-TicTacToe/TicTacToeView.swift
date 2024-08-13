@@ -189,7 +189,7 @@ struct TicTacToeView: View {
 
     func makeMove(row: Int, column: Int) {
         withAnimation {
-            guard agoraRTMVM.tiktaktoeModel.board[row][column] == "" && !agoraRTMVM.tiktaktoeModel.winner.isEmpty else { return }
+            guard agoraRTMVM.tiktaktoeModel.board[row][column] == "" && agoraRTMVM.tiktaktoeModel.winner.isEmpty else { return }
             agoraRTMVM.tiktaktoeModel.board[row][column] = agoraRTMVM.tiktaktoeModel.currentXorO
             if checkWinner() {
                 agoraRTMVM.tiktaktoeModel.winner = agoraRTMVM.tiktaktoeModel.currentXorO == "X" ? agoraRTMVM.tiktaktoeModel.player1Name : agoraRTMVM.tiktaktoeModel.player2Name // Determine winner name
