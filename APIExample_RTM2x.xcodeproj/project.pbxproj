@@ -52,8 +52,8 @@
 		297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F80252BA83B360057200A /* ListOfSamplesView.swift */; };
 		298BC2BA2C37EA5B00376036 /* AudioCallKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */; };
 		298BC2BC2C37ED1900376036 /* AudioCallKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */; };
-		29A141432C69FD0700E92E58 /* TicTacToeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141422C69FD0700E92E58 /* TicTacToeView.swift */; };
-		29A141452C69FD2700E92E58 /* MiniTicTacToe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */; };
+		29A141432C69FD0700E92E58 /* TicTacToeBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141422C69FD0700E92E58 /* TicTacToeBoardView.swift */; };
+		29A141452C69FD2700E92E58 /* MiniTicTacToeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141442C69FD2700E92E58 /* MiniTicTacToeView.swift */; };
 		29A141472C69FD3800E92E58 /* MiniTicTacToeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */; };
 		29A48EAC2C64B4E8006F1338 /* VirtualGiftingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */; };
 		29A48EAE2C64B4F4006F1338 /* VirtualGiftingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */; };
@@ -137,8 +137,8 @@
 		297F80252BA83B360057200A /* ListOfSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfSamplesView.swift; sourceTree = "<group>"; };
 		298BC2B92C37EA5B00376036 /* AudioCallKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitViewModel.swift; sourceTree = "<group>"; };
 		298BC2BB2C37ED1900376036 /* AudioCallKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCallKitView.swift; sourceTree = "<group>"; };
-		29A141422C69FD0700E92E58 /* TicTacToeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeView.swift; sourceTree = "<group>"; };
-		29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTicTacToe.swift; sourceTree = "<group>"; };
+		29A141422C69FD0700E92E58 /* TicTacToeBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeBoardView.swift; sourceTree = "<group>"; };
+		29A141442C69FD2700E92E58 /* MiniTicTacToeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTicTacToeView.swift; sourceTree = "<group>"; };
 		29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniTicTacToeViewModel.swift; sourceTree = "<group>"; };
 		29A48EAB2C64B4E8006F1338 /* VirtualGiftingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingView.swift; sourceTree = "<group>"; };
 		29A48EAD2C64B4F4006F1338 /* VirtualGiftingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualGiftingViewModel.swift; sourceTree = "<group>"; };
@@ -417,9 +417,9 @@
 		29A1413F2C69FCC700E92E58 /* Minigame-TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
-				29A141442C69FD2700E92E58 /* MiniTicTacToe.swift */,
+				29A141442C69FD2700E92E58 /* MiniTicTacToeView.swift */,
 				29A141462C69FD3800E92E58 /* MiniTicTacToeViewModel.swift */,
-				29A141422C69FD0700E92E58 /* TicTacToeView.swift */,
+				29A141422C69FD0700E92E58 /* TicTacToeBoardView.swift */,
 				29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */,
 			);
 			path = "Minigame-TicTacToe";
@@ -621,7 +621,7 @@
 				29538F852BC539E100299041 /* QuizMockItem.swift in Sources */,
 				29AB4A4B2BC7E82E00F9C1D3 /* BiddingViewModel.swift in Sources */,
 				29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */,
-				29A141432C69FD0700E92E58 /* TicTacToeView.swift in Sources */,
+				29A141432C69FD0700E92E58 /* TicTacToeBoardView.swift in Sources */,
 				292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */,
 				297F80222BA454A40057200A /* P2PMessagingView.swift in Sources */,
 				29BDB2892C003AC800BF8AF5 /* AudioRecordingView.swift in Sources */,
@@ -675,7 +675,7 @@
 				297F80142BA44C300057200A /* GlobalVariables.swift in Sources */,
 				292CDB262BBC10C700505913 /* CustomAlert.swift in Sources */,
 				296CC1272BA99690006E14F5 /* MessageItemRemoteView.swift in Sources */,
-				29A141452C69FD2700E92E58 /* MiniTicTacToe.swift in Sources */,
+				29A141452C69FD2700E92E58 /* MiniTicTacToeView.swift in Sources */,
 				29A141472C69FD3800E92E58 /* MiniTicTacToeViewModel.swift in Sources */,
 				29BDB2982C06D54800BF8AF5 /* FileInfo.swift in Sources */,
 				297F800C2BA440120057200A /* APIRequest.swift in Sources */,

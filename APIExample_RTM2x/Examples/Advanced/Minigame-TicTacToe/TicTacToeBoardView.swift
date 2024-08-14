@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TicTacToeView: View {
+struct TicTacToeBoardView: View {
 
     @EnvironmentObject var agoraRTMVM: MiniTicTacToeViewModel
     @State var virtualIndex = 0
@@ -283,6 +283,6 @@ struct TicTacToeView: View {
 
 
 #Preview {
-    TicTacToeView()
+    TicTacToeBoardView()
         .environmentObject(MiniTicTacToeViewModel())
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 import AgoraRtmKit
 
-struct MiniTicTacToe: View {
+struct MiniTicTacToeView: View {
     @StateObject var agoraRTMVM: MiniTicTacToeViewModel = MiniTicTacToeViewModel()
     @FocusState private var keyboardIsFocused: Bool
     @State var isLoading: Bool = false
@@ -48,7 +48,7 @@ struct MiniTicTacToe: View {
             
             // MARK: Display TicTacToe Board
             if agoraRTMVM.isLoggedIn {
-                TicTacToeView()
+                TicTacToeBoardView()
                     .environmentObject(agoraRTMVM)
             }
             
@@ -82,5 +82,5 @@ struct MiniTicTacToe: View {
 }
 
 #Preview {
-    MiniTicTacToe(path: .constant(NavigationPath()))
+    MiniTicTacToeView(path: .constant(NavigationPath()))
 }

@@ -61,20 +61,23 @@ struct GoBoardView: View {
     func makeMove(row: Int, col: Int) {
         guard board[row][col] == 0 else { return }
         board[row][col] = currentPlayer
-        if checkWin(player: currentPlayer, row: row, col: col) {
+        if checkWinner(player: currentPlayer, row: row, col: col) {
             print("Player \(currentPlayer) wins!")
         }
         currentPlayer = currentPlayer == 1 ? 2 : 1
     }
 
-    private func checkWin(player: Int, row: Int, col: Int) -> Bool {
-        return checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: 0) || // Vertical
-               checkDirection(player: player, row: row, col: col, deltaRow: 0, deltaCol: 1) || // Horizontal
-               checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: 1) || // Diagonal \
-               checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: -1)   // Diagonal /
+    func checkWinner(player: Int, row: Int, col: Int) -> Bool {
+        withAnimation {
+            return checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: 0) || // Vertical
+                   checkDirection(player: player, row: row, col: col, deltaRow: 0, deltaCol: 1) || // Horizontal
+                   checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: 1) || // Diagonal \
+                   checkDirection(player: player, row: row, col: col, deltaRow: 1, deltaCol: -1)   // Diagonal /
+        }
+
     }
 
-    private func checkDirection(player: Int, row: Int, col: Int, deltaRow: Int, deltaCol: Int) -> Bool {
+     func checkDirection(player: Int, row: Int, col: Int, deltaRow: Int, deltaCol: Int) -> Bool {
         var count = 0
         for i in -4...4 {
             let newRow = row + i * deltaRow

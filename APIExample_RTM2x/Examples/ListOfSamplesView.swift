@@ -136,7 +136,7 @@ struct ListOfSamplesView: View {
                 case .VirtualGiftingView(serviceIcon: let serviceIcon):
                     VirtualGiftingView(serviceIcon: serviceIcon, path: $path)
                 case .MiniGameTicTacToe(serviceIcon: let serviceIcon):
-                    MiniTicTacToe(serviceIcon: serviceIcon, path: $path)
+                    MiniTicTacToeView(serviceIcon: serviceIcon, path: $path)
                 }
                 
             }
