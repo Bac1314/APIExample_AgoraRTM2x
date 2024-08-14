@@ -27,15 +27,15 @@ struct TicTacToeView: View {
                     Text(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? "P1 : Tap To Enter" : "P1: \(agoraRTMVM.tiktaktoeModel.player1Name)")
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? Color.gray : Color.accentColor)
-                        .overlay(
+                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? Color.gray : Color.white)
+                        .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
+                                .fill(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty ? Color.clear : Color.accentColor)
+                                .stroke(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty  ? Color.gray : Color.black, lineWidth: 2)
+                            
                         )
                         .contentTransition(.numericText())
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
-                        .background()
+                        .padding(8)
                         .onTapGesture {
                             if agoraRTMVM.tiktaktoeModel.player1Name.isEmpty && agoraRTMVM.tiktaktoeModel.player2Name != agoraRTMVM.userID {
                                 withAnimation{
@@ -54,14 +54,15 @@ struct TicTacToeView: View {
                     Text(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty ? "P2 : Tap To Enter" : "P2: \(agoraRTMVM.tiktaktoeModel.player2Name)")
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  ? Color.gray : Color.accentColor)
-                        .overlay(
+                        .foregroundStyle(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty ? Color.gray : Color.white)
+                        .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  ? Color.gray : Color.accentColor, lineWidth: 2)
+                                .fill(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty ? Color.clear : Color.accentColor)
+                                .stroke(agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  ? Color.gray : Color.black, lineWidth: 2)
+                            
                         )
                         .contentTransition(.numericText())
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
+                        .padding(8)
                         .onTapGesture {
                             if agoraRTMVM.tiktaktoeModel.player2Name.isEmpty  && agoraRTMVM.tiktaktoeModel.player1Name != agoraRTMVM.userID {
                                 withAnimation{
@@ -158,8 +159,8 @@ struct TicTacToeView: View {
                     }
 
 
-                    Button("Reset Game") {
-                        resetGame()
+                    Button("Restart Game") {
+                        restart()
                         publishBoardUpdate()
                     }
                     .padding()
@@ -169,6 +170,26 @@ struct TicTacToeView: View {
                 }
             }
             
+            // Reset Game
+            if agoraRTMVM.tiktaktoeModel.gameStarted {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            reset()
+                            Task {
+                                await agoraRTMVM.PublishBoardUpdate()
+                            }
+                        }, label: {
+                            Text("Reset")
+                                .foregroundStyle(Color.red)
+                        })
+                        .padding()
+                    }
+                    Spacer()
+
+                }
+            }
             
             if !agoraRTMVM.tiktaktoeModel.winner.isEmpty {
                 GiftView(gift: Gift(userID: "", gift: virtualgifts[virtualIndex], timestamp: Date()))
@@ -184,7 +205,7 @@ struct TicTacToeView: View {
         guard !agoraRTMVM.tiktaktoeModel.player1Name.isEmpty, !agoraRTMVM.tiktaktoeModel.player2Name.isEmpty else { return }
         agoraRTMVM.tiktaktoeModel.currentXorO = "X" // Start with X
         agoraRTMVM.tiktaktoeModel.gameStarted = true
-        resetGame() // Reset the game state
+        restart() // Reset the game state
     }
 
     func makeMove(row: Int, column: Int) {
@@ -233,7 +254,7 @@ struct TicTacToeView: View {
         return true
     }
 
-    func resetGame() {
+    func restart() {
         withAnimation {
             agoraRTMVM.tiktaktoeModel.board = [["", "", ""], ["", "", ""], ["", "", ""]]
             agoraRTMVM.tiktaktoeModel.winner = ""
@@ -243,6 +264,12 @@ struct TicTacToeView: View {
             let tempPlayer = agoraRTMVM.tiktaktoeModel.player1Name
             agoraRTMVM.tiktaktoeModel.player1Name = agoraRTMVM.tiktaktoeModel.player2Name
             agoraRTMVM.tiktaktoeModel.player2Name = tempPlayer
+        }
+    }
+    
+    func reset() {
+        withAnimation {
+            agoraRTMVM.tiktaktoeModel = TicTacToeModel()
         }
     }
     

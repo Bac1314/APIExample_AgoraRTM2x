@@ -63,7 +63,6 @@ struct LoginRTMView: View {
                             .padding(12)
                             .background(
                                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                //                                    .fill(Color.gray.opacity(0.1))
                                     .stroke(Color.gray, lineWidth: 1.0)
                                 
                             )

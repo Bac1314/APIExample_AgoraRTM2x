@@ -16,11 +16,11 @@ struct MiniTicTacToe: View {
     var serviceIcon: String = "gamecontroller"
     @Binding var path: NavigationPath
     
-        
+    
     // Show Alert alert
     @State var showAlert: Bool = false
     @State var alertMessage: String = "Error"
-
+    
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -57,7 +57,7 @@ struct MiniTicTacToe: View {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
             }
         }
-    
+        
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")

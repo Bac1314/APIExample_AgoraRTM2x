@@ -17,7 +17,6 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var players: [String] = []
     @Published var mainChannel = "TicTacToeChannel"
     
     @Published var tiktaktoeModel : TicTacToeModel = TicTacToeModel()
@@ -61,9 +60,17 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     
     // Logout RTM server
     func logoutRTM(){
-        agoraRtmKit?.logout()
-        agoraRtmKit?.destroy()
-        isLoggedIn = false
+        Task {
+            if tiktaktoeModel.player1Name == userID || tiktaktoeModel.player2Name == userID {
+                await DeleteBoard() // Delete board
+            }
+            await agoraRtmKit?.logout()
+            await MainActor.run {
+                agoraRtmKit?.destroy()
+                isLoggedIn = false
+            }
+        }
+
     }
     
     //MARK: MESSAGE CHANNEL METHODS
@@ -140,10 +147,24 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     
     func UpdateBoard(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
         if let newTTTBoardString = metadataItems.first(where: {$0.key == customTTT})?.value,  let newTTTBoard = convertJsonStringToObject(jsonString: newTTTBoardString, objectType: TicTacToeModel.self) {
-           
             tiktaktoeModel = newTTTBoard
             currentMajorRevision = majorRevision
         }
+    }
+    
+    func DeleteBoard() async  {
+        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return }
+
+        if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
+            if error == nil {
+                // Delete Successful
+                print("Delete Success")
+            }else {
+                // Delete failed
+                print("Delete Failed with error \(String(describing: error))")
+            }
+        }
+        
     }
 
     
