@@ -85,6 +85,7 @@
 		29E6010E2BD8DB7800D69079 /* WhiteBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */; };
 		29E601102BD8E08100D69079 /* Drawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6010F2BD8E08100D69079 /* Drawing.swift */; };
 		29FF598D2C6B541A00919BF4 /* TicTacToeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */; };
+		29FF59922C6CB32800919BF4 /* GoBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF59912C6CB32800919BF4 /* GoBoardView.swift */; };
 		B7EB18E00F3D3F85B982EF56 /* Pods_APIExample_RTM2x.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */; };
 /* End PBXBuildFile section */
 
@@ -171,6 +172,7 @@
 		29E6010D2BD8DB7800D69079 /* WhiteBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteBoardViewModel.swift; sourceTree = "<group>"; };
 		29E6010F2BD8E08100D69079 /* Drawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawing.swift; sourceTree = "<group>"; };
 		29FF598C2C6B541A00919BF4 /* TicTacToeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeModel.swift; sourceTree = "<group>"; };
+		29FF59912C6CB32800919BF4 /* GoBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoBoardView.swift; sourceTree = "<group>"; };
 		8B9EBC26C17A9F578DCA7D18 /* Pods_APIExample_RTM2x.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APIExample_RTM2x.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4E55CAF6F22C3F801A9EC6C /* Pods-APIExample_RTM2x.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APIExample_RTM2x.debug.xcconfig"; path = "Target Support Files/Pods-APIExample_RTM2x/Pods-APIExample_RTM2x.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -397,6 +399,7 @@
 				298BC2B82C37EA2D00376036 /* AudioCallKit */,
 				29A48EAA2C64B4BC006F1338 /* VirtualGifting */,
 				29A1413F2C69FCC700E92E58 /* Minigame-TicTacToe */,
+				29FF598E2C6CB30100919BF4 /* Minigame-Go */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -475,6 +478,14 @@
 				29E6010F2BD8E08100D69079 /* Drawing.swift */,
 			);
 			path = WhiteBoard;
+			sourceTree = "<group>";
+		};
+		29FF598E2C6CB30100919BF4 /* Minigame-Go */ = {
+			isa = PBXGroup;
+			children = (
+				29FF59912C6CB32800919BF4 /* GoBoardView.swift */,
+			);
+			path = "Minigame-Go";
 			sourceTree = "<group>";
 		};
 		80022166EFD6AFFE1ACCB3A2 /* Frameworks */ = {
@@ -630,6 +641,7 @@
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
+				29FF59922C6CB32800919BF4 /* GoBoardView.swift in Sources */,
 				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
 				292CED542C65BDE000002390 /* GiftView.swift in Sources */,
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
