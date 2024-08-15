@@ -13,6 +13,9 @@
 		29024AAA2BCE1F0600E871B2 /* Arch_ChannelMessaging.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */; };
 		29024AAB2BCE1F0600E871B2 /* Arch_Quiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */; };
 		29024AAF2BCE866100E871B2 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29024AAE2BCE866100E871B2 /* Configurations.swift */; };
+		2910B6712C6DA0CF0013846D /* GoBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2910B6702C6DA0CF0013846D /* GoBoardModel.swift */; };
+		2910B6732C6DA0DB0013846D /* MiniGoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2910B6722C6DA0DB0013846D /* MiniGoViewModel.swift */; };
+		2910B6752C6DA0E70013846D /* MiniGoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2910B6742C6DA0E70013846D /* MiniGoView.swift */; };
 		292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */; };
 		292CDB1E2BBA66C600505913 /* GlobalTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1D2BBA66C600505913 /* GlobalTools.swift */; };
 		292CDB202BBA94D100505913 /* CustomPoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CDB1F2BBA94D100505913 /* CustomPoll.swift */; };
@@ -97,6 +100,9 @@
 		29024AA52BCE1F0600E871B2 /* Arch_ChannelMessaging.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_ChannelMessaging.png; sourceTree = "<group>"; };
 		29024AA62BCE1F0600E871B2 /* Arch_Quiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arch_Quiz.png; sourceTree = "<group>"; };
 		29024AAE2BCE866100E871B2 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
+		2910B6702C6DA0CF0013846D /* GoBoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoBoardModel.swift; sourceTree = "<group>"; };
+		2910B6722C6DA0DB0013846D /* MiniGoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGoViewModel.swift; sourceTree = "<group>"; };
+		2910B6742C6DA0E70013846D /* MiniGoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGoView.swift; sourceTree = "<group>"; };
 		292CDB192BB6AE1E00505913 /* CustomRTMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRTMUser.swift; sourceTree = "<group>"; };
 		292CDB1D2BBA66C600505913 /* GlobalTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTools.swift; sourceTree = "<group>"; };
 		292CDB1F2BBA94D100505913 /* CustomPoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPoll.swift; sourceTree = "<group>"; };
@@ -483,7 +489,10 @@
 		29FF598E2C6CB30100919BF4 /* Minigame-Go */ = {
 			isa = PBXGroup;
 			children = (
+				2910B6742C6DA0E70013846D /* MiniGoView.swift */,
+				2910B6722C6DA0DB0013846D /* MiniGoViewModel.swift */,
 				29FF59912C6CB32800919BF4 /* GoBoardView.swift */,
+				2910B6702C6DA0CF0013846D /* GoBoardModel.swift */,
 			);
 			path = "Minigame-Go";
 			sourceTree = "<group>";
@@ -633,6 +642,7 @@
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */,
+				2910B6732C6DA0DB0013846D /* MiniGoViewModel.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */,
 				29AFACB02BD20D3100088381 /* CustomStreamTopic.swift in Sources */,
@@ -640,6 +650,7 @@
 				29A48EB02C64B7DD006F1338 /* Gift.swift in Sources */,
 				29E601102BD8E08100D69079 /* Drawing.swift in Sources */,
 				296CC12F2BAAE070006E14F5 /* MessageItemFullView.swift in Sources */,
+				2910B6752C6DA0E70013846D /* MiniGoView.swift in Sources */,
 				297F801E2BA4546A0057200A /* QuizGameView.swift in Sources */,
 				29FF59922C6CB32800919BF4 /* GoBoardView.swift in Sources */,
 				29BDB2A42C08655400BF8AF5 /* CustomModifiers.swift in Sources */,
@@ -650,6 +661,7 @@
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
+				2910B6712C6DA0CF0013846D /* GoBoardModel.swift in Sources */,
 				297F80262BA83B360057200A /* ListOfSamplesView.swift in Sources */,
 				297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */,
 				297F801C2BA4545D0057200A /* PollingView.swift in Sources */,

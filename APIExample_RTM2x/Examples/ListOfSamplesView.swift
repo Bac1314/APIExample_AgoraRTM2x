@@ -24,6 +24,7 @@ enum CustomNavigationType: Hashable {
     case AudioCallKitView(serviceIcon: String)
     case VirtualGiftingView(serviceIcon: String)
     case MiniGameTicTacToe(serviceIcon: String)
+    case MiniGameGo(serviceIcon: String)
 
 }
 
@@ -66,7 +67,8 @@ struct ListOfSamplesView: View {
         ("File Sharing", ("filemenu.and.cursorarrow", CustomNavigationType.FileSharingView(serviceIcon:"filemenu.and.cursorarrow"))),
         ("P2P Audio Call", ("phone.down", CustomNavigationType.AudioCallKitView(serviceIcon:"phone.down"))),
         ("Virtual Gifting", ("gift", CustomNavigationType.VirtualGiftingView(serviceIcon:"gift"))),
-        ("Minigame - TicTacToe", ("gamecontroller", CustomNavigationType.MiniGameTicTacToe(serviceIcon:"gamecontroller")))
+        ("Minigame - TicTacToe", ("gamecontroller", CustomNavigationType.MiniGameTicTacToe(serviceIcon:"gamecontroller"))),
+        ("Minigame - Go", ("gamecontroller", CustomNavigationType.MiniGameGo(serviceIcon:"gamecontroller")))
 
     ]
     
@@ -137,6 +139,8 @@ struct ListOfSamplesView: View {
                     VirtualGiftingView(serviceIcon: serviceIcon, path: $path)
                 case .MiniGameTicTacToe(serviceIcon: let serviceIcon):
                     MiniTicTacToeView(serviceIcon: serviceIcon, path: $path)
+                case .MiniGameGo(serviceIcon: let serviceIcon):
+                    MiniGoView(serviceIcon: serviceIcon, path: $path)
                 }
                 
             }
