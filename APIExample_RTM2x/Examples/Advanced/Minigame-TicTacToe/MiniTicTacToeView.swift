@@ -60,7 +60,7 @@ struct MiniTicTacToeView: View {
         
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "TicTacToe" : "Login")
         .toolbar{
             // Back button
             ToolbarItem(placement: .topBarLeading) {

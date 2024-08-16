@@ -60,7 +60,7 @@ struct MiniGoView: View {
         
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(agoraRTMVM.isLoggedIn ? "Channels" : "Login")
+        .navigationTitle(agoraRTMVM.isLoggedIn ? "Gomuku" : "Login")
         .toolbar{
             // Back button
             ToolbarItem(placement: .topBarLeading) {

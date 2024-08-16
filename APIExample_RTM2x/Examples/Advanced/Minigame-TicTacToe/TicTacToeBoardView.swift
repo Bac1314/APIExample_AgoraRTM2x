@@ -85,22 +85,28 @@ struct TicTacToeBoardView: View {
                     .buttonBorderShape(.roundedRectangle(radius: 16.0))
                     .disabled(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty || agoraRTMVM.tiktaktoeModel.player2Name.isEmpty)
                 } else {
-                    // Spectator
-                    if agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player1Name && agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player2Name {
-                        Text("You are spectating")
-                            .font(.caption2)
-                            .bold()
-                            .padding(8)
-                            .foregroundStyle(Color.pink)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.pink, lineWidth: 2)
-                            )
+                    // Spectators
+                    HStack(spacing: 0) {
+                        let spectatorCount = agoraRTMVM.users.filter({$0.userId != agoraRTMVM.tiktaktoeModel.player1Name || $0.userId != agoraRTMVM.tiktaktoeModel.player2Name}).count
+                        
+                        if agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player1Name && agoraRTMVM.userID != agoraRTMVM.tiktaktoeModel.player2Name {
+                            Text("You're spectating. \(spectatorCount) users")
+                        }else {
+                            Image(systemName: "person.2.fill")
+                            Text("\(spectatorCount) spectators")
+                        }
                     }
+                    .font(.caption2)
+                    .bold()
+                    .padding(8)
+                    .foregroundStyle(Color.pink)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.pink, lineWidth: 2)
+                    )
                     
-                    Text("Tic-Tac-Toe")
-                        .font(.largeTitle)
-                        .padding()
+                    Spacer()
+                    
                     
                     HStack {
                         Text("X: \(agoraRTMVM.tiktaktoeModel.player1Name)")
@@ -157,7 +163,8 @@ struct TicTacToeBoardView: View {
                             .font(.title)
                             .padding()
                     }
-
+                    
+                    Spacer()
 
                     Button("Restart Game") {
                         restart()
