@@ -40,6 +40,10 @@
 		296CC13E2BAC0397006E14F5 /* LoginRTMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CC13D2BAC0397006E14F5 /* LoginRTMView.swift */; };
 		297003032BB6656100B6681A /* PollingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297003022BB6656100B6681A /* PollingViewModel.swift */; };
 		297003052BB66FBB00B6681A /* CustomRTMChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297003042BB66FBB00B6681A /* CustomRTMChannel.swift */; };
+		297367812C6F5D3A00AF3424 /* MiniBingoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297367802C6F5D3A00AF3424 /* MiniBingoView.swift */; };
+		297367832C6F5D4700AF3424 /* MiniBingoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297367822C6F5D4700AF3424 /* MiniBingoViewModel.swift */; };
+		297367852C6F5D5800AF3424 /* BingoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297367842C6F5D5800AF3424 /* BingoCard.swift */; };
+		297367872C6F5D7200AF3424 /* BingoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297367862C6F5D7200AF3424 /* BingoCardView.swift */; };
 		297F7FF42BA420E20057200A /* APIExample_RTM2xApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297F7FF32BA420E20057200A /* APIExample_RTM2xApp.swift */; };
 		297F7FF82BA420E40057200A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297F7FF72BA420E40057200A /* Assets.xcassets */; };
 		297F7FFB2BA420E40057200A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297F7FFA2BA420E40057200A /* Preview Assets.xcassets */; };
@@ -127,6 +131,10 @@
 		296CC13D2BAC0397006E14F5 /* LoginRTMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRTMView.swift; sourceTree = "<group>"; };
 		297003022BB6656100B6681A /* PollingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingViewModel.swift; sourceTree = "<group>"; };
 		297003042BB66FBB00B6681A /* CustomRTMChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRTMChannel.swift; sourceTree = "<group>"; };
+		297367802C6F5D3A00AF3424 /* MiniBingoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBingoView.swift; sourceTree = "<group>"; };
+		297367822C6F5D4700AF3424 /* MiniBingoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBingoViewModel.swift; sourceTree = "<group>"; };
+		297367842C6F5D5800AF3424 /* BingoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BingoCard.swift; sourceTree = "<group>"; };
+		297367862C6F5D7200AF3424 /* BingoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BingoCardView.swift; sourceTree = "<group>"; };
 		297F7FF02BA420E20057200A /* APIExample_RTM2x.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APIExample_RTM2x.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F7FF32BA420E20057200A /* APIExample_RTM2xApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIExample_RTM2xApp.swift; sourceTree = "<group>"; };
 		297F7FF72BA420E40057200A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -305,6 +313,17 @@
 			path = Bidding;
 			sourceTree = "<group>";
 		};
+		2973677F2C6F5D1900AF3424 /* Minigame-Bingo */ = {
+			isa = PBXGroup;
+			children = (
+				297367802C6F5D3A00AF3424 /* MiniBingoView.swift */,
+				297367822C6F5D4700AF3424 /* MiniBingoViewModel.swift */,
+				297367842C6F5D5800AF3424 /* BingoCard.swift */,
+				297367862C6F5D7200AF3424 /* BingoCardView.swift */,
+			);
+			path = "Minigame-Bingo";
+			sourceTree = "<group>";
+		};
 		297F7FE72BA420E20057200A = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +425,7 @@
 				29A48EAA2C64B4BC006F1338 /* VirtualGifting */,
 				29A1413F2C69FCC700E92E58 /* Minigame-TicTacToe */,
 				29FF598E2C6CB30100919BF4 /* Minigame-Go */,
+				2973677F2C6F5D1900AF3424 /* Minigame-Bingo */,
 			);
 			path = Advanced;
 			sourceTree = "<group>";
@@ -642,6 +662,7 @@
 				29AB4A4D2BC7E92100F9C1D3 /* CustomAuctionItem.swift in Sources */,
 				29AFAC9E2BD0F36400088381 /* Personalize.swift in Sources */,
 				29AFACAA2BD10C3000088381 /* StreamMessagingViewModel.swift in Sources */,
+				297367852C6F5D5800AF3424 /* BingoCard.swift in Sources */,
 				2910B6732C6DA0DB0013846D /* MiniGoViewModel.swift in Sources */,
 				29538F872BC67E1900299041 /* QuizUser.swift in Sources */,
 				29BDB29A2C07069400BF8AF5 /* FileInfoItemView.swift in Sources */,
@@ -658,6 +679,7 @@
 				29DF1E402BE0CA6900F6D47A /* FullImageView.swift in Sources */,
 				29AFACA42BD0F37700088381 /* LocationView.swift in Sources */,
 				297F80242BA4550C0057200A /* StreamMessagingView.swift in Sources */,
+				297367812C6F5D3A00AF3424 /* MiniBingoView.swift in Sources */,
 				296CC1262BA99690006E14F5 /* MessageItemLocalView.swift in Sources */,
 				297F80202BA454770057200A /* BiddingView.swift in Sources */,
 				292CDB242BBBA55100505913 /* TestingView.swift in Sources */,
@@ -678,10 +700,12 @@
 				297F80162BA4540D0057200A /* ChannelMessagingView.swift in Sources */,
 				29307D272BBD5819005BB4CC /* PollCreationView.swift in Sources */,
 				296CC1332BABE0E7006E14F5 /* P2PMessagingViewModel.swift in Sources */,
+				297367872C6F5D7200AF3424 /* BingoCardView.swift in Sources */,
 				29E6010C2BD8A5EE00D69079 /* WhiteBoardView.swift in Sources */,
 				29E6010A2BD8A59B00D69079 /* Canvas.swift in Sources */,
 				29BDB28B2C00471200BF8AF5 /* AudioMessage.swift in Sources */,
 				292CDB222BBAAB7600505913 /* PollItemView.swift in Sources */,
+				297367832C6F5D4700AF3424 /* MiniBingoViewModel.swift in Sources */,
 				292CDB1A2BB6AE1E00505913 /* CustomRTMUser.swift in Sources */,
 				297003032BB6656100B6681A /* PollingViewModel.swift in Sources */,
 				297F80142BA44C300057200A /* GlobalVariables.swift in Sources */,

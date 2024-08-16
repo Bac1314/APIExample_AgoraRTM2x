@@ -10,20 +10,20 @@ import SwiftUI
 struct GoBoardView: View {
     @EnvironmentObject var agoraRTMVM: MiniGoViewModel
     
-//    @State var board: [[Int]]
-//    @State var currentPlayer: Int = 1
+    //    @State var board: [[Int]]
+    //    @State var currentPlayer: Int = 1
     @State var cellSize : CGFloat = 30
-//    let boardSize: Int = 12
-//    
+    //    let boardSize: Int = 12
+    //
     
     @State var virtualIndex = 0
     var virtualgifts : [String] = [
         "flower1", "flowers2", "present", "fireworks1"
     ]
     
-//    init(){
-//        agoraRTMVM.goBoardModel.board = Array(repeating: Array(repeating: 0, count: 12), count: 12)
-//    }
+    //    init(){
+    //        agoraRTMVM.goBoardModel.board = Array(repeating: Array(repeating: 0, count: 12), count: 12)
+    //    }
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
@@ -120,9 +120,9 @@ struct GoBoardView: View {
                             .stroke(Color.pink, lineWidth: 2)
                     )
                     
-
-                    Spacer() 
-
+                    
+                    Spacer()
+                    
                     // Show Player Turn
                     HStack {
                         Circle()
@@ -132,11 +132,11 @@ struct GoBoardView: View {
                             .shadow(radius: 4)
                             .frame(width: cellSize, height: cellSize)
                             .padding(4)
-                             .overlay(
+                            .overlay(
                                 Capsule().stroke(Color.red, lineWidth: agoraRTMVM.goBoardModel.current1or2 == 1 ? 2 : 0)
-                             )
-                             .padding(3)
-
+                            )
+                            .padding(3)
+                        
                         
                         Text("\(agoraRTMVM.goBoardModel.player1Name)")
                             .underline(agoraRTMVM.goBoardModel.current1or2 == 1, color: .accentColor)
@@ -153,10 +153,10 @@ struct GoBoardView: View {
                             .shadow(radius: 4)
                             .frame(width: cellSize, height: cellSize)
                             .padding(4)
-                             .overlay(
+                            .overlay(
                                 Capsule().stroke(Color.red, lineWidth: agoraRTMVM.goBoardModel.current1or2 == 2 ? 2 : 0)
-                             )
-                             .padding(3)
+                            )
+                            .padding(3)
                         
                         Text("\(agoraRTMVM.goBoardModel.player2Name)")
                             .underline(agoraRTMVM.goBoardModel.current1or2 == 2, color: .accentColor)
@@ -246,7 +246,7 @@ struct GoBoardView: View {
                                     .cornerRadius(10)
                                     
                                 }
-
+                                
                             }
                         }else {
                             // Show reset if you are spectator but only if player1 and player2 are NOT onlien
@@ -264,16 +264,16 @@ struct GoBoardView: View {
                                 .cornerRadius(10)
                             }
                         }
-
+                        
                     }
                     
                     
- 
+                    
                 }
                 
             }
             
-
+            
             
             // SHow virtual gift when someone wins
             if !agoraRTMVM.goBoardModel.winner.isEmpty {
