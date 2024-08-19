@@ -62,8 +62,9 @@ class MiniGoViewModel: NSObject, ObservableObject {
     // Logout RTM server
     func logoutRTM(){
         Task {
+            // If player logs out, reset the board
             if goBoardModel.player1Name == userID || goBoardModel.player2Name == userID {
-                await DeleteBoard() // Delete board
+                await DeleteBoard() // Delete board from cloud
             }
             await agoraRtmKit?.logout()
             await MainActor.run {
@@ -105,8 +106,9 @@ class MiniGoViewModel: NSObject, ObservableObject {
     
     
     func PublishBoardUpdate() async {
+        print("Bac's PublishBoardUpdate ")
         if let boardJSONString = convertObjectToJsonString(object: goBoardModel) {
-            print("UpdateBoard boardJSONSTRING success")
+            print("Bac's PublishBoardUpdate boardJSONSTRING success")
             
             guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata()
             else {return }
@@ -122,8 +124,10 @@ class MiniGoViewModel: NSObject, ObservableObject {
             metaDataOption.recordUserId = true
             metaDataOption.recordTs = true
             
-            
+            // Update or Set New ChannelMetadata
             if let currentMajorRevision = currentMajorRevision {
+                print("Bac's PublishBoardUpdate currentMajorRevision")
+
                 metaData.setMajorRevision(currentMajorRevision )
                 
                 if let (_, error) = await agoraRtmKit?.getStorage()?.updateChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
@@ -132,6 +136,8 @@ class MiniGoViewModel: NSObject, ObservableObject {
                     }
                 }
             }else {
+                print("Bac's PublishBoardUpdate else")
+
                 metaData.setMajorRevision(await fetchMajorRevision())
                 
                 if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
@@ -146,10 +152,19 @@ class MiniGoViewModel: NSObject, ObservableObject {
         }
     }
     
-    func UpdateBoard(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
+    @MainActor
+    func UpdateLocalBoard(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
         if let newTTTBoardString = metadataItems.first(where: {$0.key == customTTT})?.value,  let newTTTBoard = convertJsonStringToObject(jsonString: newTTTBoardString, objectType: GoBoardModel.self) {
             goBoardModel = newTTTBoard
             currentMajorRevision = majorRevision
+        }
+    }
+    
+    @MainActor
+    func ResetLocalBoard(){
+        withAnimation {
+            goBoardModel = GoBoardModel()
+            currentMajorRevision = nil
         }
     }
     
@@ -159,7 +174,6 @@ class MiniGoViewModel: NSObject, ObservableObject {
         if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
             if error == nil {
                 // Delete Successful
-                print("Delete Success")
             }else {
                 // Delete failed
                 print("Delete Failed with error \(String(describing: error))")
@@ -199,10 +213,22 @@ extension MiniGoViewModel: AgoraRtmClientDelegate {
             print("Bac's didReceiveStorageEvent updated \(event.eventType)")
             
             if event.eventType == .snapshot ||  event.eventType == .update || event.eventType == .set {
-                Task {
-                    await MainActor.run {
-                        UpdateBoard(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
+                
+                if event.data.getItems().count > 0 {
+                    Task {
+                        await UpdateLocalBoard(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
                     }
+                }else {
+                    // Remote user deleted board, reset the local board
+                    Task {
+                        await ResetLocalBoard()
+                    }
+                }
+
+            }else if event.eventType == .remove {
+                // MARK: NOT TRIGGERING
+                Task {
+                    await ResetLocalBoard()
                 }
             }
         }

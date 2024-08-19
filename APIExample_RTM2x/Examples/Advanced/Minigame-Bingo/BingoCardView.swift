@@ -8,45 +8,66 @@
 import SwiftUI
 
 struct BingoCardView: View {
-    @State private var card = BingoCard()
-    var bingoWord: String = "BINGO"
+    @State var card = BingoCard()
+    @State var isBingo: Bool = false
     
     var body: some View {
         VStack {
-            VStack(spacing: 0) {
-                Text("Bingo")
+            if isBingo {
+                Text("BINGO!")
                     .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding()
+            }
+            
+            VStack(spacing: 0) {
+     
+                // Header for BINGO
+                HStack(spacing: 0) {
+                    let bingoLetters = Array("BINGO") // Convert string to array of characters
+                    ForEach(0..<5) { index in
+                        Text(String(bingoLetters[index])) // Convert character back to string
+                            .minimumScaleFactor(0.3)
+                            .frame(width: 60, height: 60)
+                            .font(.title)
+                            .foregroundStyle(.white)
+                            .bold()
+                    }
+                }
                 
                 ForEach(0..<5) { row in
                     HStack(spacing: 0) {
                         ForEach(0..<5) { column in
+                            
                             let number = card.numbers[row][column]
                             Text(number == 0 ? "⭐️" : "\(number)")
                                 .minimumScaleFactor(0.3)
                                 .frame(width: 60, height: 60)
-                                .background(card.marked[row][column] ? Color.mint : Color.white.opacity(0.8))
+                                .background(card.marked[row][column] || number == 0 ? Color.orange : Color.white.opacity(0.8))
                                 .border(Color.black) // Add border to distinguish cells
-                                .foregroundColor(.primary)
+                                .foregroundColor(card.marked[row][column] || number == 0  ? .white : .primary)
                                 .font(.title2)
                                 .bold()
                                 .onTapGesture {
                                     if number != 0 {
-                                        card.marked[row][column].toggle()
+                                        withAnimation {
+                                            card.marked[row][column].toggle()
+                                            isBingo = card.isBingo()
+                                        }
                                     }
                                 }
                         }
                     }
                 }
+                
             }
             .padding()
             .background(.brown)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .fontDesign(.rounded)
             
             Button("Reset Game") {
-                card = BingoCard()
+                withAnimation {
+                    card = BingoCard()
+                }
             }
             .padding()
         }

@@ -82,8 +82,16 @@ struct TicTacToeBoardView: View {
                         startGame()
                         publishBoardUpdate()
                     }
-                    .buttonBorderShape(.roundedRectangle(radius: 16.0))
+                    .font(.headline)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundStyle(Color.white)
+                    .background(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty || agoraRTMVM.tiktaktoeModel.player2Name.isEmpty ? Color.gray : Color.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .padding(8)
                     .disabled(agoraRTMVM.tiktaktoeModel.player1Name.isEmpty || agoraRTMVM.tiktaktoeModel.player2Name.isEmpty)
+                    
                 } else {
                     // Spectators
                     HStack(spacing: 0) {

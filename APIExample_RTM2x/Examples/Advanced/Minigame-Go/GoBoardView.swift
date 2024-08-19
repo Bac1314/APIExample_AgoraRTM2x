@@ -52,15 +52,16 @@ struct GoBoardView: View {
                             if agoraRTMVM.goBoardModel.player1Name.isEmpty && agoraRTMVM.goBoardModel.player2Name != agoraRTMVM.userID {
                                 withAnimation{
                                     agoraRTMVM.goBoardModel.player1Name = agoraRTMVM.userID
+                                    publishBoardUpdate()
                                 }
                             }
                             else if agoraRTMVM.goBoardModel.player1Name == agoraRTMVM.userID {
                                 withAnimation {
                                     agoraRTMVM.goBoardModel.player1Name = ""
+                                    publishBoardUpdate()
                                 }
                             }
                             
-                            publishBoardUpdate()
                         }
                     
                     Text(agoraRTMVM.goBoardModel.player2Name.isEmpty ? "P2 : Tap To Enter" : "P2: \(agoraRTMVM.goBoardModel.player2Name)")
@@ -79,22 +80,30 @@ struct GoBoardView: View {
                             if agoraRTMVM.goBoardModel.player2Name.isEmpty  && agoraRTMVM.goBoardModel.player1Name != agoraRTMVM.userID {
                                 withAnimation{
                                     agoraRTMVM.goBoardModel.player2Name = agoraRTMVM.userID
+                                    publishBoardUpdate()
                                 }
                             }
                             else if agoraRTMVM.goBoardModel.player2Name == agoraRTMVM.userID {
                                 withAnimation {
                                     agoraRTMVM.goBoardModel.player2Name = ""
+                                    publishBoardUpdate()
                                 }
                             }
                             
-                            publishBoardUpdate()
                         }
                     
                     Button("Start Game") {
                         startGame()
                         publishBoardUpdate()
                     }
-                    .buttonBorderShape(.roundedRectangle(radius: 16.0))
+                    .font(.headline)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundStyle(Color.white)
+                    .background(agoraRTMVM.goBoardModel.player1Name.isEmpty || agoraRTMVM.goBoardModel.player2Name.isEmpty ? Color.gray : Color.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .padding(8)
                     .disabled(agoraRTMVM.goBoardModel.player1Name.isEmpty || agoraRTMVM.goBoardModel.player2Name.isEmpty)
                 }
                 
@@ -102,13 +111,14 @@ struct GoBoardView: View {
                     
                     // Spectators
                     HStack(spacing: 0) {
-                        let spectatorCount = agoraRTMVM.users.filter({$0.userId != agoraRTMVM.goBoardModel.player1Name || $0.userId != agoraRTMVM.goBoardModel.player2Name}).count
+//                        let spectatorCount = agoraRTMVM.users.filter({$0.userId != agoraRTMVM.goBoardModel.player1Name && $0.userId != agoraRTMVM.goBoardModel.player2Name}).count
+                        let spectatorCount = agoraRTMVM.users.count
                         
                         if agoraRTMVM.userID != agoraRTMVM.goBoardModel.player1Name && agoraRTMVM.userID != agoraRTMVM.goBoardModel.player2Name {
                             Text("You're spectating. \(spectatorCount) users")
                         }else {
                             Image(systemName: "person.2.fill")
-                            Text("\(spectatorCount) spectators")
+                            Text("\(spectatorCount) users")
                         }
                     }
                     .font(.caption2)
@@ -221,12 +231,13 @@ struct GoBoardView: View {
                     // Reset Game
                     if agoraRTMVM.goBoardModel.gameStarted {
                         
+                        
                         // Show restart and reset if you are player
                         if !(agoraRTMVM.userID != agoraRTMVM.goBoardModel.player1Name && agoraRTMVM.userID != agoraRTMVM.goBoardModel.player2Name) {
                             VStack {
                                 HStack {
                                     Button("Restart") {
-                                        restart()
+                                        agoraRTMVM.ResetLocalBoard()
                                         publishBoardUpdate()
                                     }
                                     .padding(10)
@@ -235,10 +246,8 @@ struct GoBoardView: View {
                                     .cornerRadius(10)
                                     
                                     Button("Reset") {
-                                        reset()
-                                        Task {
-                                            await agoraRTMVM.PublishBoardUpdate()
-                                        }
+                                        agoraRTMVM.ResetLocalBoard()
+                                        publishBoardUpdate()
                                     }
                                     .padding(10)
                                     .background(Color.red)
@@ -253,10 +262,9 @@ struct GoBoardView: View {
                             
                             if !agoraRTMVM.users.contains(where: {$0.userId == agoraRTMVM.goBoardModel.player1Name || $0.userId == agoraRTMVM.goBoardModel.player2Name}) {
                                 Button("Reset") {
-                                    reset()
-                                    Task {
-                                        await agoraRTMVM.PublishBoardUpdate()
-                                    }
+                                    agoraRTMVM.ResetLocalBoard()
+                                    publishBoardUpdate()
+
                                 }
                                 .padding(10)
                                 .background(Color.red)
@@ -275,7 +283,7 @@ struct GoBoardView: View {
             
             
             
-            // SHow virtual gift when someone wins
+            // Show virtual gift when someone wins
             if !agoraRTMVM.goBoardModel.winner.isEmpty {
                 GiftView(gift: Gift(userID: "", gift: virtualgifts[virtualIndex], timestamp: Date()))
                     .transition(.move(edge: .top))
@@ -344,12 +352,13 @@ struct GoBoardView: View {
         }
     }
     
-    func reset() {
-        withAnimation {
-            agoraRTMVM.goBoardModel = GoBoardModel()
-        }
-    }
-    
+//    func reset() {
+//        withAnimation {
+//            agoraRTMVM.goBoardModel = GoBoardModel()
+//            agoraRTMVM.currentMajorRevision = nil
+//        }
+//    }
+//    
     func publishBoardUpdate() {
         Task {
             await agoraRTMVM.PublishBoardUpdate()
