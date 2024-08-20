@@ -16,5 +16,3 @@ struct APIExample_RTM2xApp: App {
         }
     }
 }
-
-

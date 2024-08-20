@@ -10,14 +10,26 @@ import SwiftUI
 struct BingoCardView: View {
     @State var card = BingoCard()
     @State var isBingo: Bool = false
+    @State var randomNumber: Int = 0
     
     var body: some View {
         VStack {
-            if isBingo {
-                Text("BINGO!")
-                    .font(.largeTitle)
-            }
-            
+//            Button(action: {
+//                withAnimation {
+//                    randomNumber = Int.random(in: 1...50)
+//                    card.markNumber(randomNumber)
+//                    isBingo = card.isBingo()
+//                }
+//
+//            }, label: {
+//                Text("Generate Random Number: \(randomNumber)")
+//            })
+//            
+//            if isBingo {
+//                Text("BINGO!")
+//                    .font(.largeTitle)
+//            }
+//            
             VStack(spacing: 0) {
      
                 // Header for BINGO

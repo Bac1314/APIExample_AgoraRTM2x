@@ -48,8 +48,15 @@ struct MiniGoView: View {
             
             // MARK: Display Go Board
             if agoraRTMVM.isLoggedIn {
-                GoBoardView()
-                    .environmentObject(agoraRTMVM)
+                VStack {
+                    Spacer()
+                    GoBoardView()
+                        .environmentObject(agoraRTMVM)
+                    Spacer()
+                    Text("Logged in as \(agoraRTMVM.userID)")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                }
             }
             
             // MARK: SHOW CUSTOM ALERT
@@ -57,7 +64,6 @@ struct MiniGoView: View {
                 CustomAlert(displayAlert: $showAlert, title: "Alert", message: alertMessage)
             }
         }
-        
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(agoraRTMVM.isLoggedIn ? "Gomuku" : "Login")

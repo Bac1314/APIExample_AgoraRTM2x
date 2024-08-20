@@ -20,7 +20,7 @@ struct BingoCard {
     }
     
     static func generateNumbers() -> [[Int]] {
-        var allNumbers = Array(1...75).shuffled() // Create an array of numbers 1-75 and shuffle it
+        var allNumbers = Array(1...50).shuffled() // Create an array of numbers 1-75 and shuffle it
         var card = [[Int]]()
         
         for _ in 0..<5 {
@@ -33,6 +33,18 @@ struct BingoCard {
         // Set the center space to free
         card[2][2] = 0 // Free space
         return card
+    }
+    
+    
+    mutating func markNumber(_ number: Int) {
+        for row in 0..<5 {
+            for column in 0..<5 {
+                if numbers[row][column] == number {
+                    marked[row][column] = true
+                    return // Exit once the number is found and marked
+                }
+            }
+        }
     }
     
     func isBingo() -> Bool {

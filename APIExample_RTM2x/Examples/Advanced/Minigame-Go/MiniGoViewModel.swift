@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import AgoraRtmKit
+import AVFoundation
 
 class MiniGoViewModel: NSObject, ObservableObject {
     
@@ -155,8 +156,11 @@ class MiniGoViewModel: NSObject, ObservableObject {
     @MainActor
     func UpdateLocalBoard(metadataItems : [AgoraRtmMetadataItem], majorRevision: Int64) {
         if let newTTTBoardString = metadataItems.first(where: {$0.key == customTTT})?.value,  let newTTTBoard = convertJsonStringToObject(jsonString: newTTTBoardString, objectType: GoBoardModel.self) {
-            goBoardModel = newTTTBoard
-            currentMajorRevision = majorRevision
+            withAnimation {
+                goBoardModel = newTTTBoard
+                currentMajorRevision = majorRevision
+                tokVibrate()
+            }
         }
     }
     
@@ -182,6 +186,13 @@ class MiniGoViewModel: NSObject, ObservableObject {
         
     }
 
+    
+    func tokVibrate() {
+        AudioServicesPlaySystemSound(SystemSoundID(1104)) // Tok sound
+    //    AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) // Vibrate
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    }
     
     
 }

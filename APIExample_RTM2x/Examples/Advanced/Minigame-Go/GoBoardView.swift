@@ -197,8 +197,9 @@ struct GoBoardView: View {
                                             .overlay(alignment: .center) {
                                                 Circle()
                                                     .fill(self.colorForCell(row: row, col: col))
-                                                    .shadow(radius: 2)
+                                                    .shadow(color: Color.black.opacity(0.5), radius: 4, x: 0, y: 2)
                                                     .padding(2)
+                                                    .transition(.scaleAndFade) // Use the custom transition
                                                 
                                             }
                                             .offset(x: -cellSize/2, y: -cellSize/2)
@@ -237,7 +238,7 @@ struct GoBoardView: View {
                             VStack {
                                 HStack {
                                     Button("Restart") {
-                                        agoraRTMVM.ResetLocalBoard()
+                                        restart()
                                         publishBoardUpdate()
                                     }
                                     .padding(10)
@@ -304,12 +305,15 @@ struct GoBoardView: View {
     
     func makeMove(row: Int, col: Int) {
         guard agoraRTMVM.goBoardModel.board[row][col] == 0 else { return }
-        agoraRTMVM.goBoardModel.board[row][col] = agoraRTMVM.goBoardModel.current1or2
-        if checkWinner(player: agoraRTMVM.goBoardModel.current1or2, row: row, col: col) {
-            agoraRTMVM.goBoardModel.winner = agoraRTMVM.goBoardModel.current1or2 == 1 ? agoraRTMVM.goBoardModel.player1Name : agoraRTMVM.goBoardModel.player2Name
-            print("\(agoraRTMVM.goBoardModel.winner ) wins!")
+        withAnimation {
+            agoraRTMVM.goBoardModel.board[row][col] = agoraRTMVM.goBoardModel.current1or2
+            if checkWinner(player: agoraRTMVM.goBoardModel.current1or2, row: row, col: col) {
+                agoraRTMVM.goBoardModel.winner = agoraRTMVM.goBoardModel.current1or2 == 1 ? agoraRTMVM.goBoardModel.player1Name : agoraRTMVM.goBoardModel.player2Name
+                print("\(agoraRTMVM.goBoardModel.winner ) wins!")
+            }
+            agoraRTMVM.goBoardModel.current1or2 = agoraRTMVM.goBoardModel.current1or2 == 1 ? 2 : 1
+            agoraRTMVM.tokVibrate()
         }
-        agoraRTMVM.goBoardModel.current1or2 = agoraRTMVM.goBoardModel.current1or2 == 1 ? 2 : 1
     }
     
     func checkWinner(player: Int, row: Int, col: Int) -> Bool {
@@ -344,21 +348,10 @@ struct GoBoardView: View {
             agoraRTMVM.goBoardModel.board = Array(repeating: Array(repeating: 0, count: agoraRTMVM.goBoardModel.boardSize), count: agoraRTMVM.goBoardModel.boardSize)
             agoraRTMVM.goBoardModel.winner = ""
             agoraRTMVM.goBoardModel.current1or2 = 1 // Reset to player X
-            //
-            //            //Swap players
-            //            let tempPlayer = agoraRTMVM.tiktaktoeModel.player1Name
-            //            agoraRTMVM.tiktaktoeModel.player1Name = agoraRTMVM.tiktaktoeModel.player2Name
-            //            agoraRTMVM.tiktaktoeModel.player2Name = tempPlayer
         }
     }
     
-//    func reset() {
-//        withAnimation {
-//            agoraRTMVM.goBoardModel = GoBoardModel()
-//            agoraRTMVM.currentMajorRevision = nil
-//        }
-//    }
-//    
+  
     func publishBoardUpdate() {
         Task {
             await agoraRTMVM.PublishBoardUpdate()
@@ -381,4 +374,11 @@ struct GoBoardView: View {
 #Preview {
     GoBoardView()
         .environmentObject(MiniGoViewModel())
+}
+
+extension AnyTransition {
+    static var scaleAndFade: AnyTransition {
+        AnyTransition.scale(scale: 0.1, anchor: .center)
+            .combined(with: .opacity)
+    }
 }
