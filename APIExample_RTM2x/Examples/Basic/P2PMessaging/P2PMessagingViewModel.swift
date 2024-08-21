@@ -37,6 +37,7 @@ class P2PMessagingViewModel: NSObject, ObservableObject {
             if let (response, error) = await agoraRtmKit?.login(token.isEmpty ? Configurations.agora_AppID : token) {
                 if error == nil{
                     isLoggedIn = true
+                    
                 }else{
                     print("Bac's code loginRTM login result = \(String(describing: response?.description)) | error \(String(describing: error))")
                     await agoraRtmKit?.logout()
@@ -90,6 +91,7 @@ class P2PMessagingViewModel: NSObject, ObservableObject {
         return false
     }
     
+    
 //    @MainActor
 //    func checkIfUserIsOnline(remoteUser: String) async -> Bool{
 ////        if let (response, error) = await agoraRtmKit?.getPresence().user
@@ -123,5 +125,6 @@ extension P2PMessagingViewModel: AgoraRtmClientDelegate {
         }
     }
     
+
     
 }

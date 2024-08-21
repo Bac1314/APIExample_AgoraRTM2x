@@ -120,9 +120,10 @@ The list of samples and what feature is used
 | [Whiteboard](APIExample_RTM2x/Examples/Advanced/WhiteBoard/)          | Real-time whiteboard collaboration tool  | Message, Stream             | `.message`, `.presence`             |
 | [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings directly to users | Message             | `.message`, `.presence`             |
 | [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Send files directly to users | Message             | `.message`, `.presence`             |
-| [Audio Call with CallKit (Pending)](APIExample_RTM2x/Examples/Advanced/AudioCallKit/)          | P2P audio call with Agora RTC and Apple callKit | Message             | `.message`, `.presence` ,  `RTC_SDK`          |
+| [Audio Call with CallKit (Pending)](APIExample_RTM2x/Examples/Advanced/AudioCallKit/)          | P2P audio call with Agora RTC and Apple callKit | Message             | `.message`, `.presence`          |
 | [Virtual Gifting](APIExample_RTM2x/Examples/Advanced/VirtualGifting/)          | Send virtual emoji through message channel | Message             | `.message`          |
-| [Minigame - TicTacToe](APIExample_RTM2x/Examples/Advanced/Minigame-TicTacToe/)          | Play TicTacToe with a friend | Message             | `.storage`          |
+| [Minigame - TicTacToe](APIExample_RTM2x/Examples/Advanced/Minigame-TicTacToe/)          | Play TicTacToe with a friend | Message             | `.storage`, `.presence`         |
+| [Minigame - Go](APIExample_RTM2x/Examples/Advanced/Minigame-Go/)          | Play Go with a friend | Message             | `.storage`, `.presence`         |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
