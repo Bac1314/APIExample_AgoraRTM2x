@@ -219,6 +219,7 @@ extension StreamMessagingViewModel: AgoraRtmClientDelegate {
       
         for eventInfo in event.topicInfos {
             print("Bac's topicinfo \(eventInfo.description)")
+            
         }
     }
     

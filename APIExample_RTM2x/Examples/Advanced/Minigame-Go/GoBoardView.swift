@@ -9,21 +9,11 @@ import SwiftUI
 
 struct GoBoardView: View {
     @EnvironmentObject var agoraRTMVM: MiniGoViewModel
-    
-    //    @State var board: [[Int]]
-    //    @State var currentPlayer: Int = 1
     @State var cellSize : CGFloat = 30
-    //    let boardSize: Int = 12
-    //
-    
     @State var virtualIndex = 0
     var virtualgifts : [String] = [
         "flower1", "flowers2", "present", "fireworks1"
     ]
-    
-    //    init(){
-    //        agoraRTMVM.goBoardModel.board = Array(repeating: Array(repeating: 0, count: 12), count: 12)
-    //    }
     
     var body: some View {
         let screenWidth = UIScreen.main.bounds.width
@@ -179,18 +169,25 @@ struct GoBoardView: View {
                     .padding()
                     .padding(.horizontal, 20)
                     
-                    // Board Display
+                    // MARK: Board Display
                     VStack(spacing: 0) {
                         ForEach(0..<agoraRTMVM.goBoardModel.boardSize, id: \.self) { row in
                             HStack(spacing: 0) {
                                 ForEach(0..<agoraRTMVM.goBoardModel.boardSize, id: \.self) { col in
                                     ZStack {
-                                        Rectangle()
-                                            .fill(.brown)
-                                            .frame(width: cellSize, height: cellSize)
-                                            .border(Color.black) // Add border to distinguish cells
                                         
-                                        // Actual Items
+                                        // BACKGROUND
+                                        if row != agoraRTMVM.goBoardModel.boardSize-1 && col != agoraRTMVM.goBoardModel.boardSize-1 {
+                                            Rectangle()
+                                                .fill(.brown)
+                                                .frame(width: cellSize, height: cellSize)
+                                                .border(Color.black) // Add border to distinguish cells
+                                                .offset(x: cellSize/2, y: cellSize/2)
+
+                                        }
+        
+                                        
+                                        // ACTUAL ITEMS
                                         Rectangle()
                                             .fill(.white.opacity(0.01))
                                             .frame(width: cellSize, height: cellSize)
@@ -202,10 +199,11 @@ struct GoBoardView: View {
                                                     .transition(.scaleAndFade) // Use the custom transition
                                                 
                                             }
-                                            .offset(x: -cellSize/2, y: -cellSize/2)
                                             .onTapGesture {
-                                                makeMove(row: row, col: col)
-                                                publishBoardUpdate()
+                                                print("row \(row) col \(col)")
+                                                    makeMove(row: row, col: col)
+                                                    publishBoardUpdate()
+    
                                             }
                                             .disabled(agoraRTMVM.goBoardModel.board[row][col] != 0 || !agoraRTMVM.goBoardModel.winner.isEmpty || (agoraRTMVM.goBoardModel.current1or2 == 1 && agoraRTMVM.goBoardModel.player1Name != agoraRTMVM.userID) || (agoraRTMVM.goBoardModel.current1or2 == 2 && agoraRTMVM.goBoardModel.player2Name != agoraRTMVM.userID)) // Disable button if already chosen or game is over
                                     }

@@ -156,7 +156,6 @@ extension LocationViewModel: AgoraRtmClientDelegate {
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
         switch event.channelType {
         case .message:
-            
             break
         case .stream:
             break

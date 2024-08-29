@@ -9,8 +9,8 @@ import Foundation
 
 
 struct GoBoardModel : Codable {
-    var boardSize: Int = 12
-    var board: [[Int]] = Array(repeating: Array(repeating: 0, count: 12), count: 12)
+    var boardSize: Int = 14
+    var board: [[Int]] = Array(repeating: Array(repeating: 0, count: 14), count: 14)
     var winner: String = ""
     var player1Name: String = ""
     var player2Name: String = ""

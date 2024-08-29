@@ -131,19 +131,22 @@ class MiniBingoViewModel: NSObject, ObservableObject {
                 
                 if let (_, error) = await agoraRtmKit?.getStorage()?.updateChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
                     if error == nil {
-            
+                        return
                     }
                 }
-            }else {
-                metaData.setMajorRevision(await fetchMajorRevision())
-                
-                if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
-                    if error == nil {
-            
-                    }
-                }
-                
             }
+            
+            
+            // if there is no major revision or update failed, then fetch a new revision 
+            metaData.setMajorRevision(await fetchMajorRevision())
+            
+            if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
+                if error == nil {
+        
+                }
+            }
+                
+            
             
 
         }
