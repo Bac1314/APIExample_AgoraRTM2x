@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TicTacToeBoardView: View {
 
-    @EnvironmentObject var agoraRTMVM: MiniTicTacToeViewModel
+    @ObservedObject var agoraRTMVM: MiniTicTacToeViewModel
     @State var virtualIndex = 0
     var virtualgifts : [String] = [
         "flower1", "flowers2", "present", "fireworks1"
@@ -298,6 +298,5 @@ struct TicTacToeBoardView: View {
 
 
 #Preview {
-    TicTacToeBoardView()
-        .environmentObject(MiniTicTacToeViewModel())
+    TicTacToeBoardView(agoraRTMVM: MiniTicTacToeViewModel())
 }

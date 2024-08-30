@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GoBoardView: View {
-    @EnvironmentObject var agoraRTMVM: MiniGoViewModel
+    @ObservedObject var agoraRTMVM: MiniGoViewModel
     @State var cellSize : CGFloat = 30
     @State var virtualIndex = 0
     var virtualgifts : [String] = [
@@ -370,8 +370,7 @@ struct GoBoardView: View {
 }
 
 #Preview {
-    GoBoardView()
-        .environmentObject(MiniGoViewModel())
+    GoBoardView(agoraRTMVM: MiniGoViewModel())
 }
 
 extension AnyTransition {

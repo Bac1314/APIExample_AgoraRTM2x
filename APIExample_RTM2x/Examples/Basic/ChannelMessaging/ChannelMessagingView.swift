@@ -150,8 +150,7 @@ struct ChannelMessagingView: View {
         .navigationDestination(for: CustomChildNavType.self) { value in
             switch value {
             case .ChannelMessagingDetailedView(let selectedChannel):
-                ChannelMessagingDetailedView(selectedChannel: selectedChannel, path: $path)
-                    .environmentObject(agoraRTMVM)
+                ChannelMessagingDetailedView(agoraRTMVM: agoraRTMVM, selectedChannel: selectedChannel, path: $path)
             default:
                 Text("ChannelMessagingView Not found")
             }
@@ -166,7 +165,7 @@ struct ChannelMessagingView: View {
 
 // MARK: TO SHOW THE LIST OF MESSAGES OF SPECIFIED CHANNEL
 struct ChannelMessagingDetailedView: View {
-    @EnvironmentObject var agoraRTMVM: ChannelMessagingViewModel
+    @ObservedObject var agoraRTMVM: ChannelMessagingViewModel
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedChannel: String = ""
     @State var newMessage: String = ""
@@ -299,9 +298,5 @@ struct ChannelMessagingDetailedView: View {
 
 
 #Preview {
-    ChannelMessagingView(path: .constant(NavigationPath()))
-        .environmentObject(ChannelMessagingViewModel())
-    
-//    ChannelMessagingDetailedView(path: .constant(NavigationPath()))
-//        .environmentObject(ChannelMessagingViewModel())
+    ChannelMessagingView(agoraRTMVM: ChannelMessagingViewModel() ,path: .constant(NavigationPath()))
 }

@@ -9,28 +9,22 @@ import SwiftUI
 import AVFoundation
 
 struct TestingView: View {
-    let items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+    @State private var scale: CGFloat = 0.1 // Start small
+    @State private var offset: CGSize = CGSize(width: UIScreen.main.bounds.width, height: 0) // Offset to the top right
 
-    var body: some View {
-        NavigationView {
-            List(items, id: \.self) { item in
-                Text(item)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .padding(.vertical, 5) // Adds spacing between items
-                    .onTapGesture {
-                        
-                        print("Hello World \(item)")
-                    }
-
-                
-            }
-            .listStyle(.plain)
-            .navigationTitle("Items List")
-        }
-    }
+     var body: some View {
+         Rectangle()
+             .fill(Color.blue) // Change to your desired color or view
+             .scaleEffect(scale, anchor: .topTrailing) // Scale from the top right
+             .offset(x: offset.width, y: offset.height) // Initial offset
+             .onAppear {
+                 withAnimation(.easeInOut(duration: 0.5)) {
+                     scale = 1.0 // Scale to full size
+                     offset = CGSize.zero // Reset offset
+                 }
+             }
+             .edgesIgnoringSafeArea(.all) // Make sure it fills the entire screen
+     }
 }
 
 

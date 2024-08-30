@@ -50,8 +50,7 @@ struct MiniGoView: View {
             if agoraRTMVM.isLoggedIn {
                 VStack {
                     Spacer()
-                    GoBoardView()
-                        .environmentObject(agoraRTMVM)
+                    GoBoardView(agoraRTMVM: agoraRTMVM)
                     Spacer()
                     Text("Logged in as \(agoraRTMVM.userID)")
                         .font(.caption)

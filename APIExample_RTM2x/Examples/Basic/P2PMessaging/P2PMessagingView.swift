@@ -138,8 +138,7 @@ struct P2PMessagingView: View {
         .navigationDestination(for: CustomChildNavType.self) { value in
             switch value {
             case .P2PMessagingDetailedView(let selectedUser):
-                P2PMessagingDetailedView(selectedUser: selectedUser, path: $path)
-                    .environmentObject(agoraRTMVM)
+                P2PMessagingDetailedView(agoraRTMVM: agoraRTMVM, selectedUser: selectedUser, path: $path)
             default:
                 Text("ChannelMessagingView Not found")
             }
@@ -152,14 +151,12 @@ struct P2PMessagingView: View {
 
 #Preview {
     P2PMessagingView(path: .constant(NavigationPath()))
-        .environmentObject(P2PMessagingViewModel())
-
 }
 
 
 // MARK: TO SHOW THE LIST OF MESSAGES OF SPECIFIED CHANNEL
 struct P2PMessagingDetailedView: View {
-    @EnvironmentObject var agoraRTMVM: P2PMessagingViewModel
+    @ObservedObject var agoraRTMVM: P2PMessagingViewModel
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedUser: String = ""
     @State var message: String = ""

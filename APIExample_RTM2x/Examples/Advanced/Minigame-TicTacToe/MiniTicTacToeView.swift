@@ -48,8 +48,7 @@ struct MiniTicTacToeView: View {
             
             // MARK: Display TicTacToe Board
             if agoraRTMVM.isLoggedIn {
-                TicTacToeBoardView()
-                    .environmentObject(agoraRTMVM)
+                TicTacToeBoardView(agoraRTMVM: agoraRTMVM)
             }
             
             // MARK: SHOW CUSTOM ALERT

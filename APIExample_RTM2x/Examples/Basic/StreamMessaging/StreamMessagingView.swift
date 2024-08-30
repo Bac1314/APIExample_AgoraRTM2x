@@ -137,8 +137,7 @@ struct StreamMessagingView: View {
         .navigationDestination(for: CustomChildNavType.self) { value in
             switch value {
             case .StreamMessagingDetailedView(let selectedTopic):
-                StreamMessagingDetailedView(selectedTopic: selectedTopic, path: $path)
-                    .environmentObject(agoraRTMVM)
+                StreamMessagingDetailedView(agoraRTMVM: agoraRTMVM, selectedTopic: selectedTopic, path: $path)
             default:
                 Text("ChannelMessagingView Not found")
             }
@@ -153,7 +152,7 @@ struct StreamMessagingView: View {
 
 // MARK: TO SHOW THE LIST OF MESSAGES OF SPECIFIED CHANNEL
 struct StreamMessagingDetailedView: View {
-    @EnvironmentObject var agoraRTMVM: StreamMessagingViewModel
+    @ObservedObject var agoraRTMVM: StreamMessagingViewModel
     @FocusState private var keyboardIsFocused: Bool
     @State var selectedTopic: String = ""
     @State var message: String = ""
@@ -219,7 +218,6 @@ struct StreamMessagingDetailedView: View {
 
 
 #Preview {
-    StreamMessagingDetailedView(path: .constant(NavigationPath()))
-        .environmentObject(StreamMessagingViewModel())
+    StreamMessagingDetailedView(agoraRTMVM: StreamMessagingViewModel(), path: .constant(NavigationPath()))
 }
 
