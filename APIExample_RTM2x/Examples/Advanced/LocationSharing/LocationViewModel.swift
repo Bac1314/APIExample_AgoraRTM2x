@@ -18,7 +18,7 @@ class LocationViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    @Published var mainChannel = "ChannelA" // to publish the storage
+    @Published var mainChannel = "LocationRootChannel" // to publish the storage
     
     // Location Properties
     @Published var users : [LocationUser] = []

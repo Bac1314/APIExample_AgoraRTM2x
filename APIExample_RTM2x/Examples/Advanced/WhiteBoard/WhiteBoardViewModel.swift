@@ -20,7 +20,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
     
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "WhiteBoardRootChannel" // to publish and receive poll questions/answers
     @Published var tokenRTC: String = ""
     var agoraStreamChannel: AgoraRtmStreamChannel? = nil
 

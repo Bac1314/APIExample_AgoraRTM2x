@@ -20,11 +20,26 @@ class PollingViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "PollRootChannel" // to publish and receive poll questions/answers
     let customPollQuestionType = "pollquestion"
     let customPollResultType = "pollresult"
     
     let defaultPollTime = 15
+    
+    func testing()  {
+ 
+//        agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil, completion: { response, error in
+//            
+//        })
+//        
+//        agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil) { response, error in
+//            
+//        }
+        
+//        if let (response, error) =  await agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil) {
+//            // Async/await
+//        }
+    }
     
     @MainActor
     func loginRTM() async throws {

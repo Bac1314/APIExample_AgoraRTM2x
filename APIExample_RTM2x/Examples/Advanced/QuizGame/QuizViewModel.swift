@@ -19,7 +19,7 @@ class QuizViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "QuizRootChannel" // to publish and receive poll questions/answers
     let customQuizQuestionType = "quizquestion"
     let customQuizResultType = "quizresult"
     

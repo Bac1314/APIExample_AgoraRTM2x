@@ -9,25 +9,82 @@ import SwiftUI
 import AVFoundation
 
 struct TestingView: View {
-    @State private var scale: CGFloat = 0.1 // Start small
-    @State private var offset: CGSize = CGSize(width: UIScreen.main.bounds.width, height: 0) // Offset to the top right
+    @State private var selectedItem: Int? = nil
+    @Namespace private var animationNamespace
 
-     var body: some View {
-         Rectangle()
-             .fill(Color.blue) // Change to your desired color or view
-             .scaleEffect(scale, anchor: .topTrailing) // Scale from the top right
-             .offset(x: offset.width, y: offset.height) // Initial offset
-             .onAppear {
-                 withAnimation(.easeInOut(duration: 0.5)) {
-                     scale = 1.0 // Scale to full size
-                     offset = CGSize.zero // Reset offset
-                 }
-             }
-             .edgesIgnoringSafeArea(.all) // Make sure it fills the entire screen
-     }
+    let items = Array(1...10) // Sample list items
+
+    var body: some View {
+        ZStack {
+            // The list of items
+            ScrollView {
+                LazyVStack(spacing: 20) {
+                    ForEach(items, id: \.self) { item in
+                        ItemView(item: item)
+                            .matchedGeometryEffect(id: item, in: animationNamespace)
+                            .onTapGesture {
+                                withAnimation(.bouncy) {
+                                    selectedItem = item
+                                }
+                            }
+                    }
+                }
+                .padding()
+            }
+
+            // The overlay for the expanded view
+            if let selectedItem = selectedItem {
+                ExpandedItemView(item: selectedItem)
+                    .matchedGeometryEffect(id: selectedItem, in: animationNamespace)
+                    .onTapGesture {
+                        withAnimation(.bouncy) {
+                            self.selectedItem = nil
+                        }
+                    }
+                    .ignoresSafeArea() // Make sure it covers the whole screen
+            }
+        }
+    }
 }
 
 
 #Preview {
     TestingView()
+}
+
+
+var moveAndFade: AnyTransition {
+     .asymmetric(
+         insertion: .move(edge: .bottom).combined(with: .opacity).combined(with: .opacity),
+         removal: .push(from: .top).combined(with: .opacity)
+     )
+ }
+
+struct ItemView: View {
+    let item: Int
+
+    var body: some View {
+        Text("Item \(item)")
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(10)
+            .foregroundColor(.white)
+    }
+}
+
+struct ExpandedItemView: View {
+    let item: Int
+
+    var body: some View {
+        VStack {
+            Text("Expanded Item \(item)")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
+                .background(Color.red)
+                .cornerRadius(10)
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
 }

@@ -19,7 +19,7 @@ class MiniGoViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var mainChannel = "GoChannel"
+    @Published var mainChannel = "GoRootChannel"
     
     @Published var goBoardModel : GoBoardModel = GoBoardModel()
     @Published var currentMajorRevision : Int64?

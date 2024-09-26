@@ -17,7 +17,7 @@ class MiniTicTacToeViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var mainChannel = "TicTacToeChannel"
+    @Published var mainChannel = "TicTacToeRootChannel"
     
     @Published var tiktaktoeModel : TicTacToeModel = TicTacToeModel()
     @Published var currentMajorRevision : Int64?

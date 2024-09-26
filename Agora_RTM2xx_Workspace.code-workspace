@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../APIExample_RTM2x_Web"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../../API-Examples-Web-main"
+		}
+	],
+	"settings": {}
+}

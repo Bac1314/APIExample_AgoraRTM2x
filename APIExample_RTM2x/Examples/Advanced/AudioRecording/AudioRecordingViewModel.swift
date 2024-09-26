@@ -17,7 +17,7 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
     @Published var token: String = ""
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "AudioRecordingRootChannel" // to publish and receive poll questions/answers
     
     // Audio Recording Variables
     @Published var isRecording = false

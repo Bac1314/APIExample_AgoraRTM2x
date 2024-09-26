@@ -16,7 +16,7 @@ class FileSharingViewModel: NSObject, ObservableObject {
     @Published var token: String = ""
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "FileSharingRootChannel" // to publish and receive poll questions/answers
     
     @Published var fileInfos : [FileInfo] = []
     @Published var fileChunks : [UUID: [Data]] = [:]

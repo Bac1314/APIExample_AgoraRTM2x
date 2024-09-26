@@ -111,19 +111,19 @@ The list of samples and what feature is used
 | **Samples**      | **Description**                                                                                      | **RTM ChannelType** | **RTM Features**  |
 |------------------|------------------------------------------------------------------------------------------------------|---------------------|-------------------|
 | [Channel Messaging](/APIExample_RTM2x/Examples/Basic/ChannelMessaging/) | Build a simple chat system using pub/sub model.                                                      | Message             | `.message`, `.presence` |
-| [P2P Messaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging/)     | Peer-to-peer messaging where a user can directly send a message to another user                      | User               | /                 |
+| [P2P Messaging](/APIExample_RTM2x/Examples/Basic/P2PMessaging/)     | Peer-to-peer messaging                      | User               | /                 |
 | [Stream Messaging](APIExample_RTM2x/Examples/Basic/StreamMessaging/)          | Pub-and-sub model with RTM Stream Channel's topics | Stream             | `.presence`           |
-| [Polling](APIExample_RTM2x/Examples/Advanced/Polling/)          | Publish poll question and poll options through the Message Channel.                                  | Message             | `.message`, `.presence` |
-| [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame/)         | Publish quiz question and answers through Message Channel.                                           | Message             | `.message`, `.presence` |
+| [Polling](APIExample_RTM2x/Examples/Advanced/Polling/)          | Setup polls through Message Channel                                  | Message             | `.message`, `.presence` |
+| [QuizGame](APIExample_RTM2x/Examples/Advanced/QuizGame/)         | Setup a quiz game and score through Message Channel and Presence Userstates                                           | Message             | `.message`, `.presence` |
 | [Bidding](APIExample_RTM2x/Examples/Advanced/Bidding/)          | Live bidding scenario where the auction data is stored using the `.storage` channel metadata feature. | Message             | `.storage`           |
 | [Location Sharing](APIExample_RTM2x/Examples/Advanced/LocationSharing/)          | Real-time location sharing scenario where the location data is shared through `.presence` states | Message             | `.presence`           |
 | [Whiteboard](APIExample_RTM2x/Examples/Advanced/WhiteBoard/)          | Real-time whiteboard collaboration tool  | Message, Stream             | `.message`, `.presence`             |
-| [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recordings directly to users | Message             | `.message`, `.presence`             |
-| [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Send files directly to users | Message             | `.message`, `.presence`             |
+| [Audio Recording](APIExample_RTM2x/Examples/Advanced/AudioRecording/)          | Send audio recording through Message Channel | Message             | `.message`, `.presence`             |
+| [File Sharing](APIExample_RTM2x/Examples/Advanced/FileSharing/)          | Share files through Message Channel | Message             | `.message`, `.presence`             |
 | [Audio Call with CallKit (Pending)](APIExample_RTM2x/Examples/Advanced/AudioCallKit/)          | P2P audio call with Agora RTC and Apple callKit | Message             | `.message`, `.presence`          |
-| [Virtual Gifting](APIExample_RTM2x/Examples/Advanced/VirtualGifting/)          | Send virtual emoji through message channel | Message             | `.message`          |
-| [Minigame - TicTacToe](APIExample_RTM2x/Examples/Advanced/Minigame-TicTacToe/)          | Play TicTacToe with a friend | Message             | `.storage`, `.presence`         |
-| [Minigame - Go](APIExample_RTM2x/Examples/Advanced/Minigame-Go/)          | Play Go with a friend | Message             | `.storage`, `.presence`         |
+| [Virtual Gifting](APIExample_RTM2x/Examples/Advanced/VirtualGifting/)          | Send virtual emojis through Message Channel | Message             | `.message`          |
+| [Minigame - TicTacToe](APIExample_RTM2x/Examples/Advanced/Minigame-TicTacToe/)          | TicTacToe game using Storage Channel Metadata | Message             | `.storage`, `.presence`         |
+| [Minigame - Go](APIExample_RTM2x/Examples/Advanced/Minigame-Go/)          | Go game using Storage Channel Metadata | Message             | `.storage`, `.presence`         |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

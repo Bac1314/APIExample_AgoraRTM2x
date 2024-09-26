@@ -37,7 +37,7 @@ class AudioCallKitViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var mainChannel = "ChannelA" // to publish and receive poll questions/answers
+    @Published var mainChannel = "AudioCallRootCall" // to publish and receive poll questions/answers
     @Published var currentCallUser = "" //
     
     // RTC variables

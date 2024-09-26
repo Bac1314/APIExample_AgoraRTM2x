@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-
-import Foundation
 import SwiftUI
 import AgoraRtmKit
 
@@ -20,7 +17,7 @@ class MiniBingoViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var users: [AgoraRtmUserState] = []
-    @Published var mainChannel = "BingoChannel"
+    @Published var mainChannel = "BingoRootChannel"
     
     @Published var goBoardModel : GoBoardModel = GoBoardModel()
     @Published var currentMajorRevision : Int64?
