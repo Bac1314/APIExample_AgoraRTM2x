@@ -19,13 +19,13 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
     @Published var customStreamTopicList : [CustomStreamTopic] = []
-    @Published var users: [AgoraRtmUserState] = []
+//    @Published var users: [AgoraRtmUserState] = []
     
     @Published var mainChannel = "ChannelA" // to publish the storage
     @Published var tokenRTC: String = ""
     var agoraStreamChannel: AgoraRtmStreamChannel? = nil
 
-    var defaultTopics : [String] = ["topic1", "topic2"] // Topics that you would to publish to
+//    var defaultTopics : [String] = ["topic1", "topic2"] // Topics that you would to publish to
 //    @Published var subscribedTopics : [String] = ["topic1", "topic2"] // Topics that you would like to subscribe to
     
     @MainActor
@@ -64,6 +64,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     
     // Logout RTM server
     func logoutRTM(){
+        agoraStreamChannel = nil
         agoraRtmKit?.logout()
         agoraRtmKit?.destroy()
         isLoggedIn = false
@@ -93,13 +94,13 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
         }
     }
     
-    // Pre-join some topics
-    func preJoinSubTopics() async {
-        for topic in defaultTopics {
-            // Join as publisher first, if success then subscribe
-            let _ = await JoinAndSubTopic(topic: topic)
-        }
-    }
+//    // Pre-join some topics
+//    func preJoinSubTopics() async {
+//        for topic in defaultTopics {
+//            // Join as publisher first, if success then subscribe
+//            let _ = await JoinAndSubTopic(topic: topic)
+//        }
+//    }
     
     
     
@@ -128,8 +129,7 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     func subscribeOneTopic(topic: String) async -> Bool{
         // Set subscribing options
         let subscribeTopicOptions = AgoraRtmTopicOption()
-        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
-        
+//        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
         
         // Subscribe to topic
         if let (response, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
@@ -137,6 +137,14 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
                 // Subscribe success
                 print("Bac's subscribe \(topic) success")
                 print("Bac's subscribed Success users \(String(describing: response?.succeedUsers)) AND Failed \(String(describing: response?.failedUsers)) ")
+                
+                if !customStreamTopicList.contains(where: {$0.topic == topic}) {
+                    Task {
+                        await MainActor.run {
+                            customStreamTopicList.append(CustomStreamTopic(topic: topic, messages: [] , lastMessage: "Latest message would appear here", users: response?.succeedUsers ?? []))
+                        }
+                    }
+                }
 
                 return true
             }else {
@@ -151,35 +159,23 @@ class StreamMessagingViewModel: NSObject, ObservableObject {
     
     // Join and subscribe a topic
     func JoinAndSubTopic(topic: String) async -> Bool{
-        if !customStreamTopicList.contains(where: {$0.topic == topic}) {
-            let resultA = await joinOneTopic(topic: topic)
-            let resultB = resultA ? await subscribeOneTopic(topic: topic) : false
-
-            Task {
-                await MainActor.run {
-                    customStreamTopicList.append(CustomStreamTopic(topic: topic, messages: [] , lastMessage: "Latest message would appear here"))
-                }
-            }
-            
-            return resultB // only return true if join and sub is successful
-        }
-        return false
+        let resultA = await joinOneTopic(topic: topic)
+        let resultB = await subscribeOneTopic(topic: topic)
+        return resultA && resultB
     }
     
     // Resubscribe when a new user joins
-    func reSubscribeNewUsers() async {
+    func reSubscribeNewUsers(topic: String) async {
         // Set subscribing options
         let subscribeTopicOptions = AgoraRtmTopicOption()
-        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
+//        subscribeTopicOptions.users = users.map(\.userId) // get the list of usersID
         
-        for topic in customStreamTopicList.map(\.topic) {
-            if let (_, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
-                if error == nil {
-                    // Subscribe success
-                }else {
-                    // Subscribe failed
-                    print("Bac's subscribeTopics failed \(error?.code ?? 0) \(error?.reason ?? "")")
-                }
+        if let (_, error) = await agoraStreamChannel?.subscribeTopic(topic, option: subscribeTopicOptions) {
+            if error == nil {
+                // Subscribe success
+            }else {
+                // Subscribe failed
+                print("Bac's subscribeTopics failed \(error?.code ?? 0) \(error?.reason ?? "")")
             }
         }
     }
@@ -219,6 +215,16 @@ extension StreamMessagingViewModel: AgoraRtmClientDelegate {
       
         for eventInfo in event.topicInfos {
             print("Bac's topicinfo \(eventInfo.description)")
+//            eventInfo.publishers
+            if let index = customStreamTopicList.firstIndex(where: {$0.topic == eventInfo.topic}) {
+                Task {
+                    await MainActor.run {
+                        customStreamTopicList[index].users = eventInfo.publishers.compactMap {$0.publisherUserId }
+                    }
+                    
+                    await reSubscribeNewUsers(topic: eventInfo.topic)
+                }
+            }
             
         }
     }
@@ -253,32 +259,32 @@ extension StreamMessagingViewModel: AgoraRtmClientDelegate {
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceivePresenceEvent event: AgoraRtmPresenceEvent) {
         print("Bac's didReceivePresenceEvent channelType \(event.channelType) publisher \(String(describing: event.publisher)) channel \(event.channelName) type \(event.type) ")
         
-        if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
-            // Remove user from list
-            if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
-                users.remove(at: userIndex)
-            }
-            
-        }else if event.type == .remoteJoinChannel && event.publisher != nil {
-            print("Bac's didReceivePresenceEvent remoteJoinChannel publisher: \(event.publisher ?? "")")
-            // Add user to list if it doesn't exist
-            if !users.contains(where: {$0.userId == event.publisher}) && event.publisher != nil {
-                let userState = AgoraRtmUserState()
-                userState.userId = event.publisher!
-                userState.states = event.states
-                users.append(userState)
-                
-                // StreamChannel - Resubscribe for new users
-                Task {
-                    await reSubscribeNewUsers()
-                }
-            }
-            
-        }else if event.type == .snapshot {
-            users = event.snapshot
-        }else if event.type == .remoteStateChanged {
-            
-        }
+//        if event.type == .remoteLeaveChannel || event.type == .remoteConnectionTimeout {
+//            // Remove user from list
+//            if let userIndex = users.firstIndex(where: {$0.userId == event.publisher}) {
+//                users.remove(at: userIndex)
+//            }
+//            
+//        }else if event.type == .remoteJoinChannel && event.publisher != nil {
+//            print("Bac's didReceivePresenceEvent remoteJoinChannel publisher: \(event.publisher ?? "")")
+//            // Add user to list if it doesn't exist
+//            if !users.contains(where: {$0.userId == event.publisher}) && event.publisher != nil {
+//                let userState = AgoraRtmUserState()
+//                userState.userId = event.publisher!
+//                userState.states = event.states
+//                users.append(userState)
+//                
+//                // StreamChannel - Resubscribe for new users
+//                Task {
+//                    await reSubscribeNewUsers()
+//                }
+//            }
+//            
+//        }else if event.type == .snapshot {
+//            users = event.snapshot
+//        }else if event.type == .remoteStateChanged {
+//            
+//        }
     }
     
     // Receive storage event

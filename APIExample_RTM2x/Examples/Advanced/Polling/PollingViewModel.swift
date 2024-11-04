@@ -23,7 +23,6 @@ class PollingViewModel: NSObject, ObservableObject {
     @Published var mainChannel = "PollRootChannel" // to publish and receive poll questions/answers
     let customPollQuestionType = "pollquestion"
     let customPollResultType = "pollresult"
-    
     let defaultPollTime = 15
     
     func testing()  {

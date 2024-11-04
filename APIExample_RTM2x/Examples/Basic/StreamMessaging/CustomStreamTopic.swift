@@ -13,4 +13,5 @@ struct CustomStreamTopic : Identifiable {
     var topic : String
     var messages : [AgoraRtmMessageEvent]
     var lastMessage : String
+    var users: [String]
 }

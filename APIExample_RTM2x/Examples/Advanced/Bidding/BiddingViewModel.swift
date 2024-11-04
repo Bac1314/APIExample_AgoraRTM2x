@@ -17,12 +17,8 @@ class BiddingViewModel: NSObject, ObservableObject {
     @Published var token: String = ""
     @Published var isLoggedIn: Bool = false
     @Published var currentAuctionItem: CustomAuctionItem? = nil
-    //= CustomAuctionItem(majorRevision: 123456, auctionName: "Pokemon Card - Mew Two", startingPrice: 100, currentBid: 100, highestBidder: "Bac", lastUpdatedTimeStamp: Int(Date().addingTimeInterval(-15).timeIntervalSince1970))
     @Published var connectionState: AgoraRtmClientConnectionState = .disconnected
-    
-//    let mainChannel = "biddingChannel" // to publish the storage
     @Published var mainChannel = "BiddingRootChannel" // to publish the storage
-
     
     @MainActor
     func loginRTM() async throws {
@@ -190,7 +186,6 @@ class BiddingViewModel: NSObject, ObservableObject {
         return false
         
     }
-    
     
     func fetchMajorRevision() async -> Int64 {
         if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){

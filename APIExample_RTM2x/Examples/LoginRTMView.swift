@@ -108,7 +108,7 @@ struct LoginRTMView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                             
-                            TextField("Stream channel requires RTC token (must)", text: $streamToken)
+                            TextField("(Required) Stream channel requires RTC token", text: $streamToken)
                                 .textFieldStyle(.plain)
                                 .font(.headline)
                                 .padding(12)
@@ -134,7 +134,7 @@ struct LoginRTMView: View {
                         .foregroundStyle(Color.white)
                         .background(Color.black)
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .disabled(userID.isEmpty || channelName.isEmpty)
+                        .disabled(userID.isEmpty || channelName.isEmpty || (isStreamChannel && (streamToken.isEmpty || token.isEmpty)))
                         .onTapGesture {
                             isLoading = true
                             self.onButtonTap?()

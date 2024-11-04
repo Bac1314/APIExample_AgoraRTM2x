@@ -22,7 +22,6 @@ struct StreamMessagingView: View {
     let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
-        GridItem(.flexible()),
     ]
     
     var serviceIcon: String = "message"
@@ -38,7 +37,7 @@ struct StreamMessagingView: View {
                         do{
                             try await agoraRTMVM.loginRTM()
                             await agoraRTMVM.createAndJoinStreamChannel()
-                            await agoraRTMVM.preJoinSubTopics()
+//                            await agoraRTMVM.preJoinSubTopics()
                         }catch {
                             if let agoraError = error as? AgoraRtmErrorInfo {
                                 alertMessage = "\(agoraError.code) : \(agoraError.reason)"
@@ -73,6 +72,8 @@ struct StreamMessagingView: View {
                                         .font(.callout)
                                         .foregroundStyle(Color.secondary)
                                         .lineLimit(1)
+                                    
+                                    Text("#\(topicChannel.users.count)")
                                 }
                                 Spacer()
                             }
@@ -143,6 +144,26 @@ struct StreamMessagingView: View {
             }
             
         }
+        .alert("Subscribe", isPresented: $presentAlertSubscribe, actions: {
+            TextField("Enter channelname", text: $newTopic)
+                .focused($keyboardIsFocused)
+            
+            Button("Subscribe", action: {
+                Task{
+                    keyboardIsFocused = false // dismiss keyboard
+                    
+                    if agoraRTMVM.customStreamTopicList.contains(where: { $0.topic == newTopic}) {
+                        return
+                    }
+                    let _ = await agoraRTMVM.JoinAndSubTopic(topic: newTopic)
+                    newTopic = "" //Reset
+                }
+            })
+            
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("Subscribe to another channel")
+        })
     }
 }
 
@@ -210,7 +231,7 @@ struct StreamMessagingDetailedView: View {
             }
         }
         .padding(.horizontal)
-        .navigationTitle("\(selectedTopic)")
+        .navigationTitle("\(selectedTopic) (\(agoraRTMVM.customStreamTopicList.first(where: {$0.topic == selectedTopic})?.users.count ?? 0))")
         
     }
     
