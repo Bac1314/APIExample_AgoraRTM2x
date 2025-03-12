@@ -126,23 +126,16 @@ class LocationViewModel: NSObject, ObservableObject {
                 }
             }
         }
-
         
         // publish location to remote users
-        let itemLatitude = AgoraRtmStateItem()
-        itemLatitude.key = latitudeKey
-        itemLatitude.value = String(newLocation.center.latitude)
+        let itemLatLong: [String: String] = [latitudeKey: String(newLocation.center.latitude), longitudeKey: String(newLocation.center.longitude)]
         
-        let itemLongitude = AgoraRtmStateItem()
-        itemLongitude.key = longitudeKey
-        itemLongitude.value = String(newLocation.center.longitude)
-        
-        if let (_, error) = await agoraRtmKit?.getPresence()?.setState(channelName: mainChannel, channelType: .message, items: [itemLatitude, itemLongitude]){
+        if let (_, error) = await agoraRtmKit?.getPresence()?.setState(channelName: mainChannel, channelType: .message, items: itemLatLong){
             if error == nil {
                 return true
             }
         }
-        
+                
         return false
     }
    

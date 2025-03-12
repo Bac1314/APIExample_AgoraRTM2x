@@ -166,6 +166,22 @@ typedef NS_ENUM(NSInteger, AgoraRtmErrorCode) {
    * -10021: The operation is too frequent.
    */
   AgoraRtmErrorOperationRateExceedLimitation = -10021,
+  /**
+   * -10022: The service is not configured in private config mode.
+   */
+  AgoraRtmErrorServiceNotSupport = -10022,
+  /**
+   * -10023: This login operation stopped by a new login operation or logout operation.
+   */
+  AgoraRtmErrorLoginCanceled = -10023,
+  /**
+   * -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
+   */
+  AgoraRtmErrorInvalidPrivateConfig = -10024,
+  /**
+   * -10025: Perform operation failed due to RTM service is not connected.
+   */
+  AgoraRtmErrorNotConnected = -10025,
 
   /**
    * -11001 ~ -12000 : reserved for channel error.
@@ -299,7 +315,24 @@ typedef NS_ENUM(NSInteger, AgoraRtmErrorCode) {
   /**
    * -11033: The destination user of publish message is offline.
    */
-   AgoraRtmErrorChannelReceiverOffline = -11033,
+  AgoraRtmErrorChannelReceiverOffline = -11033,
+  /**
+   * -11034: The channel join operation is canceled.
+   */
+  AgoraRtmErrorChannelJoinCanceled = -11034,
+   /**
+   * -11035: The message receiver is offline but the message store in history succeeded.
+   */
+  AgoraRtmErrorChannelReceiverOfflineButMessageStoreSucceeded = -11035,
+   /**
+   * -11036: The message receiver is offline and the message store in history failed.
+   */
+  AgoraRtmErrorChannelReceiverOfflineAndMessageStoreFailed = -11036,
+  /**
+   * -11037: The message delivered successfully but store in history failed.
+   */
+  AgoraRtmErrorChannelMessageDeliveredButStoreFailed = -11037,
+
   /**
    * -12001 ~ -13000 : reserved for storage error.
    * -12001: The storage operation failed.
@@ -354,7 +387,7 @@ typedef NS_ENUM(NSInteger, AgoraRtmErrorCode) {
    */
   AgoraRtmErrorStorageDuplicateKey = -12013,
   /**
-   * -12014: The revision in storage operation is outdated.
+   * -12014: The revision in storage operation is outdated or the key does not exist.
    */
   AgoraRtmErrorStorageOutdatedRevision = -12014,
   /**
@@ -469,6 +502,27 @@ typedef NS_ENUM(NSInteger, AgoraRtmErrorCode) {
    * -14009: The lock service is not available.
    */
   AgoraRtmErrorLockNotAvailable = -14009,
+  /**
+   * -15001 ~ -16000 : reserved for history error.
+   * -15001: The history operation failed.
+   */
+  AgoraRtmErrorHistoryOperationFailed = -15001,
+  /**
+   * -15002: The timestamp is invalid.
+   */
+  AgoraRtmErrorHistoryInvalidTimestamp = -15002,
+  /**
+   * -15003: The history operation timeout.
+   */
+  AgoraRtmErrorHistoryOperationTimeout = -15003,
+  /**
+   * -15004: The history operation is not permitted.
+   */
+  AgoraRtmErrorHistoryOperationNotPermitted = -15004,
+  /**
+   * -15005: The history service is not available.
+   */
+  AgoraRtmErrorHistoryNotAvailable = -15005,
 };
 
 /**
@@ -536,6 +590,269 @@ typedef NS_ENUM(NSInteger, AgoraRtmProxyType) {
    * 1: Link with http proxy
    */
   AgoraRtmProxyTypeHttp = 1,
+  /**
+   * 2: Link with tcp cloud proxy
+   */
+  AgoraRtmProxyTypeCloudTcp = 2,
+};
+
+typedef NS_OPTIONS(NSInteger, AgoraRtmServiceType) {
+  /**
+   * None rtm service.
+   */
+  AgoraRtmServiceTypeNone = 0x00000000,
+  /**
+   * The basic functionality of rtm service.
+   */
+  AgoraRtmServiceTypeMessage = 0x00000001,
+  /**
+   * The advanced functionality of rtm service.
+   */
+  AgoraRtmServiceTypeStream = 0x00000002,
+};
+
+/**
+ * Rtm protocol type for underlying connection.
+ */
+typedef NS_ENUM(NSInteger, AgoraRtmProtocolType) {
+  /**
+   * TCP and UDP (default).
+   */
+  AgoraRtmProtocolTypeTcpUdp = 0,
+  /**
+   * Use TCP only.
+   */
+  AgoraRtmProtocolTypeTcpOnly = 1,
+};
+
+/**
+ * Rtm link state.
+ */
+typedef NS_ENUM(NSInteger, AgoraRtmLinkState) {
+  /**
+   * The initial state.
+   */
+  AgoraRtmLinkStateIdle = 0,
+  /**
+   * The SDK is connecting to the server.
+   */
+  AgoraRtmLinkStateConnecting = 1,
+  /**
+   * The SDK has connected to the server.
+   */
+  AgoraRtmLinkStateConnected = 2,
+  /**
+   * The SDK is disconnected from the server.
+   */
+  AgoraRtmLinkStateDisconnected = 3,
+  /**
+   * The SDK link is suspended.
+   */
+  AgoraRtmLinkStateSuspended = 4,
+  /**
+   * The SDK is failed to connect to the server.
+   */
+  AgoraRtmLinkStateFailed = 5,
+};
+
+/**
+ * Rtm link state change reason.
+ */
+typedef NS_ENUM(NSInteger, AgoraRtmLinkStateChangeReason) {
+/**
+   * Unknown reason.
+   */
+  AgoraRtmLinkStateChangeReasonUnknown = 0,
+  /**
+   * Login.
+   */
+  AgoraRtmLinkStateChangeReasonLogin = 1,
+  /**
+   * Login success.
+   */
+  AgoraRtmLinkStateChangeReasonLoginSuccess = 2,
+  /**
+   * Login timeout.
+   */
+  AgoraRtmLinkStateChangeReasonLoginTimeout = 3,
+  /**
+   * Login not authorized.
+   */
+  AgoraRtmLinkStateChangeReasonLoginNotAuthorized = 4,
+  /**
+   * Login rejected.
+   */
+  AgoraRtmLinkStateChangeReasonLoginRejected = 5,
+  /**
+   * Re-login.
+   */
+  AgoraRtmLinkStateChangeReasonRelogin = 6,
+  /**
+   * Logout.
+   */
+  AgoraRtmLinkStateChangeReasonLogout = 7,
+  /**
+   * Auto reconnect.
+   */
+  AgoraRtmLinkStateChangeReasonAutoReconnect = 8,
+  /**
+   * Reconnect timeout.
+   */
+  AgoraRtmLinkStateChangeReasonReconnectTimeout = 9,
+  /**
+   * Reconnect success.
+   */
+  AgoraRtmLinkStateChangeReasonReconnectSuccess = 10,
+  /**
+   * Join.
+   */
+  AgoraRtmLinkStateChangeReasonJoin = 11,
+  /**
+   * Join success.
+   */
+  AgoraRtmLinkStateChangeReasonJoinSuccess = 12,
+  /**
+   * Join failed.
+   */
+  AgoraRtmLinkStateChangeReasonJoinFailed = 13,
+  /**
+   * Rejoin.
+   */
+  AgoraRtmLinkStateChangeReasonRejoin = 14,
+  /**
+   * Leave.
+   */
+  AgoraRtmLinkStateChangeReasonLeave = 15,
+  /**
+   * Invalid token.
+   */
+  AgoraRtmLinkStateChangeReasonInvalidToken = 16,
+  /**
+   * Token expired.
+   */
+  AgoraRtmLinkStateChangeReasonTokenExpired = 17,
+  /**
+   * Inconsistent app ID.
+   */
+  AgoraRtmLinkStateChangeReasonInconsistentAppId = 18,
+  /**
+   * Invalid channel name.
+   */
+  AgoraRtmLinkStateChangeReasonInvalidChannelName = 19,
+  /**
+   * Invalid user ID.
+   */
+  AgoraRtmLinkStateChangeReasonInvalidUserId = 20,
+  /**
+   * Not initialized.
+   */
+  AgoraRtmLinkStateChangeReasonNotInitialized = 21,
+  /**
+   * Rtm service not connected.
+   */
+  AgoraRtmLinkStateChangeReasonRtmServiceNotConnected = 22,
+  /**  
+   * Channel instance exceed limitation.
+   */
+  AgoraRtmLinkStateChangeReasonChannelInstanceExceedLimitation = 23,
+  /**
+   * Operation rate exceed limitation.
+   */
+  AgoraRtmLinkStateChangeReasonOperationRateExceedLimitation = 24,
+  /**
+   * Channel in error state.
+   */
+  AgoraRtmLinkStateChangeReasonChannelInErrorState = 25,
+  /**
+   * Presence not connected.
+   */
+  AgoraRtmLinkStateChangeReasonPresenceNotConnected = 26,
+  /**
+   * Same UID login.
+   */
+  AgoraRtmLinkStateChangeReasonSameUidLogin = 27,
+  /**
+   * Kicked out by server.
+   */
+  AgoraRtmLinkStateChangeReasonKickedOutByServer = 28,
+  /**
+   * Keep alive timeout.
+   */
+  AgoraRtmLinkStateChangeReasonKeepAliveTimeout = 29,
+  /**
+   * Connection error.
+   */
+  AgoraRtmLinkStateChangeReasonConnectionError = 30,
+  /**
+   * Presence not ready.
+   */
+  AgoraRtmLinkStateChangeReasonPresenceNotReady = 31,
+  /**
+   * Network change.
+   */
+  AgoraRtmLinkStateChangeReasonNetworkChange = 32,
+  /**
+   * Service not supported.
+   */
+  AgoraRtmLinkStateChangeReasonServiceNotSupported = 33,
+  /**
+   * Stream channel not available.
+   */
+  AgoraRtmLinkStateChangeReasonStreamChannelNotAvailable = 34,
+  /**
+   * Storage not available.
+   */
+  AgoraRtmLinkStateChangeReasonStorageNotAvailable = 35,
+  /**
+   * Lock not available.
+   */
+  AgoraRtmLinkStateChangeReasonLockNotAvailable = 36,
+};
+
+/**
+ * Rtm link operation.
+ */
+typedef NS_ENUM(NSInteger, AgoraRtmLinkOperation) {
+  /**
+   * Login.
+   */
+  AgoraRtmLinkOperationLogin = 0,
+  /**
+   * Logout.
+   */
+  AgoraRtmLinkOperationLogout = 1,
+  /**
+   * Join
+   */
+  AgoraRtmLinkOperationJoin = 2,
+  /**
+   * Leave.
+   */
+  AgoraRtmLinkOperationLeave = 3,
+  /**
+   * Server reject
+   */
+  AgoraRtmLinkOperationServerReject = 4,
+  /**
+   * Auto reconnect
+   */
+  AgoraRtmLinkOperationAutoReconnect = 5,
+  /**
+   * Reconnected
+   */
+  AgoraRtmLinkOperationReconnected = 6,
+  /**
+   * Heartbeat timeout
+   */
+  AgoraRtmLinkOperationHeartbeatTimeout = 7,
+  /**
+   * Server timeout
+   */
+  AgoraRtmLinkOperationServerTimeout = 8,
+  /**
+   * Network change
+   */
+  AgoraRtmLinkOperationNetworkChange = 9,
 };
 
 /**
@@ -618,6 +935,12 @@ typedef NS_OPTIONS(NSUInteger, AgoraRtmJoinChannelFeature) {
    * 1 << 2: join stream channel with lock event notification.
    */
   AgoraRtmJoinChannelFeatureLock = 1 << 2,
+  /**
+   * Whether to subscribe channel in quiet mode
+   * Quiet mode means remote user will not receive any notification when we subscribe or
+   * unsubscribe or change our presence state
+   */
+  AgoraRtmJoinChannelFeatureBeQuiet = 1 << 3,
 };
 
 /**subscribe message channel features*/
@@ -642,6 +965,12 @@ typedef NS_OPTIONS(NSUInteger, AgoraRtmSubscribeChannelFeature) {
    * 1 << 3: subscribe message channel with lock event notification.
    */
   AgoraRtmSubscribeChannelFeatureLock =  1 << 3,
+  /**
+   * Whether to join channel in quiet mode
+   * Quiet mode means remote user will not receive any notification when we join or
+   * leave or change our presence state
+   */
+  AgoraRtmSubscribeChannelFeatureBeQuiet = 1 << 4,
 };
 
 
@@ -768,9 +1097,17 @@ typedef NS_ENUM(NSInteger, AgoraRtmClientConnectionChangeReason) {
    */
   AgoraRtmClientConnectionChangedLicenseValidationFailure = 21,
   /**
-   * 22: The connection is failed due to user vid not support stream channel.
+   * 22: The connection is failed due to certification verify failure.
    */
-  AgoraRtmClientConnectionChangedStreamChannelNotAvailable = 22,
+  AgoraRtmClientConnectionChangedCertificationVerifyFailure = 22,
+  /**
+   * 23: The connection is failed due to user vid not support stream channel.
+   */
+  AgoraRtmClientConnectionChangedStreamChannelNotAvailable = 23,
+  /**
+   * 24: The connection is failed due to token and appid inconsistent.
+   */
+  AgoraRtmClientConnectionChangedInconsistentAppId = 24,
   /**
    * 10001: The connection of rtm edge service has been successfully established.
    */

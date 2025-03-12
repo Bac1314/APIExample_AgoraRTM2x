@@ -15,7 +15,7 @@
 @class AgoraRtmTopicMessageOptions;
 @class AgoraRtmLock;
 @class AgoraRtmStorage;
-@class AgoraRtmPresence;
+@class AgoraRtmPresence;   
 @class AgoraRtmMetadataOptions;
 @class AgoraRtmMetadataItem;
 @class AgoraRtmMetadata;
@@ -24,7 +24,6 @@
 @class AgoraRtmGetOnlineUsersOptions;
 @class AgoraRtmUserState;
 @class AgoraRtmChannelInfo;
-@class AgoraRtmStateItem;
 @class AgoraRtmTopicEvent;
 @class AgoraRtmLockEvent;
 @class AgoraRtmStorageEvent;
@@ -45,6 +44,12 @@
 @class AgoraRtmPresenceGetStateResponse;
 @class AgoraRtmGetTopicSubscribedUsersResponse;
 @class AgoraRtmMessage;
+@class AgoraRtmPrivateConfig;
+@class AgoraRtmLinkStateEvent;
+@class AgoraRtmHistory;
+@class AgoraRtmGetHistoryMessagesOptions;
+@class AgoraRtmHistoryMessage;
+@class AgoraRtmGetHistoryMessagesResponse;
 
 __attribute__((visibility("default"))) @interface AgoraRtmPublishOptions: NSObject
 /**
@@ -56,6 +61,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmPublishOptions: NSObje
  * The custom type of the message, up to 32 bytes for customize.
  */
 @property (nonatomic, copy, nonnull) NSString* customType;
+
+/**
+ * Whether to store in history, true to enable
+ */
+@property (nonatomic, assign) BOOL storeInHistory;
 @end
 
 
@@ -66,9 +76,9 @@ __attribute__((visibility("default"))) @interface AgoraRtmTopicMessageOptions: N
 @property (nonatomic, copy, nonnull) NSString* customType;
 
 /**
-    The time to calibrate data with media,
-    only valid when user join topic with syncWithMedia in stream channel
-    */
+ * The time to calibrate data with media,
+ *only valid when user join topic with syncWithMedia in stream channel
+*/
 @property (nonatomic, assign) unsigned long long sendTs;
 @end
 
@@ -115,42 +125,16 @@ __attribute__((visibility("default"))) @interface AgoraRtmMetadataItem: NSObject
 
 __attribute__((visibility("default"))) @interface AgoraRtmMetadata: NSObject
 
-- (instancetype _Nullable)init NS_UNAVAILABLE;
+- (instancetype _Nullable)init;
   /**
-   * Set the major revision of metadata.
-   *
-   * @param [in] revision The major revision of the metadata.
+   * The major revision of the metadata.
    */
-- (void) setMajorRevision:(long long)revision;
-
-  /**
-   * Get the major revision of metadata.
-   *
-   * @return the major revision of metadata.
-   */
-- (long long) getMajorRevision;
-
-  /**
-   * Add or revise a metadataItem to current metadata.
-   */
-- (void) setMetadataItem:(AgoraRtmMetadataItem* _Nonnull)item;
-
- /**
-   * Get the metadataItem array of current metadata.
-   *
-   *  @return the metadataItem array.
-   */
-- (NSArray<AgoraRtmMetadataItem *> * _Nonnull) getMetadataItems;
+@property (nonatomic, assign) long long majorRevision;
 
 /**
- * Clear the metadataItem array & reset major revision
- */
-- (void) clearMetadata;
-
-/**
- * destroy the metadata instance.
- */
-- (int) destroy;
+ * The metadata item array.
+*/
+@property (nonatomic, copy, nullable) NSArray<AgoraRtmMetadataItem *> *items;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmLockDetail: NSObject
@@ -168,6 +152,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmLockDetail: NSObject
  * The ttl of the lock.
  */
 @property (nonatomic, assign) int ttl;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmGetOnlineUsersOptions: NSObject
@@ -214,7 +203,7 @@ __attribute__((visibility("default"))) @interface AgoraRtmUserState: NSObject
 /**
    * The user states.
    */
-@property (nonatomic, copy, nonnull)  NSArray<AgoraRtmStateItem *> * states;
+@property (nonatomic, copy, nonnull)  NSDictionary<NSString *, NSString *> * states;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmChannelInfo: NSObject
@@ -228,18 +217,6 @@ __attribute__((visibility("default"))) @interface AgoraRtmChannelInfo: NSObject
    * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
    */
 @property (nonatomic, assign) AgoraRtmChannelType channelType;
-@end
-
-__attribute__((visibility("default"))) @interface AgoraRtmStateItem: NSObject
-/**
-   * The key of the state item.
-   */
-@property (nonatomic, copy, nonnull) NSString* key;
-
-/**
-   * The value of the state item.
-   */
-@property (nonatomic, copy, nonnull) NSString* value;
 @end
 
 
@@ -264,6 +241,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmTopicEvent: NSObject
  * Topic information array.
  */
 @property (nonatomic, copy, nonnull) NSArray<AgoraRtmTopicInfo *> *topicInfos;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmPublisherInfo: NSObject
@@ -297,6 +279,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmLockEvent: NSObject
  * The detail information of locks
 */
 @property (nonatomic, copy, nonnull)  NSArray<AgoraRtmLockDetail *> * lockDetailList;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmStorageEvent: NSObject
@@ -325,6 +312,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmStorageEvent: NSObject
  * The metadata infomation
  */ 
 @property (nonatomic, strong, nonnull) AgoraRtmMetadata* data;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmLogConfig: NSObject <NSCopying>
@@ -447,9 +439,9 @@ __attribute__((visibility("default"))) @interface AgoraRtmJoinChannelOption: NSO
 
 __attribute__((visibility("default"))) @interface AgoraRtmMessageEvent: NSObject
 
-    /**
-     * Which channel type
-     */
+  /**
+   * Which channel type
+   */
 @property (nonatomic, assign) AgoraRtmChannelType channelType;
   /**
    * The channel to which the message was published
@@ -467,10 +459,14 @@ __attribute__((visibility("default"))) @interface AgoraRtmMessageEvent: NSObject
    * The publisher
    */
 @property (nonatomic, copy, nonnull) NSString *publisher;
-  /**
-   * The publisher
-   */
+/**
+ * The publisher
+*/
 @property (nonatomic, copy, nullable) NSString *customType;
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmTopicInfo: NSObject
@@ -520,39 +516,44 @@ __attribute__((visibility("default"))) @interface AgoraRtmPresenceIntervalInfo: 
 
 
 __attribute__((visibility("default"))) @interface AgoraRtmPresenceEvent: NSObject
-    /**
-     * Indicate presence event type
-     */
-    @property (nonatomic, assign) AgoraRtmPresenceEventType type;
-    /**
-     * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
-     */
-    @property (nonatomic, assign) AgoraRtmChannelType channelType;
+/**
+ * Indicate presence event type
+*/
+@property (nonatomic, assign) AgoraRtmPresenceEventType type;
+/**
+ * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+*/
+@property (nonatomic, assign) AgoraRtmChannelType channelType;
 
-    /**
-     * The channel which the presence event was triggered
-     */
-    @property (nonatomic, copy, nonnull) NSString * channelName;
+/**
+ * The channel which the presence event was triggered
+*/
+@property (nonatomic, copy, nonnull) NSString * channelName;
 
-    /**
-     * The user who triggered this event.
-     */
-    @property (nonatomic, copy, nullable) NSString * publisher;
+/**
+ * The user who triggered this event.
+*/
+@property (nonatomic, copy, nullable) NSString * publisher;
 
-    /**
-     * The user states
-     */
-    @property (nonatomic, copy, nonnull) NSArray<AgoraRtmStateItem *> *states;
+/**
+ * The user states
+*/
+@property (nonatomic, copy, nonnull) NSDictionary<NSString *, NSString *> * states;
  
-    /**
-     * Only valid when in interval mode
-     */
-    @property (nonatomic, copy, nullable) AgoraRtmPresenceIntervalInfo* interval;
-    /**
-     * Only valid when receive snapshot event
-     */
-    @property (nonatomic, copy, nonnull) NSArray<AgoraRtmUserState *> * snapshot;
+/**
+ * Only valid when in interval mode
+*/
+@property (nonatomic, copy, nullable) AgoraRtmPresenceIntervalInfo* interval;
 
+/**
+ * Only valid when receive snapshot event
+*/
+@property (nonatomic, copy, nonnull) NSArray<AgoraRtmUserState *> * snapshot;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
 @end
 
 /**
@@ -578,10 +579,21 @@ __attribute__((visibility("default"))) @interface AgoraRtmClientConfig: NSObject
 @property (nonatomic, assign) AgoraRtmAreaCode areaCode;
 
 /**
-   * Presence timeout in seconds, specify the timeout value when you lost connection between sdk
-   * and rtm service.
-   */
+ * The protocol used for connecting to the Agora RTM service.
+ */
+@property (nonatomic, assign)  AgoraRtmProtocolType protocolType;
+
+/**
+ * Presence timeout in seconds, specify the timeout value when you lost connection between sdk
+ * and rtm service.
+ */
 @property (nonatomic, assign) unsigned int presenceTimeout;
+
+/**
+ * Heartbeat interval in seconds, specify the interval value of sending heartbeat between sdk
+ * and rtm service.
+ */
+@property (nonatomic, assign) unsigned int heartbeatInterval;
 
 /**
  * The App ID of your project.
@@ -599,6 +611,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmClientConfig: NSObject
  */
 @property (nonatomic, assign) BOOL useStringUserId;
 
+/**
+ * Whether to enable multipath, introduced from 2.2.0, for now , only effect on stream channel.
+ */
+@property (nonatomic, assign) BOOL multipath;
+
   /**
    * The config for customer set log path, log size and log level.
    */
@@ -613,6 +630,11 @@ __attribute__((visibility("default"))) @interface AgoraRtmClientConfig: NSObject
    * The config for encryption setting
    */
 @property (nonatomic, copy, nullable) AgoraRtmEncryptionConfig * encryptionConfig;
+
+/**
+ * The config for private setting
+ */
+@property (nonatomic, copy, nullable) AgoraRtmPrivateConfig * privateConfig;
 @end
 
 __attribute__((visibility("default"))) @interface AgoraRtmErrorInfo: NSError
@@ -735,7 +757,7 @@ __attribute__((visibility("default"))) @interface AgoraRtmCommonResponse: NSObje
 
 __attribute__((visibility("default"))) @interface AgoraRtmMessage: NSObject <NSCopying>
 
-/**
+/**   
  * if rawData is nil read data from stringData
 */
 @property (nonatomic, copy, nullable) NSData* rawData;
@@ -752,6 +774,123 @@ __attribute__((visibility("default"))) @interface AgoraRtmGetTopicSubscribedUser
  * The subscribed users.
 */
 @property (nonatomic, copy, nonnull) NSArray<NSString *> *users;
+@end
+
+__attribute__((visibility("default"))) @interface AgoraRtmPrivateConfig: NSObject
+/**
+ * Rtm service type.
+*/
+@property (nonatomic, assign) AgoraRtmServiceType serviceType;
+
+/**
+ * Local access point server list.
+*/
+@property (nonatomic, copy, nonnull) NSArray<NSString *> *accessPointHosts;
+@end
+
+__attribute__((visibility("default"))) @interface AgoraRtmLinkStateEvent: NSObject
+/**
+ * The current link state
+*/
+@property (nonatomic, assign) AgoraRtmLinkState currentState;
+
+/**
+ * The previous link state
+*/
+@property (nonatomic, assign) AgoraRtmLinkState previousState;
+
+/**
+ * The service type
+*/
+@property (nonatomic, assign) AgoraRtmServiceType serviceType;
+
+/**
+ * The operation which trigger this event
+*/
+@property (nonatomic, assign) AgoraRtmLinkOperation operation;
+
+/**
+     * The reason code of this state change event
+*/
+@property (nonatomic, assign) AgoraRtmLinkStateChangeReason reasonCode;
+
+/**
+ * The reason of this state change event
+*/
+@property (nonatomic, copy, nullable) NSString* reason;
+
+/**
+ * The affected channels
+*/
+@property (nonatomic, copy, nonnull) NSArray<NSString *> * affectedChannels;
+
+/**
+ * The unrestored channels
+*/
+@property (nonatomic, copy, nonnull) NSArray<NSString *> * unrestoredChannels;
+
+/**
+ * Is resumed from disconnected state
+*/
+@property (nonatomic, assign) BOOL isResumed;
+
+/**
+ * RTM server UTC time
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
+@end
+
+/**
+ * @brief The option to query history message.
+ */
+__attribute__((visibility("default"))) @interface AgoraRtmGetHistoryMessagesOptions: NSObject
+/**
+   * The maximum count of messages to get.
+   */
+@property (nonatomic, assign) int messageCount;
+  /**
+   * The start timestamp of this query range.
+   */
+@property (nonatomic, assign) unsigned long long start;
+  /**
+   * The end timestamp of this query range.
+   */
+@property (nonatomic, assign) unsigned long long end;
+@end
+
+/**
+ * @brief The details of history message
+ */
+__attribute__((visibility("default"))) @interface AgoraRtmHistoryMessage : NSObject <NSCopying>
+  /**
+   * The payload
+   */
+@property (nonatomic, copy, nonnull) AgoraRtmMessage *message;
+  /**
+   * The publisher
+   */
+@property (nonatomic, copy, nonnull) NSString *publisher;
+/**
+ * The publisher
+*/
+@property (nonatomic, copy, nullable) NSString *customType;
+/**
+ * Timestamp of the message received by rtm server.
+*/
+@property (nonatomic, assign) unsigned long long timestamp;
+@end
+
+__attribute__((visibility("default"))) @interface AgoraRtmGetHistoryMessagesResponse : NSObject
+
+/**
+ * messageList The history message list.
+ */
+@property (nonatomic, copy, nonnull) NSArray <AgoraRtmHistoryMessage *> *messageList;
+
+/**
+ *  newStart The timestamp of next history message. If newStart is 0, means there are no more history messages.
+ */
+@property (nonatomic, assign) unsigned long long newStart;
 @end
 
 
@@ -774,3 +913,5 @@ typedef void (^AgoraRtmGetUserChannelsBlock)(AgoraRtmGetUserChannelsResponse* _N
 typedef void (^AgoraRtmPresenceGetStateBlock)(AgoraRtmPresenceGetStateResponse* _Nullable response, AgoraRtmErrorInfo* _Nullable errorInfo);
 
 typedef void (^AgoraRtmGetTopicSubscribedUsersBlock)(AgoraRtmGetTopicSubscribedUsersResponse* _Nullable response, AgoraRtmErrorInfo* _Nonnull errorInfo);
+
+typedef void (^AgoraRtmGetHistoryMessagesBlock)(AgoraRtmGetHistoryMessagesResponse* _Nullable response, AgoraRtmErrorInfo* _Nonnull errorInfo);

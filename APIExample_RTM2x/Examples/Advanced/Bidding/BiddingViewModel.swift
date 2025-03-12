@@ -87,10 +87,9 @@ class BiddingViewModel: NSObject, ObservableObject {
             }
             
             print("sendBidPrice currentAuctionItem true")
-
             
             // Try to update the metadata with user bid price
-            guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
+            guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return false }
             
             let metaDataItem: AgoraRtmMetadataItem = AgoraRtmMetadataItem()
             metaDataItem.key = "auctionName"
@@ -109,11 +108,8 @@ class BiddingViewModel: NSObject, ObservableObject {
             metaDataItem5.value = String(Date().timeIntervalSince1970)
             
             // Update the metadata item
-            metaData.setMetadataItem(metaDataItem)
-            metaData.setMetadataItem(metaDataItem3)
-            metaData.setMetadataItem(metaDataItem4)
-            metaData.setMetadataItem(metaDataItem5)
-            metaData.setMajorRevision(currentAuctionItem.majorRevision)
+            metaData.items = [metaDataItem, metaDataItem3, metaDataItem4, metaDataItem5]
+            metaData.majorRevision = currentAuctionItem.majorRevision
 
             // Metadata options
             let metaDataOption: AgoraRtmMetadataOptions = AgoraRtmMetadataOptions()
@@ -133,8 +129,8 @@ class BiddingViewModel: NSObject, ObservableObject {
     func publishNewAuction(auctionName: String, startingPrice: Int) async -> Bool {
         
         // Try to update the metadata with user bid price
-        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
-        
+        guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return false }
+
         let metaDataItem: AgoraRtmMetadataItem = AgoraRtmMetadataItem()
         metaDataItem.key = "auctionName"
         metaDataItem.value = auctionName
@@ -156,14 +152,10 @@ class BiddingViewModel: NSObject, ObservableObject {
         metaDataItem5.value = String(Date().timeIntervalSince1970)
         
         // Update the metadata item
-        metaData.setMetadataItem(metaDataItem)
-        metaData.setMetadataItem(metaDataItem3)
-        metaData.setMetadataItem(metaDataItem4)
-        metaData.setMetadataItem(metaDataItem5)
-//        metaData.setMajorRevision(1)
+        metaData.items = [metaDataItem, metaDataItem3, metaDataItem4, metaDataItem5]
         
         let majorRevision = await fetchMajorRevision()
-        metaData.setMajorRevision(majorRevision)
+        metaData.majorRevision = majorRevision
         
         print("Bac's majorrevision = \(majorRevision)")
         
@@ -190,7 +182,7 @@ class BiddingViewModel: NSObject, ObservableObject {
     func fetchMajorRevision() async -> Int64 {
         if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){
             if error == nil {
-                return response?.data?.getMajorRevision() ?? 0
+                return response?.data?.majorRevision ?? 0
             }else{
                 return 0
             }
@@ -218,8 +210,8 @@ class BiddingViewModel: NSObject, ObservableObject {
     
     
     func deleteAuctionStorage() async -> Bool {
-        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
-        metaData.setMajorRevision(currentAuctionItem?.majorRevision ?? -1)
+        guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return false }
+        metaData.majorRevision = (currentAuctionItem?.majorRevision ?? -1)
 
         if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
             if error == nil {
@@ -297,7 +289,7 @@ extension BiddingViewModel: AgoraRtmClientDelegate {
 
                 Task {
                     await MainActor.run {
-                        UpdateAuctionFromRemoteUsers(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
+                        UpdateAuctionFromRemoteUsers(metadataItems: event.data.items ?? [], majorRevision: event.data.majorRevision)
                     }
                 }
             }

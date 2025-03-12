@@ -306,7 +306,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     
     // Storage Methods
     func saveDrawingsToStorage() async -> Bool {
-        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
+        guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return false }
         guard let drawingsString = convertObjectToJsonString(object: drawings) else {
             print("Bac's saveDrawingsToStorage failed to convertObjectoString")
             return false}
@@ -316,7 +316,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
         let metaDataItem: AgoraRtmMetadataItem = AgoraRtmMetadataItem()
         metaDataItem.key = StorageDrawingKey
         metaDataItem.value = drawingsString
-        metaData.setMetadataItem(metaDataItem)
+        metaData.items = [metaDataItem]
         
         if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: AgoraRtmMetadataOptions(), lock: nil) {
             if error == nil {
@@ -340,7 +340,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
                 // Get Successful, do here
                 print("Bac's getDrawingsFromStorage success error")
 
-                guard let drawingsString = response?.data?.getItems().first(where: {$0.key == StorageDrawingKey})?.value else {return false}
+                guard let drawingsString = response?.data?.items?.first(where: {$0.key == StorageDrawingKey})?.value else {return false}
                 
                 print("Bac's getDrawingsFromStorage drawingsString \(drawingsString)")
 
@@ -363,7 +363,7 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
     }
     
     func deleteAllDrawingsFromStorage() async -> Bool {
-        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return false }
+        guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return false }
 
         if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
             if error == nil {
@@ -382,8 +382,6 @@ class WhiteBoardViewModel: NSObject, ObservableObject {
 }
 
 extension WhiteBoardViewModel: AgoraRtmClientDelegate {
-    
-    
     // Receive message event notifications in subscribed message channels and subscribed topics.
     func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveMessageEvent event: AgoraRtmMessageEvent) {
 //        print("Bac's didReceiveMessageEvent msg = \(event.message.stringData ?? "Empty") from \(event.publisher) Topic \(String(describing: event.channelTopic))")

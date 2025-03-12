@@ -75,7 +75,271 @@
 
 namespace agora {
 namespace rtm {
+
 const uint32_t DEFAULT_LOG_SIZE_IN_KB = 1024;
+
+/**
+ * Rtm link state.
+ */
+enum RTM_LINK_STATE {
+  /**
+   * The initial state.
+   */
+  RTM_LINK_STATE_IDLE = 0,
+  /**
+   * The SDK is connecting to the server.
+   */
+  RTM_LINK_STATE_CONNECTING = 1,
+  /**
+   * The SDK has connected to the server.
+   */
+  RTM_LINK_STATE_CONNECTED = 2,
+  /**
+   * The SDK is disconnected from the server.
+   */
+  RTM_LINK_STATE_DISCONNECTED = 3,
+  /**
+   * The SDK link is suspended.
+   */
+  RTM_LINK_STATE_SUSPENDED = 4,
+  /**
+   * The SDK is failed to connect to the server.
+   */
+  RTM_LINK_STATE_FAILED = 5,
+};
+
+/**
+ * Rtm link operation.
+ */
+enum RTM_LINK_OPERATION {
+  /**
+   * Login.
+   */
+  RTM_LINK_OPERATION_LOGIN = 0,
+  /**
+   * Logout.
+   */
+  RTM_LINK_OPERATION_LOGOUT = 1,
+  /**
+   * Join
+   */
+  RTM_LINK_OPERATION_JOIN = 2,
+  /**
+   * Leave.
+   */
+  RTM_LINK_OPERATION_LEAVE = 3,
+  /**
+   * Server reject
+   */
+  RTM_LINK_OPERATION_SERVER_REJECT = 4,
+  /**
+   * Auto reconnect
+   */
+  RTM_LINK_OPERATION_AUTO_RECONNECT = 5,
+  /**
+   * Reconnected
+   */
+  RTM_LINK_OPERATION_RECONNECTED = 6,
+  /**
+   * Heartbeat lost
+   */
+  RTM_LINK_OPERATION_HEARTBEAT_LOST = 7,
+  /**
+   * Server timeout
+   */
+  RTM_LINK_OPERATION_SERVER_TIMEOUT = 8,
+  /**
+   * Network change
+   */
+  RTM_LINK_OPERATION_NETWORK_CHANGE = 9,
+};
+
+
+/**
+ * Rtm service type.
+ */
+enum RTM_SERVICE_TYPE {
+  /**
+   * The type of rtm service not specified.
+   */
+  RTM_SERVICE_TYPE_NONE = 0x00000000,
+  /**
+   * The basic functionality of rtm service.
+   */
+  RTM_SERVICE_TYPE_MESSAGE = 0x00000001,
+  /**
+   * The advanced functionality of rtm service.
+   */
+  RTM_SERVICE_TYPE_STREAM = 0x00000002,
+};
+
+/**
+ * Rtm link state change reason.
+ */
+enum RTM_LINK_STATE_CHANGE_REASON {
+  /**
+   * Unknown reason.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_UNKNOWN = 0,
+  /**
+   * Login.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGIN = 1,
+  /**
+   * Login success.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGIN_SUCCESS = 2,
+  /**
+   * Login timeout.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGIN_TIMEOUT = 3,
+  /**
+   * Login not authorized.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGIN_NOT_AUTHORIZED = 4,
+  /**
+   * Login rejected.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGIN_REJECTED = 5,
+  /**
+   * Re-login.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_RELOGIN = 6,
+  /**
+   * Logout.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOGOUT = 7,
+  /**
+   * Auto reconnect.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_AUTO_RECONNECT = 8,
+  /**
+   * Reconnect timeout.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_RECONNECT_TIMEOUT = 9,
+  /**
+   * Reconnect success.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_RECONNECT_SUCCESS = 10,
+  /**
+   * Join.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_JOIN = 11,
+  /**
+   * Join success.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_JOIN_SUCCESS = 12,
+  /**
+   * Join failed.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_JOIN_FAILED = 13,
+  /**
+   * Rejoin.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_REJOIN = 14,
+  /**
+   * Leave.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LEAVE = 15,
+  /**
+   * Invalid token.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_INVALID_TOKEN = 16,
+  /**
+   * Token expired.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_TOKEN_EXPIRED = 17,
+  /**
+   * Inconsistent app ID.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_INCONSISTENT_APP_ID = 18,
+  /**
+   * Invalid channel name.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_INVALID_CHANNEL_NAME = 19,
+  /**
+   * Invalid user ID.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_INVALID_USER_ID = 20,
+  /**
+   * Not initialized.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_NOT_INITIALIZED = 21,
+  /**
+   * Rtm service not connected.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_RTM_SERVICE_NOT_CONNECTED = 22,
+  /**
+   * Channel instance exceed limitation.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_CHANNEL_INSTANCE_EXCEED_LIMITATION = 23,
+  /**
+   * Operation rate exceed limitation.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_OPERATION_RATE_EXCEED_LIMITATION = 24,
+  /**
+   * Channel in error state.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_CHANNEL_IN_ERROR_STATE = 25,
+  /**
+   * Presence not connected.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_PRESENCE_NOT_CONNECTED = 26,
+  /**
+   * Same UID login.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_SAME_UID_LOGIN = 27,
+  /**
+   * Kicked out by server.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_KICKED_OUT_BY_SERVER = 28,
+  /**
+   * Keep alive timeout.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_KEEP_ALIVE_TIMEOUT = 29,
+  /**
+   * Connection error.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_CONNECTION_ERROR = 30,
+  /**
+   * Presence not ready.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_PRESENCE_NOT_READY = 31,
+  /**
+   * Network change.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_NETWORK_CHANGE = 32,
+  /**
+   * Service not supported.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_SERVICE_NOT_SUPPORTED = 33,
+  /**
+   * Stream channel not available.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_STREAM_CHANNEL_NOT_AVAILABLE = 34,
+  /**
+   * storage not available.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_STORAGE_NOT_AVAILABLE = 35,
+  /**
+   * Lock not available.
+   */
+  RTM_LINK_STATE_CHANGE_REASON_LOCK_NOT_AVAILABLE = 36,
+};
+
+/**
+ * Rtm protocol type for underlying connection.
+ */
+enum RTM_PROTOCOL_TYPE {
+  /**
+   * TCP and UDP (default).
+   */
+  RTM_PROTOCOL_TYPE_TCP_UDP = 0,
+  /**
+   * Use TCP only.
+   */
+  RTM_PROTOCOL_TYPE_TCP_ONLY = 1,
+};
 
 /**
  * IP areas.
@@ -249,6 +513,22 @@ enum RTM_ERROR_CODE {
    * -10021: The operation is too frequent.
    */
   RTM_ERROR_OPERATION_RATE_EXCEED_LIMITATION = -10021,
+  /**
+   * -10022: The service is not configured in private config mode.
+   */
+  RTM_ERROR_SERVICE_NOT_SUPPORTED = -10022,
+  /**
+   * -10023: This login operation stopped by a new login operation or logout operation.
+   */
+  RTM_ERROR_LOGIN_CANCELED = -10023,
+  /**
+   * -10024: The private config is invalid, set private config should both set serviceType and accessPointHosts.
+   */
+  RTM_ERROR_INVALID_PRIVATE_CONFIG = -10024,
+  /**
+   * -10025: Perform operation failed due to RTM service is not connected.
+   */
+  RTM_ERROR_NOT_CONNECTED = -10025,
 
   /**
    * -11001 ~ -12000 : reserved for channel error.
@@ -383,6 +663,22 @@ enum RTM_ERROR_CODE {
    * -11033: The destination user of publish message is offline.
    */
   RTM_ERROR_CHANNEL_RECEIVER_OFFLINE = -11033,
+  /**
+   * -11034: The channel join operation is canceled.
+   */
+  RTM_ERROR_CHANNEL_JOIN_CANCELED = -11034,
+  /**
+   * -11035: The message receiver is offline but the message store in history succeeded.
+   */
+  RTM_ERROR_CHANNEL_RECEIVER_OFFLINE_BUT_STORE_SUCCEEDED = -11035,
+  /**
+   * -11036: The message receiver is offline and the message store in history failed.
+   */
+  RTM_ERROR_CHANNEL_RECEIVER_OFFLINE_AND_STORE_FAILED = -11036,
+  /**
+   * -11037: The message delivered successfully but store in history failed.
+   */
+  RTM_ERROR_CHANNEL_MESSAGE_DELIVERED_BUT_STORE_FAILED = -11037,
 
   /**
    * -12001 ~ -13000 : reserved for storage error.
@@ -438,7 +734,7 @@ enum RTM_ERROR_CODE {
    */
   RTM_ERROR_STORAGE_DUPLICATE_KEY = -12013,
   /**
-   * -12014: The revision in storage operation is outdated.
+   * -12014: The revision in storage operation is outdated or the key does not exist.
    */
   RTM_ERROR_STORAGE_OUTDATED_REVISION = -12014,
   /**
@@ -553,6 +849,28 @@ enum RTM_ERROR_CODE {
    * -14009: The lock service is not available.
    */
   RTM_ERROR_LOCK_NOT_AVAILABLE = -14009,
+
+  /**
+   * -15001 ~ -16000 : reserved for history error.
+   * -15001: The history operation failed.
+   */
+  RTM_ERROR_HISTORY_OPERATION_FAILED = -15001,
+  /**
+   * -15002: The timestamp is invalid.
+   */
+  RTM_ERROR_HISTORY_INVALID_TIMESTAMP = -15002,
+  /**
+   * -15003: The history operation timeout.
+   */
+  RTM_ERROR_HISTORY_OPERATION_TIMEOUT = -15003,
+  /**
+   * -15004: The history operation is not permitted.
+   */
+  RTM_ERROR_HISTORY_OPERATION_NOT_PERMITTED = -15004,
+  /**
+   * -15005: The history service not available.
+   */
+  RTM_ERROR_HISTORY_NOT_AVAILABLE = -15005,
 };
 
 /**
@@ -677,13 +995,17 @@ enum RTM_CONNECTION_CHANGE_REASON {
    */
   RTM_CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
   /**
-   * 22: The connection is failed due to user vid not support stream channel.
+   * 22: The connection is failed due to certification verify failure.
    */
-  RTM_CONNECTION_CHANGED_STREAM_CHANNEL_NOT_AVAILABLE = 22,
+  RTM_CONNECTION_CHANGED_CERTIFICATION_VERIFY_FAILURE = 22,
   /**
-   * 23: The connection is failed due to token and appid inconsistent.
+   * 23: The connection is failed due to user vid not support stream channel.
    */
-  RTM_CONNECTION_CHANGED_INCONSISTENT_APPID = 23,
+  RTM_CONNECTION_CHANGED_STREAM_CHANNEL_NOT_AVAILABLE = 23,
+  /**
+   * 24: The connection is failed due to token and appid inconsistent.
+   */
+  RTM_CONNECTION_CHANGED_INCONSISTENT_APPID = 24,
   /**
    * 10001: The connection of rtm edge service has been successfully established.
    */
@@ -741,7 +1063,7 @@ enum RTM_STORAGE_TYPE {
   /**
     0: Unknown type.
     */
-  RTM_STORAGE_TYPE_NONE= 0,
+  RTM_STORAGE_TYPE_NONE = 0,
   /**
     1: The user storage event.
     */
@@ -759,7 +1081,7 @@ enum RTM_STORAGE_EVENT_TYPE {
   /**
     0: Unknown event type.
     */
-  RTM_STORAGE_EVENT_TYPE_NONE= 0,
+  RTM_STORAGE_EVENT_TYPE_NONE = 0,
   /**
     1: Triggered when user subscribe user metadata state or join channel with options.withMetadata = true
     */
@@ -825,6 +1147,10 @@ enum RTM_PROXY_TYPE {
    * 1: Link with http proxy
    */
   RTM_PROXY_TYPE_HTTP = 1,
+  /**
+   * 2: Link with tcp cloud proxy
+   */
+  RTM_PROXY_TYPE_CLOUD_TCP = 2,
 };
 
 /**
@@ -887,7 +1213,7 @@ enum RTM_PRESENCE_EVENT_TYPE {
   RTM_PRESENCE_EVENT_TYPE_ERROR_OUT_OF_SERVICE = 7,
 };
 
-/** 
+/**
  * Definition of LogConfiguration
  */
 struct RtmLogConfig {
@@ -895,7 +1221,7 @@ struct RtmLogConfig {
    * The log file path, default is NULL for default log path
    */
   const char* filePath;
-  /** 
+  /**
    * The log file size, KB , set 1024KB to use default log size
    */
   uint32_t fileSizeInKB;
@@ -1043,10 +1369,18 @@ struct SubscribeOptions {
    */
   bool withLock;
 
+  /**
+   * Whether to subscribe channel in quiet mode
+   * Quiet mode means remote user will not receive any notification when we subscribe or
+   * unsubscribe or change our presence state
+   */
+  bool beQuiet;
+
   SubscribeOptions() : withMessage(true),
                        withMetadata(false),
                        withPresence(true),
-                       withLock(false) {}
+                       withLock(false),
+                       beQuiet(false) {}
 };
 
 /**
@@ -1086,46 +1420,28 @@ struct PresenceOptions {
 };
 
 /**
- *  The option to query user presence.
+ * @brief Publish message option
  */
-struct GetOnlineUsersOptions {
-  /**
-   * Whether to display user id in query result
-   */
-  bool includeUserId;
-  /**
-   * Whether to display user state in query result
-   */
-  bool includeState;
-  /**
-   * The paging object used for pagination.
-   */
-  const char* page;
-
-  GetOnlineUsersOptions() : includeUserId(true),
-                      includeState(false),
-                      page(NULL) {}
-};
-
-/**
-  @brief Publish message option
-  */
 struct PublishOptions {
-  /*
-   The channel type.
-  */
-  RTM_CHANNEL_TYPE channelType;  
   /**
-    The message type.
-    */
+   * The channel type.
+   */
+  RTM_CHANNEL_TYPE channelType;
+  /**
+   * The message type.
+   */
   RTM_MESSAGE_TYPE messageType;
   /**
-    The custom type of the message, up to 32 bytes for customize
-    */
+   * The custom type of the message, up to 32 bytes for customize
+   */
   const char* customType;
+  /**
+   * Whether to store in history, true to enable
+   */
+  bool storeInHistory;
 
   PublishOptions() : channelType(RTM_CHANNEL_TYPE_MESSAGE), messageType(RTM_MESSAGE_TYPE_BINARY),
-                     customType(NULL) {}
+                     customType(NULL), storeInHistory(false) {}
 };
 
 /**
@@ -1148,6 +1464,28 @@ struct TopicMessageOptions {
 
   TopicMessageOptions() : messageType(RTM_MESSAGE_TYPE_BINARY),
                      sendTs(0), customType(NULL) {}
+};
+
+/**
+ *  The option to query user presence.
+ */
+struct GetOnlineUsersOptions {
+  /**
+   * Whether to display user id in query result
+   */
+  bool includeUserId;
+  /**
+   * Whether to display user state in query result
+   */
+  bool includeState;
+  /**
+   * The paging object used for pagination.
+   */
+  const char* page;
+
+  GetOnlineUsersOptions() : includeUserId(true),
+                      includeState(false),
+                      page(NULL) {}
 };
 
 /**
@@ -1205,6 +1543,87 @@ struct RtmEncryptionConfig {
                        encryptionKey(NULL) {
     memset(encryptionSalt, 0, sizeof(encryptionSalt));
   }
+};
+
+/**
+ * @brief Private configuration
+ */
+struct RtmPrivateConfig {
+  /**
+   * Rtm service type.
+   */
+  RTM_SERVICE_TYPE serviceType;
+
+  /**
+   * Local access point hosts list.
+   */
+  const char** accessPointHosts;
+
+  /**
+   * The count of access point hosts list.
+   */
+  size_t accessPointHostsCount;
+
+  RtmPrivateConfig() : serviceType(RTM_SERVICE_TYPE_NONE), accessPointHosts(NULL), accessPointHostsCount(0) {}
+};
+
+/**
+ * @brief The option to query history message.
+ */
+struct GetHistoryMessagesOptions {
+  /**
+   * The maximum count of messages to get.
+   */
+  uint16_t messageCount;
+  /**
+   * The start timestamp of this query range.
+   */
+  uint64_t start;
+  /**
+   * The end timestamp of this query range.
+   */
+  uint64_t end;
+
+  GetHistoryMessagesOptions() : messageCount(100),
+                               start(0),
+                               end(0) {}
+};
+
+/**
+ * @brief The details of history message
+ */
+struct HistoryMessage {
+  /**
+   * Message type
+   */
+  RTM_MESSAGE_TYPE messageType;
+  /**
+   * The publisher
+   */
+  const char* publisher;
+  /**
+   * The payload
+   */
+  const char* message;
+  /**
+   * The payload length
+   */
+  size_t messageLength;
+  /**
+   * The custom type of the message
+   */
+  const char* customType;
+  /**
+   * Timestamp of the message received by rtm server
+   */
+  uint64_t timestamp;
+
+  HistoryMessage() : messageType(RTM_MESSAGE_TYPE_BINARY),
+                     publisher(NULL),
+                     message(NULL),
+                     messageLength(0),
+                     customType(NULL),
+                     timestamp(0) {}
 };
 
 }  // namespace rtm

@@ -31,7 +31,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int setLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint32_t ttl, uint64_t& requestId) = 0;
+  virtual void setLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint32_t ttl, uint64_t& requestId) = 0;
 
   /**
    * gets locks in the channel
@@ -43,7 +43,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int getLocks(const char* channelName, RTM_CHANNEL_TYPE channelType, uint64_t& requestId) = 0;
+  virtual void getLocks(const char* channelName, RTM_CHANNEL_TYPE channelType, uint64_t& requestId) = 0;
 
   /**
    * removes a lock
@@ -56,7 +56,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int removeLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint64_t& requestId) = 0;
+  virtual void removeLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint64_t& requestId) = 0;
 
   /**
    * acquires a lock
@@ -70,7 +70,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int acquireLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, bool retry, uint64_t& requestId) = 0;
+  virtual void acquireLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, bool retry, uint64_t& requestId) = 0;
 
   /**
    * releases a lock
@@ -83,7 +83,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int releaseLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint64_t& requestId) = 0;
+  virtual void releaseLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, uint64_t& requestId) = 0;
 
   /**
    * disables a lock
@@ -97,7 +97,7 @@ class IRtmLock {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int revokeLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, const char* owner, uint64_t& requestId) = 0;
+  virtual void revokeLock(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* lockName, const char* owner, uint64_t& requestId) = 0;
 
  protected:
   virtual ~IRtmLock() {}

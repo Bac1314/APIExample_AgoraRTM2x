@@ -30,7 +30,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int whoNow(const char* channelName, RTM_CHANNEL_TYPE channelType, const PresenceOptions& options, uint64_t& requestId) = 0;
+  virtual void whoNow(const char* channelName, RTM_CHANNEL_TYPE channelType, const PresenceOptions& options, uint64_t& requestId) = 0;
 
   /**
    * To query which channels the user joined
@@ -41,7 +41,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int whereNow(const char* userId, uint64_t& requestId) = 0;
+  virtual void whereNow(const char* userId, uint64_t& requestId) = 0;
 
   /**
    * Set user state
@@ -55,7 +55,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int setState(const char* channelName, RTM_CHANNEL_TYPE channelType, const StateItem* items, size_t count, uint64_t& requestId) = 0;
+  virtual void setState(const char* channelName, RTM_CHANNEL_TYPE channelType, const StateItem* items, size_t count, uint64_t& requestId) = 0;
 
   /**
    * Delete user state
@@ -69,7 +69,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int removeState(const char* channelName, RTM_CHANNEL_TYPE channelType, const char** keys, size_t count, uint64_t& requestId) = 0;
+  virtual void removeState(const char* channelName, RTM_CHANNEL_TYPE channelType, const char** keys, size_t count, uint64_t& requestId) = 0;
 
   /**
    * Get user state
@@ -82,7 +82,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int getState(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* userId, uint64_t& requestId) = 0;
+  virtual void getState(const char* channelName, RTM_CHANNEL_TYPE channelType, const char* userId, uint64_t& requestId) = 0;
 
   /**
    * To query who joined this channel
@@ -95,7 +95,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int getOnlineUsers(const char* channelName, RTM_CHANNEL_TYPE channelType, const GetOnlineUsersOptions& options, uint64_t& requestId) = 0;
+  virtual void getOnlineUsers(const char* channelName, RTM_CHANNEL_TYPE channelType, const GetOnlineUsersOptions& options, uint64_t& requestId) = 0;
 
   /**
    * To query which channels the user joined
@@ -106,7 +106,7 @@ class IRtmPresence {
    * - 0: Success.
    * - < 0: Failure.
    */
-  virtual int getUserChannels(const char* userId, uint64_t& requestId) = 0;
+  virtual void getUserChannels(const char* userId, uint64_t& requestId) = 0;
 
  protected:
   virtual ~IRtmPresence() {}

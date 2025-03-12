@@ -5,6 +5,6 @@
 //  Copyright (c) 2018 Agora. All rights reserved.
 //
 
-#import <AgoraRtmKit/AgoraRtmClientKit.h>
-#import <AgoraRtmKit/AgoraRtmEnumerates.h>
-#import <AgoraRtmKit/AgoraRtmObjects.h>
+#import "AgoraRtmClientKit.h"
+#import "AgoraRtmEnumerates.h"
+#import "AgoraRtmObjects.h"

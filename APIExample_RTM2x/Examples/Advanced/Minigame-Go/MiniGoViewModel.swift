@@ -96,7 +96,7 @@ class MiniGoViewModel: NSObject, ObservableObject {
     func fetchMajorRevision() async -> Int64 {
         if let (response, error) = await agoraRtmKit?.getStorage()?.getChannelMetadata(channelName: mainChannel, channelType: .message){
             if error == nil {
-                return response?.data?.getMajorRevision() ?? 0
+                return response?.data?.majorRevision ?? 0
             }else{
                 return 0
             }
@@ -111,14 +111,13 @@ class MiniGoViewModel: NSObject, ObservableObject {
         if let boardJSONString = convertObjectToJsonString(object: goBoardModel) {
             print("Bac's PublishBoardUpdate boardJSONSTRING success")
             
-            guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata()
-            else {return }
+            guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else {return }
             
             let metaDataItem : AgoraRtmMetadataItem = AgoraRtmMetadataItem()
             metaDataItem.key = customTTT
             metaDataItem.value = boardJSONString
             
-            metaData.setMetadataItem(metaDataItem)
+            metaData.items = [metaDataItem]
             
             // Metadata options
             let metaDataOption: AgoraRtmMetadataOptions = AgoraRtmMetadataOptions()
@@ -129,7 +128,7 @@ class MiniGoViewModel: NSObject, ObservableObject {
             if let currentMajorRevision = currentMajorRevision {
                 print("Bac's PublishBoardUpdate currentMajorRevision")
 
-                metaData.setMajorRevision(currentMajorRevision )
+                metaData.majorRevision = currentMajorRevision
                 
                 if let (_, error) = await agoraRtmKit?.getStorage()?.updateChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
                     if error == nil {
@@ -139,7 +138,7 @@ class MiniGoViewModel: NSObject, ObservableObject {
             }else {
                 print("Bac's PublishBoardUpdate else")
 
-                metaData.setMajorRevision(await fetchMajorRevision())
+                metaData.majorRevision = (await fetchMajorRevision())
                 
                 if let (_, error) = await agoraRtmKit?.getStorage()?.setChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: metaDataOption, lock: nil){
                     if error == nil {
@@ -173,7 +172,7 @@ class MiniGoViewModel: NSObject, ObservableObject {
     }
     
     func DeleteBoard() async  {
-        guard let metaData: AgoraRtmMetadata = agoraRtmKit?.getStorage()?.createMetadata() else { return }
+        guard let metaData: AgoraRtmMetadata = AgoraRtmMetadata() else { return }
 
         if let (_, error) = await agoraRtmKit?.getStorage()?.removeChannelMetadata(channelName: mainChannel, channelType: .message, data: metaData, options: nil, lock: nil) {
             if error == nil {
@@ -225,9 +224,9 @@ extension MiniGoViewModel: AgoraRtmClientDelegate {
             
             if event.eventType == .snapshot ||  event.eventType == .update || event.eventType == .set {
                 
-                if event.data.getItems().count > 0 {
+                if event.data.items?.count ?? 0 > 0 {
                     Task {
-                        await UpdateLocalBoard(metadataItems: event.data.getItems(), majorRevision: event.data.getMajorRevision())
+                        await UpdateLocalBoard(metadataItems: event.data.items ?? [], majorRevision: event.data.majorRevision)
                     }
                 }else {
                     // Remote user deleted board, reset the local board
@@ -280,4 +279,5 @@ extension MiniGoViewModel: AgoraRtmClientDelegate {
     
     
 }
+
 

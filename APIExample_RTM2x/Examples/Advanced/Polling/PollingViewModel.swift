@@ -28,11 +28,11 @@ class PollingViewModel: NSObject, ObservableObject {
     func testing()  {
  
 //        agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil, completion: { response, error in
-//            
+//
 //        })
-//        
+//
 //        agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil) { response, error in
-//            
+//
 //        }
         
 //        if let (response, error) =  await agoraRtmKit?.getPresence()?.whoNow(channelName: "channelName", channelType: .message, options: nil) {

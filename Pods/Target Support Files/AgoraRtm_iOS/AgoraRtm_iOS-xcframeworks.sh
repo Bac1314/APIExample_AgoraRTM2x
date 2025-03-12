@@ -23,6 +23,12 @@ variant_for_slice()
   "AgoraRtmKit.xcframework/ios-arm64_x86_64-simulator")
     echo "simulator"
     ;;
+  "AgoraRtmKit.xcframework/xros-arm64")
+    echo ""
+    ;;
+  "AgoraRtmKit.xcframework/xros-arm64_x86_64-simulator")
+    echo "simulator"
+    ;;
   esac
 }
 
@@ -33,6 +39,12 @@ archs_for_slice()
     echo "arm64 armv7"
     ;;
   "AgoraRtmKit.xcframework/ios-arm64_x86_64-simulator")
+    echo "arm64 x86_64"
+    ;;
+  "AgoraRtmKit.xcframework/xros-arm64")
+    echo "arm64"
+    ;;
+  "AgoraRtmKit.xcframework/xros-arm64_x86_64-simulator")
     echo "arm64 x86_64"
     ;;
   esac

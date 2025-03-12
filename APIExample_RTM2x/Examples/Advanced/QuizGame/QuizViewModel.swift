@@ -119,22 +119,24 @@ class QuizViewModel: NSObject, ObservableObject {
         
         
         // Define the rtm state item
-        let item = AgoraRtmStateItem()
-        item.key = scoreKey
-        item.value = String(score)
+        let item: [String: String] = [scoreKey: String(score)]
         
         // Update local score OR add new item if it doesn't exist
-        
         if let userIndex = users.firstIndex(where: {$0.userId == userID}) {
-            // Local User exists
-            users[userIndex].userScore = item.value
+            // Local User exists - Update the score
+            if let scoreValue = item[scoreKey] {
+                users[userIndex].userScore = scoreValue
+            }
         }else {
-            // Local user doesn't exists
-            users.append(QuizUser(userId: userID, userScore: item.value))
+            // Local user doesn't exist - Add new user with score
+            if let scoreValue = item[scoreKey] {
+                users.append(QuizUser(userId: userID, userScore: scoreValue))
+            }
         }
         
+        
         // Send the score to remote users
-        if let (_, error) = await agoraRtmKit?.getPresence()?.setState(channelName: channelName, channelType: .message, items: [item]){
+        if let (_, error) = await agoraRtmKit?.getPresence()?.setState(channelName: channelName, channelType: .message, items: item){
             if error == nil {
                 return true
             }
@@ -143,14 +145,14 @@ class QuizViewModel: NSObject, ObservableObject {
     }
     
     @MainActor
-    func getUserStateItems(channelName: String, userID: String) async -> [AgoraRtmStateItem] {
+    func getUserStateItems(channelName: String, userID: String) async -> [String:String] {
         if let (response, _) = await agoraRtmKit?.getPresence()?.getState(channelName: channelName, channelType: .message, userId: userID) {
-            return response?.state.states ?? []
+            return response?.state.states ?? [:]
         }
-        return []
+        return [:]
     }
     
-    @MainActor 
+    @MainActor
     func generateMockQuizzes(){
         listOfQuizzes = loadMockDataFromFile("quizmockdata.json")
     }

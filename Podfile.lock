@@ -6,7 +6,7 @@ PODS:
   - AgoraRtcEngine_iOS/RtcBasic (4.3.0)
   - AgoraRtcEngine_iOS/VirtualBackground (4.3.0)
   - AgoraRtcEngine_iOS/VQA (4.3.0)
-  - AgoraRtm_iOS (2.1.10)
+  - AgoraRtm_iOS (2.2.2)
 
 DEPENDENCIES:
   - AgoraRtcEngine_iOS/AINS (= 4.3.0)
@@ -16,7 +16,7 @@ DEPENDENCIES:
   - AgoraRtcEngine_iOS/RtcBasic (= 4.3.0)
   - AgoraRtcEngine_iOS/VirtualBackground (= 4.3.0)
   - AgoraRtcEngine_iOS/VQA (= 4.3.0)
-  - AgoraRtm_iOS
+  - AgoraRtm_iOS (= 2.2.2)
 
 SPEC REPOS:
   trunk:
@@ -25,8 +25,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AgoraRtcEngine_iOS: 267c0980c1fb97e056d05b850f8629b05b6e467a
-  AgoraRtm_iOS: b53a57502a35349aceea890df4416b483ea4153c
+  AgoraRtm_iOS: 9695dfe906294219645a7ae304dcc2a7b343759c
 
-PODFILE CHECKSUM: c047ef48ed8637a985ab23b44e4fb16a50383cb2
+PODFILE CHECKSUM: f0dd701b8741660db1cbcd216ac1c689b23d3388
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

@@ -78,7 +78,6 @@ class ChannelMessagingViewModel: NSObject, ObservableObject {
         let subOptions: AgoraRtmSubscribeOptions = AgoraRtmSubscribeOptions()
         subOptions.features =  [.message, .presence]
         
-        
         if let (_, error) = await agoraRtmKit?.subscribe(channelName: channelName, option: subOptions){
             if error == nil {
                 //subscribe success
@@ -273,6 +272,12 @@ extension ChannelMessagingViewModel: AgoraRtmClientDelegate {
         connectionState = connectionState
     }
     
+    func rtmKit(_ rtmKit: AgoraRtmClientKit, tokenPrivilegeWillExpire channel: String?) {
+        print("Bac's tokenPrivilegeWillExpire \(channel ?? "null channel")")
+    }
     
+    func rtmKit(_ rtmKit: AgoraRtmClientKit, didReceiveLinkStateEvent event: AgoraRtmLinkStateEvent) {
+        print("Bac's didReceiveLinkStateEvent \(event.currentState) reason \(event.reason ?? "no reason")")
+    }
 }
 

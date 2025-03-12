@@ -218,18 +218,18 @@ class AudioRecordingViewModel: NSObject, ObservableObject {
     
 //    func listAllAudioFiles() {
 //        let documentsURL = getDocumentsDirectory()
-//        
+//
 //        do {
 //            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-//            
+//
 //            let tempAudioFiles = fileURLs.filter({ $0.pathExtension == "m4a" })
-//            
+//
 //            audioMessageInfo.removeAll()
 //            for audioFileURL in tempAudioFiles {
 //                do {
 //                    let audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
 //                    let duration = audioPlayer.duration
-//                    
+//
 //                    let audioMessage = AudioMessage(id: UUID(), fileName: audioFileURL.lastPathComponent, fileURL: audioFileURL.absoluteURL, sender: userID, duration: Int(duration)) // Fix sender later with local document/database. right now all files will have sender as owner
 //                    audioMessageInfo.append(audioMessage)
 //                } catch {
